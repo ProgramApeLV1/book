@@ -1,0 +1,31 @@
+*{font-size:12px; font-family:Tahoma,Verdana,΢���ź�,������}
+body{background:#D2E0F2; }
+a{ color:Black; text-decoration:none;}
+a:hover{color:Red; text-decoration:none;}
+#t_txt a:LINK{text-decoration:none;}
+#t_txt span,a{font-size: 12px;}
+.textbox03 {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,����;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;  font-weight: bold; width: 190px; }
+.txt01{font:Verdana, Geneva, sans-serif,����;padding:3px 2px 2px 2px; border-width:1px; border-color:#ddd;  color:#000;}
+.txt {border: #878787 1px solid;padding: 4px 3px;font:Verdana, Geneva, sans-serif,����;line-height: 14px; background-color: #fff;  height: auto; font-size: 14px;}
+.footer{text-align:center;color:#15428B; margin:0px; padding:0px;line-height:23px; font-weight:bold;}
+.head a{color:White;text-decoration:underline;}
+#divMenu ul{list-style-type:none;margin:0px; padding:10px;}
+#divMenu ul li{ padding:0px;}
+#divMenu ul li a{line-height:24px;}
+#divMenu ul li div{margin:2px 0px;padding-left:10px;padding-top:2px;}
+#divMenu ul li div.hover{border:1px dashed #a6d0e7; background:#ecf8fd;cursor:pointer;}
+#divMenu ul li div.hover a{color:#007bda;}
+#divMenu ul li div.selected{border:1px solid #a6d0e7; background:#ecf8fd;cursor:default;}
+#divMenu ul li div.selected a{color:#007bda; font-weight:bold;}
+.user_table,.user_table tr th, .user_table tr td {border:1px solid #D7EBF9;}
+.icon{padding:4px 19px; }
+.icon-sys{ background:url(../../images/directory.png) no-repeat;}
+.icon-nav{background-position: -100px -18px;}
+.icon-users{background-position: -100px -480px;}
+.icon-role{background-position: -360px -200px;}
+.icon-set{background-position: -380px -200px;}
+.icon-log{background-position: -380px -80px;}
+.panel-with-icon {padding-left: 56px;}
+.panel-icon,.panel-tool {position: absolute;top: 50%;margin-top: -8px;height: 16px;overflow: hidden;}
+.panel-icon {left: 35px;width: 24px;}
+

@@ -1,0 +1,76 @@
+[field=ACTION] a:link {
+text-decoration: none;
+color: #047dd5;
+}
+
+[field=ACTION] a:visited {
+text-decoration: none;
+color: #66CDAA;
+}
+
+[field=ACTION] a:hover {
+text-decoration: none;
+color: #8B0A50;
+}
+
+[field=ACTION] a:active {
+text-decoration: none;
+color: #919191;
+}
+
+.datagrid-cell a:active {
+text-decoration: none;
+color: #919191;
+}
+
+.datagrid-cell a:link {
+text-decoration: none;
+color: #047dd5;
+}
+
+.datagrid-cell a:visited {
+text-decoration: none;
+color: #66CDAA;
+}
+
+.datagrid-cell a:hover {
+text-decoration: none;
+color: #8B0A50;
+}
+
+.load_img{
+	width: 20px;
+	height: 20px;
+	display: none;
+}
+
+.load_text{
+	font-size: 15px;
+	color: red;
+}
+
+body{
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	width:100%;
+	height:100%;
+}
+
+.sep-link {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #fff;
+  margin-left: 0;
+  margin-right: 0;
+  margin: 4px 0px 0px 0px;
+  font-size: 1px;
+}
+
+label{
+  font-size: 13px;
+}
+
+#deviceCount{
+	color: red;
+	font-size: 20
+}

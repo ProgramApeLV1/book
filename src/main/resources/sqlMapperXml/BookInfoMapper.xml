@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.BookInfoMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, bookCode, bookName, author, publishTime, unitPrice, publishingHouse, typeCode, status, createTime
+    </sql>
+
+    <select id="getBookInfoList" resultType="BookInfoVo">
+        SELECT
+        t.id,
+        t.bookCode,
+        t.bookName,
+        t.author,
+        t.publishTime,
+        t.unitPrice,
+        t.publishingHouse,
+        CASE t.`status`
+        WHEN 0 THEN '失效'
+        WHEN 1 THEN '启用'
+        WHEN 2 THEN '禁用'
+        ELSE '' END AS `statusName`,
+        t.createTime,
+        t1.typeName
+        FROM
+        cs_book_info AS t
+        LEFT JOIN cs_book_type AS t1 ON t.typeCode = t1.`code`
+        <where>
+            <if test="bookName neq null and bookName neq '' ">
+                AND t.bookName LIKE '%${bookName}%'
+            </if>
+        </where>
+    </select>
+
+</mapper>

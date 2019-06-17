@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <block name="common" th:replace="common/basePage :: commonHead('登录界面')"></block>
+    <script type="text/javascript" th:src="@{../platform/js/login.js}" ></script>
+    <meta charset="UTF-8"/>
+    <!--声明js代码域-->
+    <script>
+        window.history.forward(-1);
+
+        function reset() {
+            /*$("et_username").val="";
+            $("et_pwd").val="";*/
+            document.getElementById("et_username").value = "";
+            document.getElementById("et_pwd").value = "";
+
+        }
+
+        function login() {
+            progressLoad();
+            var userName = document.getElementById("et_username").value;
+            var userPwd = document.getElementById("et_pwd").value;
+            if (userName.length == 0 || userName == null) {
+                progressClose();
+                $.messager.alert('提示', "请输入账号！", 'info');
+                return;
+            }
+
+            if (userPwd.length == 0 || userPwd == null) {
+                progressClose();
+                $.messager.alert('提示', "请输入密码！", 'info');
+                return;
+            }
+            $.post("loginCont/getUserList", {
+                    loginName: userName, password: userPwd
+                },
+                function (data) {
+                    progressClose();
+                    if (data.result == 200) {
+
+                    } else {
+
+                    }
+                    $.messager.alert('提示', data.message, 'info');
+                }, 'JSON');
+        }
+    </script>
+</head>
+
+<body style=" margin:0; zoom:1; overflow:hidden; background-image: url(../img/main.jpg); background-size: cover;" onkeyup="fun_enter(event);">
+<div class="main">
+    <div style="text-align: center; color: black;font-family: '楷体'; margin-top: 100px;color: white;">
+        <p style="font-size: 50px;">图书馆管理系统</p>
+    </div>
+    <div style="text-align: center; margin-top: 100px;">
+
+        <form name="loginForm" id="loginForm" method="post">
+            <div style="outline: none" class="login_textbg">
+                <div style="outline: none" class="login_user"></div>
+                <!--value="账&nbsp;&nbsp;&nbsp;号"-->
+                <input style="outline: none" type="text" class="login_text" name="loginName" id="et_username"  onfocus="if(this.value=='账&nbsp;&nbsp;&nbsp;号') this.value=''" onblur="if(this.value=='') this.value='账&nbsp;&nbsp;&nbsp;号'"/>
+            </div>
+            <div style="outline: none" class="login_textbg"><div style="outline: none" class="login_pwd"></div>
+                <!--value="密&nbsp;&nbsp;&nbsp;码"-->
+                <input style="outline: none" type="text" class="login_text login_pwdtext1"   />
+                <input style="outline: none"  type="password" class="login_text login_pwdtext2" name="password" id="et_pwd" />
+            </div>
+            <div>
+                <div name="bt-login" id="bt-login" class="login_button" onclick="submitForm();"></div>
+                <label id="msg-err"></label>
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+
+</html>

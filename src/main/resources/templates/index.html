@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <block name="common" th:replace="common/basePage :: commonHead('福建船政交通职业学院')"></block>
+    <script type="text/javascript" th:src="@{../../platform/js/index.js}" ></script>
+    <meta charset="UTF-8"/>
+    <style type="text/css">
+        #rcorners1 {
+            border-radius: 5px 5px 0 0;
+            /*background: #2f5f8e;*/
+            padding: 2px;
+            padding-top: 8px;
+            width: 58px;
+            height: 100%;
+        }
+
+        .table-postition .l-btn-plain:hover {
+            border: none;
+            box-shadow: 2px 2px 7px #074183 inset;
+            background: #2f5f8e;
+        }
+
+        #rcorners1 div:first-child {
+            margin-top: 7px !important;
+        }
+
+        #rcorners1 div:last-child {
+            line-height: 15px !important;
+        }
+
+        @media screen and (max-width: 1450px) {
+            .layout-split-west {
+                width: 10% !important;
+            }
+
+            .layout-panel-center {
+                width: 90% !important;
+            }
+
+            .bg-position {
+                background-size: 80% !important;
+                background-position: 0 !important;
+            }
+
+            .table-postition {
+                left: 45% !important;
+            }
+
+            .table-postition table {
+                width: 400px !important;
+            }
+
+            .panel-with-icon {
+                padding-left: 33px;
+                white-space: nowrap;
+                margin-right: 18px;
+                text-align: right;
+            }
+
+            #divMenu ul li div {
+                text-align: center;
+            }
+
+            .icon {
+                padding: 4px 0px;
+            }
+        }
+    </style>
+    <script>
+
+        window.history.forward(-1);
+        function logout() {
+            $.messager.defaults = {ok: "确定", cancel: "取消", width: 300};
+            $.messager.confirm('提示', '确定要退出?', function (r) {
+                if (r) {
+                    window.location.href = '/';
+                }
+            });
+        }
+
+    </script>
+</head>
+<body class="easyui-layout" style="overflow-y: hidden;background-color: #0594dd" scroll="no">
+    <noscript>
+        <div style=" position:absolute; z-index:100000; height:2046px;top:0px;left:0px; width:100%;  text-align:center;">
+            <img src="images/noscript.gif" alt='抱歉，请开启脚本支持！'/>
+        </div>
+    </noscript>
+    <div class="bg-position" region="north" split="true" border="false"
+         style="overflow: hidden; height: 88px; background-image: url(../platform/images/common/head_bg.png);
+          background-size: cover; background-repeat:no-repeat; line-height: 20px;color: #fff;">
+        <span id="t_txt" style="float:right; padding-right:20px; padding-top: 30px;font-size: 15px;" class="head">
+                <img style="float:left;" src="../platform/images/common/home_ico_user.png"/>
+                <span> &nbsp;欢迎您:&nbsp;
+                    <a href="javascript:void(0)" onclick="logout()" class="easyui-linkbutton" plain="true"
+                       icon="icon-clear" style="color: white">安全退出</a>
+                </span>
+                <br/>
+        </span>
+    </div>
+    <!--导航内容start-->
+    <div id="west" region="west" split="true" data-options="iconCls:'icon-homeinfo'" title="系统导航菜单" style="width:200px;">
+        <div id="divMenu">
+            <!--导航内容 -->
+        </div>
+    </div>
+
+    <!-- 内容页面  start-->
+    <div id="mainPanle" region="center" style="background: #F2F5F7; overflow-y:hidden">
+        <div id="tabs" class="easyui-tabs" fit="true" border="false">
+            <div title="欢迎使用" style="padding:20px;overflow:hidden;border: none;" id="home">
+                <iframe id="iframeId" name="iframeId" style="width: 100%;height: 100%;
+                    background-image: url(../img/main.jpg);background-size: cover;
+                    background-repeat:no-repeat; background-position:center;" frameborder="0">
+                </iframe>
+            </div>
+        </div>
+    </div>
+    <!-- 内容页面ended-->
+
+    <!--页脚内容start-->
+    <div region="south" split="true" style="height: 30px; background: #D2E0F2; ">
+        <!-- <div class="footer">©版权所有： XXX|XXXXXXX</div> -->
+        <div class="footer"></div>
+    </div>
+    <!--页脚内容end-->
+</body>
+</html>

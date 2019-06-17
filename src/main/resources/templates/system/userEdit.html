@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <block name="common" th:replace="common/basePage :: commonHead('编辑')"></block>
+    <script type="text/javascript" th:inline="javascript">
+        var userAddPage = {};
+        $.extend(userAddPage, Page);
+        var user = [[${user}]];
+
+        $(function () {
+            $("#sex").combobox("setValue", user.sex);
+            $("#userType").combobox("setValue", user.userType);
+            //加载父级菜单combobox
+            // Page.registerComboboxSelect("parentName", "/menuCont/getParentMenuList", "code", "name");
+        });
+
+        //提交表单
+        function saveWin() {
+            progressLoad();
+            var isValid = $("#formEdit").form('validate');
+            if (!isValid) {
+                progressClose();
+                return false;
+            } else {
+                var data = serializeObject($("#formEdit"));
+                $.ajax({
+                    url: baseHttpUrl + "userCont/edit",
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify(data),
+                    type: 'POST',
+                    cache: false,
+                    dataType: "json",
+                    processData: false
+                }).done(function (res) {
+                    progressClose();
+                    if (res.result == 200) {
+                        parent.$.messager.alert('提示', res.message, 'info');
+                        parent.Page.refreshDataGrid(window.parentPanelDataGrid);
+                        parent.Page.closeDialog(window.parentPanelDivId);
+
+                    } else {
+                        parent.$.messager.alert('提示', res.message, 'info');
+                    }
+                });
+                return false;
+            }
+        }
+    </script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+<div id="mainTabs" class="easyui-panel" style="width: 100%;height: 100%;">
+    <form id="formEdit" method="post">
+        <table class="grid">
+            <tr hidden>
+                <td><input id="userCode" name="userCode" class="easyui-textbox" th:value="${user.userCode}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td><input id="status" name="status" class="easyui-textbox" th:value="${user.status}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td><input id="id" name="id" class="easyui-textbox" th:value="${user.id}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
+            <tr>
+                <td>登陆名称：</td>
+                <td><input id="loginName" name="loginName" class="easyui-textbox" th:value="${user.loginName}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td>用户名称：</td>
+                <td><input id="userName" name="userName" class="easyui-textbox" th:value="${user.userName}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
+            <tr>
+                <td>
+                    <label>用户密码：</label>
+                </td>
+                <td><input id="password" name="password" class="easyui-textbox" th:value="${user.password}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td>职员工号：</td>
+                <td><input id="jobNumber" name="jobNumber" class="easyui-textbox" th:value="${user.jobNumber}"
+                           data-options="prompt:'请输入',width:180,required:false"></td>
+            </tr>
+            <tr>
+                <td>用户性别：</td>
+                <td>
+                    <select id="sex" name="sex" class="easyui-combobox" style="width: 180px;"
+                            panelHeight="auto"
+                            data-options="prompt:'请选择',required:true,editable:false">
+                        <option value="0">男</option>
+                        <option value="1">女</option>
+                    </select>
+                </td>
+                <td>用户年龄：</td>
+                <td><input id="age" name="age" class="easyui-numberbox" th:value="${user.age}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
+            <tr>
+                <td>用户电话：</td>
+                <td><input id="phone" name="phone" class="easyui-numberbox" th:value="${user.phone}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td>用户类型：</td>
+                <td>
+                    <select id="userType" name="userType" class="easyui-combobox" style="width: 180px;"
+                            panelHeight="auto"
+                            data-options="prompt:'请选择',required:true,editable:false">
+                        <option value="root">管理员</option>
+                        <option value="admin">系统管理员</option>
+                        <option value="user">普通用户</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>

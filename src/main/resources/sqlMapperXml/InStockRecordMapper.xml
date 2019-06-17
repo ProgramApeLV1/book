@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.InStockRecordMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, inCode, bookCode, typeCode, inNum, status, createTime
+    </sql>
+
+    <select id="getReturnBookInfo" resultType="InStockRecordVo">
+        SELECT
+        t.id,
+        t.inCode,
+        t.refCode,
+        t.bookCode,
+        t2.bookName,
+        t3.typeName,
+        t.inNum,
+        t.`status`,
+        CASE t.`status`
+        WHEN 0 THEN '待归还'
+        WHEN 1 THEN '已归还'
+        ELSE '' END AS statusName,
+        t.returnTime,
+        t.createTime,
+        t.createName AS returnName,
+        TIMESTAMPDIFF(DAY,t.createTime,t.returnTime) AS `day`
+        FROM
+        cs_in_stock_record AS t
+        LEFT JOIN cs_book_info t2 ON t.bookCode = t2.bookCode
+        LEFT JOIN cs_book_type t3 ON t.typeCode = t3.`code`
+        <where>
+            <if test="inCode neq null and inCode neq '' ">
+                AND t.inCode LIKE '${inCode}%'
+            </if>
+            <if test="refCode neq null and refCode neq '' ">
+                AND t.refCode LIKE '${refCode}%'
+            </if>
+        </where>
+    </select>
+
+</mapper>

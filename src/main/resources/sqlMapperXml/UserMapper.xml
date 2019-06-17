@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.UserMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, userCode, loginName, userName, password, workDutyCode, identity, deptCode, jobNumber, sex, age, phone, userType, status, createTime
+    </sql>
+
+    <select id="getUserList" resultType="UserVo">
+        SELECT
+        t.id,
+        t.userCode,
+        t.loginName,
+        t.userName,
+        t.`password`,
+        t.workDutyCode,
+        t.identity,
+        t.deptCode,
+        t.jobNumber,
+        CASE t.sex
+        WHEN '0' THEN '男'
+        WHEN '1' THEN '女'
+        ELSE '' END AS sex,
+        t.age,
+        t.phone,
+        CASE t.userType
+        WHEN 'root' THEN '管理员'
+        WHEN 'user' THEN '普通用户'
+        WHEN 'admin' THEN '系统管理员'
+        ELSE '' END AS userType,
+        CASE t.`status`
+        WHEN '1' THEN '启用'
+        WHEN '2' THEN '禁用'
+        ELSE '' END AS statusName,
+        t.createTime
+        FROM
+        os_user AS t
+        WHERE
+        1=1
+        <if test="userName != null and userName != '' ">
+            AND t.userName LIKE CONCAT_WS(#{userName},"%","%",NULL)
+        </if>
+        ORDER BY t.createTime DESC
+    </select>
+
+</mapper>

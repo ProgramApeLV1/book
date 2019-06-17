@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment = "commonHead(title)">
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title th:text="${title}">Title</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="index" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" th:href="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+'/static/platform/images/favicon.icon'}" />
+	<link id="easyuiTheme" rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/easyui/1.5.5/themes/ui-cupertino/easyui.css' }" />
+	<link id="easyuiTheme1" rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/easyui/1.5.5/themes/icon.css'}" />
+	<link rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+'/static/platform/style/index.css'}" />
+	<link rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+'/static/platform/style/common/common.css'}" />
+	<link rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/platform/style/base.css'}" />
+	<link rel="stylesheet" type="text/css" th:href="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/platform/style/icommon.css'}" />
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/jquery/jquery.min.js'}" charset="utf-8"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/easyui/1.5.5/jquery.easyui.min.js'}" charset="utf-8"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/easyui/1.5.5/locale/easyui-lang-zh_CN.js'}" charset="utf-8"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/platform/js/extJs.js'}" charset="utf-8"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/platform/js/common.js'}" charset="utf-8"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/platform/js/index.js'}"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/echart/echarts-all.js'}"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/platform/js/common.js'}" charset="utf-8"></script>
+	<script type="text/javascript" th:src="${#httpServletRequest.getScheme()+'://'+ #httpServletRequest.getServerName() + ':' + #request.getServerPort() + #request.getContextPath()+ '/static/platform/js/controller.js'}" charset="utf-8"></script>
+	<script type="text/javascript" th:src="@{/static/platform/js/print.js}" charset="utf-8"></script>
+	<script type="text/javascript" th:inline="javascript">
+
+		//项目根目录
+        var baseUrl = [[${#httpServletRequest.getScheme()+'://'
+        				+#httpServletRequest.getServerName()+ ':'
+        				+ #request.getServerPort()
+        				+ #request.getContextPath() + '/'}]];
+		//接口请求根路径
+        var baseHttpUrl = [[${#httpServletRequest.getScheme()+'://'
+        				+#httpServletRequest.getServerName()+ ':'
+        				+ #request.getServerPort()
+        				+ #request.getContextPath() + '/'}]]+"v1/";
+      //弹窗方法
+		function showIframe(divId, cutDiv,title, url, w, h) {
+			$('#' + divId).dialog({
+				title: title,
+				width: w,
+				height: h,
+				modal: true,
+				collapsible: false,
+				minimizable: false,
+				maximizable: false,
+				buttons:'#'+cutDiv
+			});
+			$('#' + divId).html("<iframe name='" + divId + "_iframe' id='" + divId + "_iframe'  src='" + url + "' width='100%' height='98.5%' frameborder='0' scrolling='auto'></iframe>");
+		}
+	</script>
+	<style>
+		.td_label_right{
+			text-align: right;
+		}
+	</style>
+
+</head>
+</html>

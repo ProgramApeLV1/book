@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <block name="common" th:replace="common/basePage :: commonHead('新增')"></block>
+    <script type="text/javascript" th:inline="javascript">
+        var menuAddPage = {};
+        $.extend(menuAddPage, Page);
+
+        $(function () {
+            //加载父级菜单combobox
+            Page.registerComboboxSelect("parentName", "/menuCont/getParentMenuList", "code", "name");
+        });
+
+        //提交表单
+        function saveWin() {
+            progressLoad();
+            var isValid = $("#formAdd").form('validate');
+            if (!isValid) {
+                progressClose();
+                return false;
+            } else {
+                var data = serializeObject($("#formAdd"));
+                $.ajax({
+                    url: baseHttpUrl + "menuCont/saveMenu",
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify(data),
+                    type: 'POST',
+                    cache: false,
+                    dataType: "json",
+                    processData: false
+                }).done(function (res) {
+                    progressClose();
+                    if (res.result == 200) {
+                        parent.$.messager.alert('提示', res.message, 'info');
+                        parent.Page.refreshDataGrid(window.parentPanelDataGrid);
+                        parent.Page.closeDialog(window.parentPanelDivId);
+
+                    } else {
+                        parent.$.messager.alert('提示', res.message, 'info');
+                    }
+                });
+                return false;
+            }
+        }
+    </script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+<div id="mainTabs" class="easyui-panel" style="width: 100%;height: 100%;">
+    <form id="formAdd" method="post">
+        <table class="grid">
+            <tr>
+                <td>菜单名称：</td>
+                <td><input id="name" name="name" class="easyui-textbox"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
+            <tr>
+                <td>父级菜单：</td>
+                <td><input id="parentName" name="pCode" class="easyui-combobox"
+                           data-options="prompt:'请选择',width:180,required:false"></td>
+            </tr>
+            <tr>
+                <td>
+                    <label>菜单类别：</label>
+                </td>
+                <td>
+                    <select id="resourceType" name="resourceType" class="easyui-combobox" style="width: 180px;"
+                            panelHeight="auto"
+                            data-options="prompt:'请选择',required:true,editable:false">
+                        <option value="0">一级菜单</option>
+                        <option value="1">二级菜单</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>菜单路径：</td>
+                <td><input id="url" name="url" class="easyui-textbox"
+                           data-options="prompt:'请输入',width:180,required:false"></td>
+            </tr>
+            <tr>
+                <td>菜单介绍：</td>
+                <td><input id="description" name="description" class="easyui-textbox"
+                           data-options="prompt:'请输入',width:180,required:false"></td>
+            </tr>
+            <tr>
+                <td>排序：</td>
+                <td><input id="seq" name="seq" class="easyui-numberbox"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>

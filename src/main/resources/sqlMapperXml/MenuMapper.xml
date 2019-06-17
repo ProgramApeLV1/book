@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.MenuMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, code, url, description, icon, pCode, seq, status, resourceType, createTime
+    </sql>
+
+    <select id="getParentMenuTree" resultType="com.book.model.MenuTree">
+        <![CDATA[
+	     SELECT
+	       t1.id,
+	       t1.code,
+	       t1.pCode,
+	       t1.name AS text,
+	       t1.url AS attributes,
+	       t1.icon AS iconCls
+	      FROM os_menu t1
+      ]]>
+        <where>
+            <choose>
+                <when test="pCode !=null and pCode != ''">
+                    AND t1.pCode = #{pCode}
+                </when>
+                <otherwise>
+                    AND t1.pCode = 'NONE'
+                </otherwise>
+            </choose>
+            AND t1.`status` = #{status}
+        </where>
+    </select>
+
+    <select id="getMenuInfoList" resultType="MenuVo">
+        SELECT
+        t.id,
+        t.`name`,
+        t.`code`,
+        t.url,
+        t.description,
+        t.icon,
+        t.pCode,
+        t.seq,
+        CASE t.`status`
+        WHEN '0' THEN '无效'
+        WHEN '1' THEN '有效'
+        ELSE '' END AS statusName,
+        CASE t.resourceType
+        WHEN '0' THEN '一级菜单'
+        WHEN '1' THEN '二级菜单'
+        ELSE '' END AS resourceTypeName,
+        t.createTime
+        FROM
+        os_menu AS t
+        WHERE
+        1=1
+        <if test="menuName != null and menuName != '' ">
+           AND t.`name` LIKE CONCAT_WS(#{menuName},"%","%",NULL)
+        </if>
+        ORDER BY t.createTime DESC
+    </select>
+
+    <select id="getParentMenuList" resultType="Menu">
+        SELECT
+        t.id,
+        t.`name`,
+        t.`code`,
+        t.url,
+        t.description,
+        t.icon,
+        t.pCode,
+        t.seq,
+        t.`status`,
+        t.resourceType,
+        t.createTime
+        FROM
+        os_menu AS t
+        WHERE
+        1=1
+        AND t.resourceType = 0
+    </select>
+</mapper>

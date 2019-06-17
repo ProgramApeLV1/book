@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.BookTypeMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, typeName, status, createTime
+    </sql>
+
+    <select id="getBookTypeList" resultType="BookTypeVo">
+        SELECT
+        t.id,
+        t.`code`,
+        t.typeName,
+        CASE t.`status`
+        WHEN 0 THEN '失效'
+        WHEN 1 THEN '启用'
+        WHEN 2 THEN '禁用'
+        ELSE '' END AS statusName,
+        t.createTime
+        FROM
+        cs_book_type AS t
+        <where>
+            <if test="typeName neq null and typeName neq '' ">
+              AND t.typeName LIKE '%${typeName}%'
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHead(title)">
+    <!--相较于base.html,basePage.html更轻量,文件引用更少-->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title th:text="${title}">Title</title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content="index"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../easyui/1.5.5/themes/ui-cupertino/easyui.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../easyui/1.5.5/themes/icon.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../platform/style/common/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../platform/style/base.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../platform/style/login.css}"/>
+    <script type="text/javascript" th:src="@{../../jquery/jquery.min.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../easyui/1.5.5/jquery.easyui.min.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../easyui/1.5.5/locale/easyui-lang-zh_CN.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../platform/js/extJs.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../platform/js/common.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../platform/js/controller.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:inline="javascript">
+        //接口请求根路径
+        var baseHttpUrl = [[${#httpServletRequest.getScheme()+'://'
+        				+#httpServletRequest.getServerName()+ ':'
+        				+ #request.getServerPort()
+        				+ #request.getContextPath()}]] + '/';
+    </script>
+    <style>
+        .td_label_right {
+            text-align: right;
+        }
+    </style>
+</head>
+</html>

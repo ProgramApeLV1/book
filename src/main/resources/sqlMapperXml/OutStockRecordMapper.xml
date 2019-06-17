@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.mapper.OutStockRecordMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, outCode, bookCode, typeCode, outNum, status, createTime
+    </sql>
+
+    <select id="getBoorowBookInfoList" resultType="OutStockRecordVo">
+        SELECT
+        t.id,
+        t.outCode,
+        t.refCode,
+        t.bookCode,
+        t1.bookName,
+        t2.typeName,
+        t.outNum,
+        CASE t.`status`
+        WHEN 1 THEN '已借出'
+        ELSE '' END AS statusName,
+        t.`day`,
+        t.createTime,
+        t.createName
+        FROM
+        cs_out_stock_record AS t
+        LEFT JOIN cs_book_info t1 ON t.bookCode = t1.bookCode
+        LEFT JOIN cs_book_type t2 ON t.typeCode = t2.`code`
+        <where>
+            <if test="outCode neq null and outCode neq '' ">
+                AND t.outCode LIKE '${outCode}%'
+            </if>
+            <if test="refCode neq null and refCode neq '' ">
+                AND t.refCode LIKE '${refCode}%'
+            </if>
+        </where>
+    </select>
+</mapper>
