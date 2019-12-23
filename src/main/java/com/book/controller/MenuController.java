@@ -98,10 +98,10 @@ public class MenuController extends BaseController {
     @ResponseBody
     public Object saveMenu(@RequestBody Menu menu) {
         String menuCode = "ME" + System.currentTimeMillis();
-        if (StringUtils.isNotBlank(menu.getpCode())) {
+        if (StringUtils.isNotBlank(menu.getPCode())) {
 
         } else {
-            menu.setpCode("NONE");
+            menu.setPCode("NONE");
         }
         menu.setCode(menuCode);
         menu.setStatus(1);
@@ -127,10 +127,10 @@ public class MenuController extends BaseController {
             } else {
                 menuVo.setUrl("NONE");
             }
-            if (StringUtils.isNotBlank(menu.getpCode())) {
-                menuVo.setpCode(menu.getpCode());
+            if (StringUtils.isNotBlank(menu.getPCode())) {
+                menuVo.setPCode(menu.getPCode());
             } else {
-                menuVo.setpCode("NONE");
+                menuVo.setPCode("NONE");
             }
             menuVo.setName(menu.getName());
             menuVo.setDescription(menu.getDescription());

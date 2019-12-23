@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import java.io.Serializable;
  * @author wyh123
  * @since 2019-01-03
  */
+@Data
 @TableName("cs_in_stock_record")
 public class InStockRecord implements Serializable {
 
@@ -71,83 +73,4 @@ public class InStockRecord implements Serializable {
      */
     private String createName;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getInCode() {
-        return inCode;
-    }
-
-    public void setInCode(String inCode) {
-        this.inCode = inCode;
-    }
-
-    public String getRefCode() {
-        return refCode;
-    }
-
-    public void setRefCode(String refCode) {
-        this.refCode = refCode;
-    }
-
-    public String getBookCode() {
-        return bookCode;
-    }
-
-    public void setBookCode(String bookCode) {
-        this.bookCode = bookCode;
-    }
-
-    public String getTypeCode() {
-        return typeCode;
-    }
-
-    public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
-    }
-
-    public Integer getInNum() {
-        return inNum;
-    }
-
-    public void setInNum(Integer inNum) {
-        this.inNum = inNum;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Date getReturnTime() {
-        return returnTime;
-    }
-
-    public void setReturnTime(Date returnTime) {
-        this.returnTime = returnTime;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
 }

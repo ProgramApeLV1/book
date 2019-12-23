@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import java.io.Serializable;
  * @author wyh123
  * @since 2019-01-02
  */
+@Data
 @TableName("os_menu")
 public class Menu implements Serializable {
 
@@ -71,110 +73,4 @@ public class Menu implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getpCode() {
-        return pCode;
-    }
-
-    public void setpCode(String pCode) {
-        this.pCode = pCode;
-    }
-
-    public Integer getSeq() {
-        return seq;
-    }
-
-    public void setSeq(Integer seq) {
-        this.seq = seq;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getResourceType() {
-        return resourceType;
-    }
-
-    public void setResourceType(Integer resourceType) {
-        this.resourceType = resourceType;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-        ", id=" + id +
-        ", name=" + name +
-        ", code=" + code +
-        ", url=" + url +
-        ", description=" + description +
-        ", icon=" + icon +
-        ", pCode=" + pCode +
-        ", seq=" + seq +
-        ", status=" + status +
-        ", resourceType=" + resourceType +
-        ", createTime=" + createTime +
-        "}";
-    }
 }

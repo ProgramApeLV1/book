@@ -42,7 +42,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
             tree.setChildren(menuMapper.getParentMenuTree(pCode, status));
         }
         for (MenuTree tree : treeList) {
-            if (!treeSet.add(tree.getpCode() + tree.getText())) {
+            if (!treeSet.add(tree.getPCode() + tree.getText())) {
                 removeTree.add(tree);
             }
             for (MenuTree treeChild : tree.getChildren()) {
