@@ -89,4 +89,9 @@ public class User implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
+
+    /***
+     * 用户对应的角色集合
+     */
+//    Set<Role> roles;
 }
