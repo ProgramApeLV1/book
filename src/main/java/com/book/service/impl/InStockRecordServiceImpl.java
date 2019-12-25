@@ -1,11 +1,10 @@
 package com.book.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.book.common.PageInfo;
+import com.book.common.units.PageInfo;
 import com.book.model.InStockRecord;
 import com.book.mapper.InStockRecordMapper;
 import com.book.model.vo.InStockRecordVo;
-import com.book.model.vo.OutStockRecordVo;
 import com.book.service.IInStockRecordService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.book.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.book.common.PageInfo;
+import com.book.common.units.PageInfo;
 import com.book.model.BookType;
 import com.book.mapper.BookTypeMapper;
 import com.book.model.vo.BookTypeVo;

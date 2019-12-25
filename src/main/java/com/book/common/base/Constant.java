@@ -1,4 +1,4 @@
-package com.book.common.units;
+package com.book.common.base;
 
 import org.springframework.beans.factory.annotation.Value;
 

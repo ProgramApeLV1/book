@@ -1,5 +1,6 @@
-package com.book.common;
+package com.book.common.base;
 
+import com.book.common.base.BaseController;
 import com.book.model.User;
 import com.book.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.ws.Action;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class LoginController extends BaseController {
 
     /**
      * @description: 用户退出
-     * @author: laihouze
+     * @author: wangyh
      * @time: 2018-07-03 10:28:59
      */
     @RequestMapping("/logout")

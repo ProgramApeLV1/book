@@ -1,18 +1,24 @@
-package com.book.common;
+package com.book.common.conf;
 
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /***
- * author: wyh
- * time: 2018/12/23
- * spring boot 静态文件配置文件
+ * @author wangyh
+ * @date 2018/12/23
+ * @deprecated spring boot 静态文件配置文件
  */
 @Configuration
-public class WebReceiveStatisticsController extends WebMvcConfigurerAdapter {
+public class MvcConfig extends WebMvcConfigurerAdapter {
 
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 
     /**
      * 如果我们将/xxxx/** 修改为 /** 与默认的相同时，则会覆盖系统的配置，可以多次使用 addResourceLocations 添加目录，
@@ -27,4 +33,12 @@ public class WebReceiveStatisticsController extends WebMvcConfigurerAdapter {
         super.addResourceHandlers(registry);
     }
 
+    /***
+     * 拦截器配置
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**").excludePathPatterns("");
+    }
 }

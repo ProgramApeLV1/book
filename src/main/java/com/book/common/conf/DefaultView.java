@@ -1,4 +1,4 @@
-package com.book.common;
+package com.book.common.conf;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

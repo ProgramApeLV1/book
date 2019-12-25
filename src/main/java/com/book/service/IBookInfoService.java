@@ -1,6 +1,6 @@
 package com.book.service;
 
-import com.book.common.PageInfo;
+import com.book.common.units.PageInfo;
 import com.book.model.BookInfo;
 import com.baomidou.mybatisplus.service.IService;
 

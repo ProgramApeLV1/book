@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-@MapperScan(basePackages = { "com.fjwing.mapper*" }) // , sqlSessionFactoryRef = "sqlSessionFactory"
+@MapperScan(basePackages = { "com.book.mapper*" }) // , sqlSessionFactoryRef = "sqlSessionFactory"
 public class DateResourceConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {

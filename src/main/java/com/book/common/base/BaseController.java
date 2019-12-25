@@ -1,5 +1,7 @@
-package com.book.common;
+package com.book.common.base;
 
+import com.book.common.units.Result;
+import com.book.common.units.ResponseJson;
 import com.book.model.User;
 import com.book.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 /**

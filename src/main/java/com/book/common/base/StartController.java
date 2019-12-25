@@ -1,5 +1,6 @@
-package com.book.common;
+package com.book.common.base;
 
+import com.book.common.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;

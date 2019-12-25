@@ -1,4 +1,4 @@
-package com.book.common;
+package com.book.common.units;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
