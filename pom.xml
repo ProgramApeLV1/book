@@ -13,7 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>book</name>
-    <description>Book project for Spring Boot</description>
+    <description>图书管理系统</description>
 
     <properties>
         <start-class>com.book.App</start-class>
