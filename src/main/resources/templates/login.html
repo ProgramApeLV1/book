@@ -15,35 +15,6 @@
             document.getElementById("et_pwd").value = "";
 
         }
-
-        function login() {
-            progressLoad();
-            var userName = document.getElementById("et_username").value;
-            var userPwd = document.getElementById("et_pwd").value;
-            if (userName.length == 0 || userName == null) {
-                progressClose();
-                $.messager.alert('提示', "请输入账号！", 'info');
-                return;
-            }
-
-            if (userPwd.length == 0 || userPwd == null) {
-                progressClose();
-                $.messager.alert('提示', "请输入密码！", 'info');
-                return;
-            }
-            $.post("loginCont/getUserList", {
-                    loginName: userName, password: userPwd
-                },
-                function (data) {
-                    progressClose();
-                    if (data.result == 200) {
-
-                    } else {
-
-                    }
-                    $.messager.alert('提示', data.message, 'info');
-                }, 'JSON');
-        }
     </script>
 </head>
 
@@ -58,7 +29,7 @@
             <div style="outline: none" class="login_textbg">
                 <div style="outline: none" class="login_user"></div>
                 <!--value="账&nbsp;&nbsp;&nbsp;号"-->
-                <input style="outline: none" type="text" class="login_text" name="loginName" id="et_username"  onfocus="if(this.value=='账&nbsp;&nbsp;&nbsp;号') this.value=''" onblur="if(this.value=='') this.value='账&nbsp;&nbsp;&nbsp;号'"/>
+                <input style="outline: none" type="text" class="login_text" name="loginName" id="et_username" onfocus="if(this.value==='账&nbsp;&nbsp;&nbsp;号') this.value=''" onblur="if(this.value==='') this.value='账&nbsp;&nbsp;&nbsp;号'"/>
             </div>
             <div style="outline: none" class="login_textbg"><div style="outline: none" class="login_pwd"></div>
                 <!--value="密&nbsp;&nbsp;&nbsp;码"-->

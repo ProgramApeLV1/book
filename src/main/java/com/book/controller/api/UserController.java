@@ -1,4 +1,4 @@
-package com.book.manager.controller;
+package com.book.controller.api;
 
 
 import com.book.common.base.BaseController;
@@ -8,9 +8,8 @@ import com.book.model.vo.UserVo;
 import com.book.service.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -28,29 +27,14 @@ import static com.book.common.base.Constant.ACTION_SUCCESS;
  * @author wyh123
  * @since 2018-12-22
  */
-@Controller
-@RequestMapping("/userCont")
+@RestController
+@RequestMapping("/userApi")
 public class UserController extends BaseController {
 
     @Autowired
     private IUserService userService;
 
-    @RequestMapping(value = "gotoUserInfoAddPage")
-    public ModelAndView gotoUserInfoAddPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("/system/userAdd");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "gotoUserInfoEditPage")
-    public ModelAndView gotoUserInfoEditPage(ModelAndView modelAndView, Integer id) {
-        User user = userService.selectById(id);
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("/system/userEdit");
-        return modelAndView;
-    }
-
     @PostMapping(value = "/getUserList")
-    @ResponseBody
     public Object getUserList(Integer page, Integer rows, String userName) {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<>();
@@ -61,7 +45,6 @@ public class UserController extends BaseController {
     }
 
     @PostMapping(value = "/add")
-    @ResponseBody
     public Object add(@RequestBody UserVo userVo) {
         User user = new User();
         String userCode = "USER" + System.currentTimeMillis();
@@ -79,7 +62,6 @@ public class UserController extends BaseController {
     }
 
     @PostMapping(value = "/edit")
-    @ResponseBody
     public Object edit(@RequestBody User user) {
         try {
             userService.updateById(user);
@@ -91,7 +73,6 @@ public class UserController extends BaseController {
     }
 
     @PostMapping(value = "/deleteWorkById")
-    @ResponseBody
     public Object deleteWorkById(Integer id) {
         try {
             userService.deleteById(id);

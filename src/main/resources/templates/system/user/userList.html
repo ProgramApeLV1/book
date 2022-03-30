@@ -9,7 +9,7 @@
         userPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            userPage.dataGrid = Page.registerDataGrid("tableList", 'userCont/getUserList', "toolbar", {});
+            userPage.dataGrid = Page.registerDataGrid("tableList", 'userApi/getUserList', "toolbar", {});
             userPage.registerEvent($("#add")[0], "click", function () {
                 userPage.registerWindowDialog(userPage.dataGrid, "addWin", "新增", 'userCont/gotoUserInfoAddPage', 50 + '%', 40 + '%');
             });
@@ -31,7 +31,7 @@
         }
 
         function deleteById(id) {
-            Page.messager(userPage.dataGrid, "userCont/deleteWorkById", "询问", "是否确定删除?", {
+            Page.messager(userPage.dataGrid, "userApi/deleteWorkById", "询问", "是否确定删除?", {
                 id: id
             });
         }

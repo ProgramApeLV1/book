@@ -1,14 +1,10 @@
-package com.book.manager.controller;
+package com.book.controller.api;
 
 
 import com.book.common.units.PageInfo;
 import com.book.service.IInStockRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,16 +17,15 @@ import java.util.Map;
  * @author wyh123
  * @since 2019-01-03
  */
-@Controller
-@RequestMapping("/inStockRecordCont")
+@RestController
+@RequestMapping("/inStockRecordApi")
 public class InStockRecordController {
 
     @Autowired
     private IInStockRecordService inStockRecordService;
 
-    @RequestMapping(value = "/getReturnBookInfo", method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
-    public Object getReturnBookInfo(Integer page, Integer rows, String refCode, String inCode) {
+    @PostMapping(value = "/getReturnBookInfo")
+    public Object getReturnBookInfo(Integer page, Integer rows, String refCode, String inCode) throws Exception {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<>();
         condition.put("refCode", refCode);

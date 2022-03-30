@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <block name="common" th:replace="common/basePage :: commonHead('新增')"></block>
+    <block name="common" th:replace="common/basePage :: commonHead('编辑')"></block>
     <script type="text/javascript" th:inline="javascript">
         var userAddPage = {};
         $.extend(userAddPage, Page);
+        var user = [[${user}]];
 
         $(function () {
+            $("#sex").combobox("setValue", user.sex);
+            $("#userType").combobox("setValue", user.userType);
             //加载父级菜单combobox
             // Page.registerComboboxSelect("parentName", "/menuCont/getParentMenuList", "code", "name");
         });
@@ -14,14 +17,14 @@
         //提交表单
         function saveWin() {
             progressLoad();
-            var isValid = $("#formAdd").form('validate');
+            var isValid = $("#formEdit").form('validate');
             if (!isValid) {
                 progressClose();
                 return false;
             } else {
-                var data = serializeObject($("#formAdd"));
+                var data = serializeObject($("#formEdit"));
                 $.ajax({
-                    url: baseHttpUrl + "userCont/add",
+                    url: baseHttpUrl + "userApi/edit",
                     contentType: 'application/json; charset=UTF-8',
                     data: JSON.stringify(data),
                     type: 'POST',
@@ -46,24 +49,32 @@
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div id="mainTabs" class="easyui-panel" style="width: 100%;height: 100%;">
-    <form id="formAdd" method="post">
+    <form id="formEdit" method="post">
         <table class="grid">
+            <tr hidden>
+                <td><input id="userCode" name="userCode" class="easyui-textbox" th:value="${user.userCode}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td><input id="status" name="status" class="easyui-textbox" th:value="${user.status}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td><input id="id" name="id" class="easyui-textbox" th:value="${user.id}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
             <tr>
                 <td>登陆名称：</td>
-                <td><input id="loginName" name="loginName" class="easyui-textbox"
+                <td><input id="loginName" name="loginName" class="easyui-textbox" th:value="${user.loginName}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
                 <td>用户名称：</td>
-                <td><input id="userName" name="userName" class="easyui-textbox"
+                <td><input id="userName" name="userName" class="easyui-textbox" th:value="${user.userName}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
             </tr>
             <tr>
                 <td>
                     <label>用户密码：</label>
                 </td>
-                <td><input id="password" name="password" class="easyui-textbox"
+                <td><input id="password" name="password" class="easyui-textbox" th:value="${user.password}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
                 <td>职员工号：</td>
-                <td><input id="jobNumber" name="jobNumber" class="easyui-textbox"
+                <td><input id="jobNumber" name="jobNumber" class="easyui-textbox" th:value="${user.jobNumber}"
                            data-options="prompt:'请输入',width:180,required:false"></td>
             </tr>
             <tr>
@@ -77,12 +88,12 @@
                     </select>
                 </td>
                 <td>用户年龄：</td>
-                <td><input id="age" name="age" class="easyui-numberbox"
+                <td><input id="age" name="age" class="easyui-numberbox" th:value="${user.age}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
             </tr>
             <tr>
                 <td>用户电话：</td>
-                <td><input id="phone" name="phone" class="easyui-numberbox"
+                <td><input id="phone" name="phone" class="easyui-numberbox" th:value="${user.phone}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
                 <td>用户类型：</td>
                 <td>

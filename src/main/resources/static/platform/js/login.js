@@ -103,7 +103,7 @@ function submitForm() {
 
 function loadFormSubmit() {
     $.post("/loginCont/userLogin", serializeObject($('#loginForm')), function (data) {
-        if (data.result == 200) {
+        if (data.result === 200) {
             window.location.href = '/index';
         } else {
             $('#msg-err').html(data.message);

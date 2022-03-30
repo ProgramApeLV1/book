@@ -9,7 +9,7 @@
         bookPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            bookPage.dataGrid = Page.registerDataGrid("table", 'inStockRecordCont/getReturnBookInfo', "toolbar", {});
+            bookPage.dataGrid = Page.registerDataGrid("table", 'inStockRecordApi/getReturnBookInfo', "toolbar", {});
             bookPage.registerEvent($("#add")[0], "click", function () {
                 bookPage.registerWindowDialog(bookPage.dataGrid, "addWin", "新增", 'inStockRecordCont/addPage', 80 + '%', 90 + '%');
             });
@@ -31,7 +31,7 @@
         }
 
         function returnById(id) {
-            Page.messager(bookPage.dataGrid, "inStockRecordCont/returnById", "询问", "是否确定归还?", {
+            Page.messager(bookPage.dataGrid, "inStockRecordApi/returnById", "询问", "是否确定归还?", {
                 id: id
             });
         }

@@ -1,9 +1,8 @@
-package com.book.manager.controller;
+package com.book.controller.page;
 
-
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * <p>
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequestMapping("/roleMenu")
-public class RoleMenuController {
+public class RoleMenuPageController {
 
 }
 

@@ -9,7 +9,7 @@
         bookPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            bookPage.dataGrid = Page.registerDataGrid("table", 'bookInfoCont/getBookInfoList', "toolbar", {});
+            bookPage.dataGrid = Page.registerDataGrid("table", 'bookInfoApi/getBookInfoList', "toolbar", {});
             bookPage.registerEvent($("#add")[0], "click", function () {
                 bookPage.registerWindowDialog(bookPage.dataGrid, "addWin", "新增", 'bookInfoCont/addPage', 80 + '%', 90 + '%');
             });
@@ -31,7 +31,7 @@
         }
 
         function deleteById(id) {
-            Page.messager(bookPage.dataGrid, "bookInfoCont/deleteById", "询问", "是否确定删除?", {
+            Page.messager(bookPage.dataGrid, "bookInfoApi/deleteById", "询问", "是否确定删除?", {
                 id: id
             });
         }

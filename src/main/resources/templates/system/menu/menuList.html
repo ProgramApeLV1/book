@@ -9,7 +9,7 @@
         menuPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            menuPage.dataGrid = Page.registerDataGrid("tableList", 'menuCont/getMenuInfoList', "toolbar", {});
+            menuPage.dataGrid = Page.registerDataGrid("tableList", 'menuApi/getMenuInfoList', "toolbar", {});
             menuPage.registerEvent($("#add")[0], "click", function () {
                 menuPage.registerWindowDialog(menuPage.dataGrid, "addWin", "新增", 'menuCont/gotoMenuInfoAddPage', 25 + '%', 60 + '%');
             });
@@ -31,7 +31,7 @@
         }
 
         function deleteById(id) {
-            Page.messager(menuPage.dataGrid, "menuCont/deleteWorkById", "询问", "是否确定删除?", {
+            Page.messager(menuPage.dataGrid, "menuApi/deleteWorkById", "询问", "是否确定删除?", {
                 id: id
             });
         }

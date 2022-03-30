@@ -26,7 +26,7 @@ function InitLeftMenu() {
         type: "post",
         dataType: "json",
         cache : 'false',
-        url: baseHttpUrl+"/menuCont/getMenuTree",
+        url: baseHttpUrl+"/menuApi/getMenuTree",
         success: function(json){
             $("#divMenu").empty();
             var menulist = "";

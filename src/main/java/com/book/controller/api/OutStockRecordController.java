@@ -1,15 +1,11 @@
-package com.book.manager.controller;
+package com.book.controller.api;
 
 
 import com.book.common.units.PageInfo;
 import com.book.service.IOutStockRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -23,15 +19,14 @@ import java.util.Map;
  * @author wyh123
  * @since 2019-01-03
  */
-@Controller
-@RequestMapping("/outStockRecordCont")
+@RestController
+@RequestMapping("/outStockRecordApi")
 public class OutStockRecordController {
 
     @Autowired
     private IOutStockRecordService outStockRecordService;
 
-    @RequestMapping(value = "/getBoorowBookInfoList", method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
+    @PostMapping(value = "/getBoorowBookInfoList")
     public Object getBoorowBookInfoList(Integer page, Integer rows, String refCode, String outCode) {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<>();
@@ -40,12 +35,6 @@ public class OutStockRecordController {
         pageInfo.setCondition(condition);
         outStockRecordService.getBoorowBookInfoList(pageInfo);
         return pageInfo;
-    }
-
-    @RequestMapping(value = "/addPage", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView addPage(@RequestBody ModelAndView modelAndView) {
-        modelAndView.setViewName("/bookBoorow/boorowBookInfo");
-        return modelAndView;
     }
 }
 

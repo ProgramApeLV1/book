@@ -9,7 +9,7 @@
         bookPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            bookPage.dataGrid = Page.registerDataGrid("table", 'outStockRecordCont/getBoorowBookInfoList', "toolbar", {});
+            bookPage.dataGrid = Page.registerDataGrid("table", 'outStockRecordApi/getBoorowBookInfoList', "toolbar", {});
             bookPage.registerEvent($("#add")[0], "click", function () {
                 bookPage.registerWindowDialog(bookPage.dataGrid, "addWin", "新增", 'outStockRecordCont/addPage', 80 + '%', 90 + '%');
             });
@@ -31,7 +31,7 @@
         }
 
         function deleteById(id) {
-            Page.messager(bookPage.dataGrid, "outStockRecordCont/deleteById", "询问", "是否确定删除?", {
+            Page.messager(bookPage.dataGrid, "outStockRecordApi/deleteById", "询问", "是否确定删除?", {
                 id: id
             });
         }

@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <block name="common" th:replace="common/basePage :: commonHead('编辑')"></block>
+    <block name="common" th:replace="common/basePage :: commonHead('新增')"></block>
     <script type="text/javascript" th:inline="javascript">
-        var menuEidtPage = {};
-        $.extend(menuEidtPage, Page);
-        var menu = [[${menu}]];
+        var menuAddPage = {};
+        $.extend(menuAddPage, Page);
 
         $(function () {
-            $("#resourceType").combobox("setValue", menu.resourceType);
             //加载父级菜单combobox
-            Page.registerComboboxSelect("parentName", "/menuCont/getParentMenuList", "code", "name");
+            Page.registerComboboxSelect("parentName", "/menuApi/getParentMenuList", "code", "name");
         });
 
         //提交表单
         function saveWin() {
             progressLoad();
-            var isValid = $("#formEdit").form('validate');
+            var isValid = $("#formAdd").form('validate');
             if (!isValid) {
                 progressClose();
                 return false;
             } else {
-                var data = serializeObject($("#formEdit"));
+                var data = serializeObject($("#formAdd"));
                 $.ajax({
-                    url: baseHttpUrl + "menuCont/editMenu",
+                    url: baseHttpUrl + "menuApi/saveMenu",
                     contentType: 'application/json; charset=UTF-8',
                     data: JSON.stringify(data),
                     type: 'POST',
@@ -48,20 +46,16 @@
 </head>
 <body class="easyui-layout" data-options="fit:true,border:false">
 <div id="mainTabs" class="easyui-panel" style="width: 100%;height: 100%;">
-    <form id="formEdit" method="post">
+    <form id="formAdd" method="post">
         <table class="grid">
-            <tr hidden>
-                <td><input id="id" name="id" class="easyui-textbox" th:value="${menu.id}"
-                           data-options="prompt:'请输入',width:180,required:true"></td>
-            </tr>
             <tr>
                 <td>菜单名称：</td>
-                <td><input id="name" name="name" class="easyui-textbox" th:value="${menu.name}"
+                <td><input id="name" name="name" class="easyui-textbox"
                            data-options="prompt:'请输入',width:180,required:true"></td>
             </tr>
             <tr>
                 <td>父级菜单：</td>
-                <td><input id="parentName" name="pCode" class="easyui-combobox" th:value="${menu.pCode}"
+                <td><input id="parentName" name="pCode" class="easyui-combobox"
                            data-options="prompt:'请选择',width:180,required:false"></td>
             </tr>
             <tr>
@@ -79,17 +73,17 @@
             </tr>
             <tr>
                 <td>菜单路径：</td>
-                <td><input id="url" name="url" class="easyui-textbox" th:value="${menu.url}"
+                <td><input id="url" name="url" class="easyui-textbox"
                            data-options="prompt:'请输入',width:180,required:false"></td>
             </tr>
             <tr>
                 <td>菜单介绍：</td>
-                <td><input id="description" name="description" class="easyui-textbox" th:value="${menu.description}"
+                <td><input id="description" name="description" class="easyui-textbox"
                            data-options="prompt:'请输入',width:180,required:false"></td>
             </tr>
             <tr>
                 <td>排序：</td>
-                <td><input id="seq" name="seq" class="easyui-numberbox" th:value="${menu.seq}"
+                <td><input id="seq" name="seq" class="easyui-numberbox"
                            data-options="prompt:'请输入',width:180,required:true"></td>
             </tr>
         </table>
