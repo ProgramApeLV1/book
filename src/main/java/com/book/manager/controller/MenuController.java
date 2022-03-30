@@ -1,4 +1,4 @@
-package com.book.controller.controller;
+package com.book.manager.controller;
 
 import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
@@ -25,12 +25,6 @@ public class MenuController extends BaseController {
 
     @Autowired
     private IMenuService menuService;
-
-    @RequestMapping(value = "getMenuTree")
-    @ResponseBody
-    public List<MenuTree> getMenuTree() {
-        return menuService.getMenuTree();
-    }
 
     @RequestMapping(value = "gotoBookInfoPage")
     public ModelAndView gotoBookInfoPage(ModelAndView modelAndView) {
@@ -74,6 +68,12 @@ public class MenuController extends BaseController {
         modelAndView.addObject("menu", menu);
         modelAndView.setViewName("/system/menuEdit");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "getMenuTree")
+    @ResponseBody
+    public List<MenuTree> getMenuTree() {
+        return menuService.getMenuTree();
     }
 
     @RequestMapping(value = "/getMenuInfoList", method = RequestMethod.POST)

@@ -1,13 +1,14 @@
 server:
-  port: 80
+  port: 8088
 
 #数据库连接池
 spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://localhost:3306/book?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
-    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/book_bak?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+#    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     filters: stat,wall,log4j
     maxActive: 20
     initialSize: 5
@@ -19,7 +20,7 @@ spring:
     testWhileIdle: true
     testOnBorrow: false
     testOnReturn: false
-    poolPreparedStatements: true
+    poolPreparedStatements: false
     maxOpenPreparedStatements: 20
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   redis:

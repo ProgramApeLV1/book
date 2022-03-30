@@ -8,7 +8,7 @@ import java.util.Date;
 
 public abstract class Context {
 
-    protected static ThreadLocal<JSONObject> context = ThreadLocal.withInitial(() -> new JSONObject());
+    protected static ThreadLocal<JSONObject> context = ThreadLocal.withInitial(JSONObject::new);
 
 
     /**

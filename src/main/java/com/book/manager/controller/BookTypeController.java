@@ -1,4 +1,4 @@
-package com.book.controller.controller;
+package com.book.manager.controller;
 
 
 import com.book.common.units.PageInfo;

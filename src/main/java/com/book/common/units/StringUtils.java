@@ -18,7 +18,7 @@ public class StringUtils extends org.springframework.util.StringUtils {
      * StringUtils.isBlank("12345") = false
      * StringUtils.isBlank(" 12345 ") = false
      * </pre>
-     * @param str the {@code CharSequence} to check (may be {@code null})
+     * @param cs the {@code CharSequence} to check (may be {@code null})
      * @return {@code true} if the {@code CharSequence} is not {@code null},
      * its length is greater than 0, and it does not contain whitespace only
      * @see Character#isWhitespace

@@ -1,4 +1,4 @@
-package com.book.controller.controller;
+package com.book.manager.controller;
 
 
 import com.book.common.base.BaseController;
@@ -8,12 +8,9 @@ import com.book.model.vo.UserVo;
 import com.book.service.IUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -38,7 +35,21 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping(value = "/getUserList", method = RequestMethod.POST)
+    @RequestMapping(value = "gotoUserInfoAddPage")
+    public ModelAndView gotoUserInfoAddPage(ModelAndView modelAndView) {
+        modelAndView.setViewName("/system/userAdd");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "gotoUserInfoEditPage")
+    public ModelAndView gotoUserInfoEditPage(ModelAndView modelAndView, Integer id) {
+        User user = userService.selectById(id);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/system/userEdit");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/getUserList")
     @ResponseBody
     public Object getUserList(Integer page, Integer rows, String userName) {
         PageInfo pageInfo = new PageInfo(page, rows);
@@ -49,13 +60,7 @@ public class UserController extends BaseController {
         return pageInfo;
     }
 
-    @RequestMapping(value = "gotoUserInfoAddPage")
-    public ModelAndView gotoUserInfoAddPage(ModelAndView modelAndView) {
-        modelAndView.setViewName("/system/userAdd");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @PostMapping(value = "/add")
     @ResponseBody
     public Object add(@RequestBody UserVo userVo) {
         User user = new User();
@@ -73,15 +78,7 @@ public class UserController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "gotoUserInfoEditPage")
-    public ModelAndView gotoUserInfoEditPage(ModelAndView modelAndView, Integer id) {
-        User user = userService.selectById(id);
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("/system/userEdit");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @PostMapping(value = "/edit")
     @ResponseBody
     public Object edit(@RequestBody User user) {
         try {
@@ -93,7 +90,7 @@ public class UserController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/deleteWorkById", method = RequestMethod.POST)
+    @PostMapping(value = "/deleteWorkById")
     @ResponseBody
     public Object deleteWorkById(Integer id) {
         try {
