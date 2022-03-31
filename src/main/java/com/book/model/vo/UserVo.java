@@ -8,6 +8,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -24,9 +25,9 @@ public class UserVo implements Serializable {
     /**
      * 主键id
      */
-    private Integer id;
+    private String id;
     /**
-     * 用户编码{系统级别：自动生成并且唯一,运用于云平台中}
+     * 用户编码
      */
     private String userCode;
     /**
@@ -86,5 +87,5 @@ public class UserVo implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private LocalDateTime createTime;
 }

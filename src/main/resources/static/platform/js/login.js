@@ -102,9 +102,14 @@ function submitForm() {
 }
 
 function loadFormSubmit() {
-    $.post("/loginCont/userLogin", serializeObject($('#loginForm')), function (data) {
+    let params = serializeObject($('#loginForm'));
+    params.password = md5(params.password);
+    $.post("/loginCont/userLogin", params, function (data) {
         if (data.result === 200) {
-            window.location.href = '/index';
+            if (data.data) {
+                loginSetStorage(data.data);
+                window.location.href = '/index';
+            }
         } else {
             $('#msg-err').html(data.message);
         }

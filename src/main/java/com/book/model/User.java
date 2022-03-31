@@ -1,6 +1,8 @@
 package com.book.model;
 
 import com.baomidou.mybatisplus.enums.IdType;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -29,8 +31,8 @@ public class User implements Serializable {
     /**
      * 主键id
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.UUID)
+    private String id;
     /**
      * 用户编码{系统级别：自动生成并且唯一,运用于云平台中}
      */
@@ -88,7 +90,7 @@ public class User implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /***
      * 用户对应的角色集合

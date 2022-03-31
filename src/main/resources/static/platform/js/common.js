@@ -171,3 +171,11 @@ function find (obj, key) {
     }
     return false;
 };
+
+function loginSetStorage(user) {
+    window.sessionStorage.setItem("user", JSON.stringify(user));
+}
+
+function logoutRemoveStorage() {
+    window.sessionStorage.removeItem("user");
+}

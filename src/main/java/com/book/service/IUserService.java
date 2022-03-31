@@ -3,6 +3,7 @@ package com.book.service;
 import com.book.common.units.PageInfo;
 import com.book.model.User;
 import com.baomidou.mybatisplus.service.IService;
+import com.book.model.vo.UserVo;
 
 /**
  * <p>
@@ -15,4 +16,6 @@ import com.baomidou.mybatisplus.service.IService;
 public interface IUserService extends IService<User> {
 
     void getUserList(PageInfo pageInfo);
+
+    void updatePwdByUserId(String userId, String password);
 }

@@ -18,6 +18,8 @@ public class PagePathConstant {
 
     public static final String USEREDIT = "/userEdit";
 
+    public static final String EDITPWD = "/editPwd";
+
     //系统菜单模块
     public static final String SYSTEM_MENU = "/system/menu";
 

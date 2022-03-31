@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <block name="common" th:replace="common/basePage :: commonHead('修改密码')"></block>
+    <script type="text/javascript" th:src="@{../../../platform/js/index.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+        var pwdEditPage = {};
+        $.extend(pwdEditPage, Page);
+
+        $(function () {
+            //加载父级菜单combobox
+            // Page.registerComboboxSelect("parentName", "/menuCont/getParentMenuList", "code", "name");
+        });
+
+        $.extend($.fn.validatebox.defaults.rules, {
+            confirmPass: {
+                validator: function(value, param){
+                    var pass = $(param[0]).passwordbox('getValue');
+                    return value === pass;
+                },
+                message: '两次输入的不同!'
+            },
+            confirmPassLen: {
+                validator: function(value, param){
+                    return value.length >= 6;
+                },
+                message: '密码长度至少为6位!'
+            }
+        })
+
+        //提交表单
+        function saveWin() {
+            progressLoad();
+            var isValid = $("#formEdit").form('validate');
+            if (!isValid) {
+                progressClose();
+                return false;
+            } else {
+                var data = serializeObject($("#formEdit"));
+                data.userId = getCurUserInfo().id;
+                data.password = md5(data.password);
+                data.newPassword = md5(data.newPassword);
+                $.ajax({
+                    url: baseHttpUrl + "userApi/updatePwdByUserId",
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify(data),
+                    type: 'POST',
+                    cache: false,
+                    dataType: "json",
+                    processData: false
+                }).done(function (res) {
+                    progressClose();
+                    if (res.result === 200) {
+                        parent.$.messager.alert('提示', res.message, 'info');
+                        logout();
+                    } else {
+                        parent.$.messager.alert('提示', res.message, 'info');
+                    }
+                });
+                return false;
+            }
+        }
+    </script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+<div id="mainTabs" class="easyui-panel" style="width: 100%;height: 100%;">
+    <form id="formEdit" method="post">
+        <table class="grid">
+            <tr>
+                <td>旧密码：</td>
+                <td><input name="password" class="easyui-passwordbox"
+                           validType="confirmPassLen"
+                           data-options="prompt:'请输入旧密码',width:180,required:true" iconWidth="28"></td>
+            </tr>
+            <tr>
+                <td>新密码：</td>
+                <td><input id="newPassword" name="newPassword" class="easyui-passwordbox"
+                           validType="confirmPassLen"
+                           data-options="prompt:'请输入新密码',width:180,required:true" iconWidth="28"></td>
+            </tr>
+            <tr>
+                <td>再输入新密码：</td>
+                <td><input name="newPassword_1" class="easyui-passwordbox"
+                           validType="confirmPass['#newPassword']"
+                           data-options="prompt:'请再输入一次',width:180,required:true" iconWidth="28"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>

@@ -10,6 +10,7 @@
         $(function () {
             $("#sex").combobox("setValue", user.sex);
             $("#userType").combobox("setValue", user.userType);
+            $("#status").combobox("setValue", user.status);
             //加载父级菜单combobox
             // Page.registerComboboxSelect("parentName", "/menuCont/getParentMenuList", "code", "name");
         });
@@ -54,25 +55,23 @@
             <tr hidden>
                 <td><input id="userCode" name="userCode" class="easyui-textbox" th:value="${user.userCode}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
-                <td><input id="status" name="status" class="easyui-textbox" th:value="${user.status}"
-                           data-options="prompt:'请输入',width:180,required:true"></td>
                 <td><input id="id" name="id" class="easyui-textbox" th:value="${user.id}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
             </tr>
             <tr>
                 <td>登陆名称：</td>
                 <td><input id="loginName" name="loginName" class="easyui-textbox" th:value="${user.loginName}"
-                           data-options="prompt:'请输入',width:180,required:true"></td>
+                           data-options="prompt:'请输入',width:180,required:true" disabled></td>
                 <td>用户名称：</td>
                 <td><input id="userName" name="userName" class="easyui-textbox" th:value="${user.userName}"
-                           data-options="prompt:'请输入',width:180,required:true"></td>
+                           data-options="prompt:'请输入',width:180,required:true" disabled></td>
             </tr>
             <tr>
                 <td>
                     <label>用户密码：</label>
                 </td>
-                <td><input id="password" name="password" class="easyui-textbox" th:value="${user.password}"
-                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td><input id="password" name="password" class="easyui-passwordbox" th:value="${user.password}"
+                           data-options="prompt:'请输入',width:180,required:true" iconWidth="28" disabled></td>
                 <td>职员工号：</td>
                 <td><input id="jobNumber" name="jobNumber" class="easyui-textbox" th:value="${user.jobNumber}"
                            data-options="prompt:'请输入',width:180,required:false"></td>
@@ -93,9 +92,9 @@
             </tr>
             <tr>
                 <td>用户电话：</td>
-                <td><input id="phone" name="phone" class="easyui-numberbox" th:value="${user.phone}"
+                <td><input id="phone" name="phone" class="easyui-textbox" th:value="${user.phone}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
-                <td>用户类型：</td>
+                <td>用户角色：</td>
                 <td>
                     <select id="userType" name="userType" class="easyui-combobox" style="width: 180px;"
                             panelHeight="auto"
@@ -103,6 +102,21 @@
                         <option value="root">管理员</option>
                         <option value="admin">系统管理员</option>
                         <option value="user">普通用户</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>身份证号：</td>
+                <td><input id="identity" name="identity" class="easyui-textbox" th:value="${user.identity}"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+                <td>用户状态：</td>
+                <td>
+                    <select id="status" name="status" class="easyui-combobox" style="width: 180px;"
+                            panelHeight="auto"
+                            data-options="prompt:'请选择',required:true,editable:false">
+                        <option value="0">失效</option>
+                        <option value="1">启用</option>
+                        <option value="2">禁用</option>
                     </select>
                 </td>
             </tr>

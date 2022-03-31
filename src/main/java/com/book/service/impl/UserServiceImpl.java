@@ -2,6 +2,7 @@ package com.book.service.impl;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.book.common.units.PageInfo;
+import com.book.common.units.StringUtil;
 import com.book.model.User;
 import com.book.mapper.UserMapper;
 import com.book.model.vo.UserVo;
@@ -10,7 +11,9 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -30,7 +33,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public void getUserList(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
         List<UserVo> list = userMapper.getUserList(page, pageInfo.getCondition());
+        list = list.stream().map(userVo -> {
+            String phone = StringUtil.phoneCutEncrypt(userVo.getPhone());
+            String identity = StringUtil.identityCutEncrypt(userVo.getIdentity());
+            userVo.setPhone(phone);
+            userVo.setIdentity(identity);
+            return userVo;
+        }).collect(Collectors.toCollection(ArrayList::new));
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
+    }
+
+    @Override
+    public void updatePwdByUserId(String userId, String password) {
+        userMapper.updatePwdByUserId(userId, password);
     }
 }

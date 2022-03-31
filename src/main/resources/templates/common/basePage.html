@@ -22,12 +22,19 @@
     <script type="text/javascript" th:src="@{../../platform/js/extJs.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{../../platform/js/common.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{../../platform/js/controller.js}" charset="utf-8"></script>
+    <!--    MD5引入-->
+    <script type="text/javascript" th:src="@{../../md5.min.js}" charset="utf-8"></script>
     <script type="text/javascript" th:inline="javascript">
         //接口请求根路径
         var baseHttpUrl = [[${#httpServletRequest.getScheme()+'://'
         				+#httpServletRequest.getServerName()+ ':'
         				+ #request.getServerPort()
         				+ #request.getContextPath()}]] + '/';
+
+        function getCurUserInfo() {
+            const user = window.sessionStorage.getItem("user");
+            return JSON.parse(user);
+        }
     </script>
     <style>
         .td_label_right {

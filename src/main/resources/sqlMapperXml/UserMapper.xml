@@ -7,7 +7,11 @@
         id, userCode, loginName, userName, password, workDutyCode, identity, deptCode, jobNumber, sex, age, phone, userType, status, createTime
     </sql>
 
-    <select id="getUserList" resultType="UserVo">
+    <update id="updatePwdByUserId">
+        UPDATE os_user SET `password` = #{password} WHERE id = #{id}
+    </update>
+
+    <select id="getUserList" resultType="com.book.model.vo.UserVo">
         SELECT
         t.id,
         t.userCode,

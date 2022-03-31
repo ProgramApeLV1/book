@@ -1304,6 +1304,14 @@ public class StringUtil {
 		}
 		return n_str;
 	}
+
+	public static String phoneCutEncrypt(String phone){
+		return phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+	}
+
+	public static String identityCutEncrypt(String identity){
+		return identity.replaceAll("(\\d{4})\\d{10}(\\d{4})", "$1**********$2");
+	}
 	
  	public static void main(String[] args) {
 // 		new SimpleDateFormat("yyyy-MM-dd HH:00:00").format(new Date()); 

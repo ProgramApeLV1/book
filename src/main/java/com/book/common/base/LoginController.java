@@ -1,11 +1,13 @@
 package com.book.common.base;
 
 import com.book.common.base.BaseController;
+import com.book.common.units.StringUtil;
 import com.book.model.User;
 import com.book.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,17 +38,19 @@ public class LoginController extends BaseController {
         for (User user : userList) {
             userMap.put(user.getLoginName(), user);
         }
-        if (userMap.containsKey(loginName.trim())) {
-            String pwd = userMap.get(loginName).getPassword().trim();
-            if (password.trim().equals(pwd)) {
-
-            } else {
-                return responseError("密码错误");
-            }
-        } else {
+        if (!userMap.containsKey(loginName.trim())) {
             return responseError("该用户不存在");
         }
-        return responseSuccess("登录成功");
+        //二次md5加密
+        password = DigestUtils.md5DigestAsHex(password.getBytes());
+        String pwd = userMap.get(loginName).getPassword();
+        if (!password.equals(pwd)) {
+            return responseError("密码错误");
+        }
+        User user = userMap.get(loginName);
+        user.setPhone(StringUtil.phoneCutEncrypt(user.getPhone()));
+        user.setIdentity(StringUtil.identityCutEncrypt(user.getIdentity()));
+        return responseSuccess("登录成功", user);
     }
 
     /**

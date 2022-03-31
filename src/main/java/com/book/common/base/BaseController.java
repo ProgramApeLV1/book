@@ -159,7 +159,6 @@ public class BaseController implements Serializable {
     /**
      * ajax失败
      *
-     * @param msg 失败的消息
      * @return {Object}
      */
     public Object renderError() {
@@ -225,18 +224,30 @@ public class BaseController implements Serializable {
         ResponseJson rJson = new ResponseJson();
         rJson.setResult(result);
         rJson.setMessage(message);
-        rJson.setObject(object);
+        rJson.setData(object);
         return rJson;
     }
 
     /***
-     * @param  object 返回给客户端的对象
+     * @param  message 返回给客户端的对象
      * ***/
     public Object responseSuccess(String message) {
         ResponseJson rJson = new ResponseJson();
         rJson.setResult(200);
         rJson.setMessage(message);
-        rJson.setObject(message);
+        rJson.setData(null);
+        return rJson;
+    }
+
+    /***
+     * @param  message 返回给客户端的对象
+     * @param object 返回值
+     * ***/
+    public Object responseSuccess(String message, Object object) {
+        ResponseJson rJson = new ResponseJson();
+        rJson.setResult(200);
+        rJson.setMessage(message);
+        rJson.setData(object);
         return rJson;
     }
 
@@ -247,7 +258,7 @@ public class BaseController implements Serializable {
         ResponseJson rJson = new ResponseJson();
         rJson.setResult(500);
         rJson.setMessage(message);
-        rJson.setObject(null);
+        rJson.setData(null);
         return rJson;
     }
 }

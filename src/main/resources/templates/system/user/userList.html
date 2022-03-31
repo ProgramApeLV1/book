@@ -11,7 +11,7 @@
             //调用公用类加载datagrid
             userPage.dataGrid = Page.registerDataGrid("tableList", 'userApi/getUserList', "toolbar", {});
             userPage.registerEvent($("#add")[0], "click", function () {
-                userPage.registerWindowDialog(userPage.dataGrid, "addWin", "新增", 'userCont/gotoUserInfoAddPage', 50 + '%', 40 + '%');
+                userPage.registerWindowDialog(userPage.dataGrid, "addWin", "新增", 'userCont/gotoUserInfoAddPage', 50 + '%', 50 + '%');
             });
             userPage.registerEvent($("#find")[0], "click", function () {
                 userPage.dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
@@ -37,7 +37,7 @@
         }
 
         function editById(id) {
-            Page.registerWindowDialog(userPage.dataGrid, "editWin", "编辑", 'userCont/gotoUserInfoEditPage?id=' + id, 50 + '%', 40 + '%');
+            Page.registerWindowDialog(userPage.dataGrid, "editWin", "编辑", 'userCont/gotoUserInfoEditPage?id=' + id, 50 + '%', 50 + '%');
         }
 
         //详情框方法start
@@ -99,8 +99,8 @@
             <th field="userName" align="center" width="10%" data-options="halign:'center'"
                 formatter="userPage.moreInfoFormatter">用户名称
             </th>
-            <th field="password" align="center" width="10%" data-options="halign:'center'"
-                formatter="userPage.moreInfoFormatter">用户密码
+            <th field="identity" align="center" width="10%" data-options="halign:'center'"
+                formatter="userPage.moreInfoFormatter">身份证号
             </th>
             <th field="jobNumber" align="center" width="10%" data-options="halign:'center'"
                 formatter="userPage.moreInfoFormatter">用户工号
@@ -115,7 +115,7 @@
                 formatter="userPage.moreInfoFormatter">联系电话
             </th>
             <th field="userType" align="center" width="6%" data-options="halign:'center'"
-                formatter="userPage.moreInfoFormatter">用户类型
+                formatter="userPage.moreInfoFormatter">用户角色
             </th>
             <th field="statusName" align="center" width="10%" data-options="halign:'center'"
                 formatter="userPage.moreInfoFormatter">状态

@@ -174,3 +174,17 @@ function tabClose(){
 		return false;
 	});
 }
+
+function logoutModal() {
+	$.messager.defaults = {ok: "确定", cancel: "取消", width: 300};
+	$.messager.confirm('提示', '确定要退出?', function (r) {
+		if (r) {
+			logout();
+		}
+	});
+}
+
+function logout() {
+	logoutRemoveStorage();
+	window.location.href = '/';
+}
