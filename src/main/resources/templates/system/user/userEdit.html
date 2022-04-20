@@ -24,25 +24,40 @@
                 return false;
             } else {
                 var data = serializeObject($("#formEdit"));
-                $.ajax({
-                    url: baseHttpUrl + "userApi/edit",
-                    contentType: 'application/json; charset=UTF-8',
-                    data: JSON.stringify(data),
-                    type: 'POST',
-                    cache: false,
-                    dataType: "json",
-                    processData: false
-                }).done(function (res) {
+                jrequest.post(
+                    baseHttpUrl + "userApi/edit",
+                    JSON.stringify(data),
+                    "application/json; charset=UTF-8"
+                ).then(res => {
                     progressClose();
-                    if (res.result == 200) {
-                        parent.$.messager.alert('提示', res.message, 'info');
+                    if (res.data.result === 200) {
+                        parent.$.messager.alert('提示', res.data.message, 'info');
                         parent.Page.refreshDataGrid(window.parentPanelDataGrid);
                         parent.Page.closeDialog(window.parentPanelDivId);
 
                     } else {
-                        parent.$.messager.alert('提示', res.message, 'info');
+                        parent.$.messager.alert('提示', res.data.message, 'info');
                     }
                 });
+                // $.ajax({
+                //     url: baseHttpUrl + "userApi/edit",
+                //     contentType: 'application/json; charset=UTF-8',
+                //     data: JSON.stringify(data),
+                //     type: 'POST',
+                //     cache: false,
+                //     dataType: "json",
+                //     processData: false
+                // }).done(function (res) {
+                //     progressClose();
+                //     if (res.result == 200) {
+                //         parent.$.messager.alert('提示', res.message, 'info');
+                //         parent.Page.refreshDataGrid(window.parentPanelDataGrid);
+                //         parent.Page.closeDialog(window.parentPanelDivId);
+                //
+                //     } else {
+                //         parent.$.messager.alert('提示', res.message, 'info');
+                //     }
+                // });
                 return false;
             }
         }

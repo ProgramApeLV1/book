@@ -23,7 +23,7 @@ public class MenuController extends BaseController {
     @Autowired
     private IMenuService menuService;
 
-    @PostMapping(value = "getMenuTree")
+    @GetMapping(value = "getMenuTree")
     public List<MenuTree> getMenuTree() throws Exception {
         return menuService.getMenuTree();
     }

@@ -231,12 +231,12 @@ var Page = {
             .dialog(
                 {
                     content: "<iframe name='"
-                    + divId
-                    + "_iframe' id='"
-                    + divId
-                    + "_iframe'  src='"
-                    + url
-                    + "' width='100%' height='98%' frameborder='0' scrolling='auto'></iframe>",
+                        + divId
+                        + "_iframe' id='"
+                        + divId
+                        + "_iframe'  src='"
+                        + url
+                        + "' width='100%' height='98%' frameborder='0' scrolling='auto'></iframe>",
                     title: title,
                     width: w,
                     height: h,
@@ -268,18 +268,31 @@ var Page = {
                         //确定
                         var type = "0";
                         progressLoad();
-                        $.post(baseHttpUrl + checkTaskUrl, {
-                                taskId: taskId, businessCode: businessCode,
-                                type: type, remark: obj.remarkStr
-                            },
-                            function (data) {
-                                progressClose();
-                                if (data.result == 200) {
-                                    $(document.getElementById("myTaskTable")).find("a[taskId='" + taskId + "']").parent().remove();
-                                    $.messager.alert('提示', data.message, 'info');
-                                }
-                                $('#' + divId).dialog('close');
-                            }, 'JSON');
+                        jrequest.post(baseHttpUrl + checkTaskUrl, {
+                            taskId: taskId,
+                            businessCode: businessCode,
+                            type: type,
+                            remark: obj.remarkStr
+                        }).then(res => {
+                            progressClose();
+                            if (res.data.result === 200) {
+                                $(document.getElementById("myTaskTable")).find("a[taskId='" + taskId + "']").parent().remove();
+                                $.messager.alert('提示', res.data.message, 'info');
+                            }
+                            $('#' + divId).dialog('close');
+                        })
+                        // $.post(baseHttpUrl + checkTaskUrl, {
+                        //         taskId: taskId, businessCode: businessCode,
+                        //         type: type, remark: obj.remarkStr
+                        //     },
+                        //     function (data) {
+                        //         progressClose();
+                        //         if (data.result == 200) {
+                        //             $(document.getElementById("myTaskTable")).find("a[taskId='" + taskId + "']").parent().remove();
+                        //             $.messager.alert('提示', data.message, 'info');
+                        //         }
+                        //         $('#' + divId).dialog('close');
+                        //     }, 'JSON');
                     });
                     $(obj).parent().find(".l-btn-small").eq(1).on("click", function () {
                         //取消
@@ -300,26 +313,48 @@ var Page = {
                     //确定
                     var type = "1";
                     progressLoad();
-                    $.post(baseHttpUrl + checkTaskUrl, {
-                            taskId: taskId, businessCode: businessCode,
-                            type: type, remark: obj.remarkStr, titleName: titleName
-                        },
-                        function (data) {
-                            progressClose();
-                            if (data.result == 200) {
-                                $(document.getElementById("myTaskTable")).find("a[taskId='" + taskId + "']").parent().remove();
-                                $.messager.alert('提示', data.message, 'info');
-                                $('#' + divId).dialog('close');
-                            }
-                            if (data.result == 500) {
-                                $.messager.alert('提示', data.message, 'info');
-                                return false;
-                            }
-                            if (data.result == 400) {
-                                //这例为个人领料审核时使用，如有问题可群里询问，请勿私自删除
-                                Page.passSecondWin('secondWin', divId, taskId, obj.remarkStr, checkTaskUrl, businessCode, titleName, '询问', '批复数量未修改，您是否通过?');
-                            }
-                        }, 'JSON');
+                    jrequest.post(baseHttpUrl + checkTaskUrl, {
+                        taskId: taskId,
+                        businessCode: businessCode,
+                        type: type,
+                        remark: obj.remarkStr,
+                        titleName: titleName
+                    }).then(res => {
+                        progressClose();
+                        if (res.data.result === 200) {
+                            $(document.getElementById("myTaskTable")).find("a[taskId='" + taskId + "']").parent().remove();
+                            $.messager.alert('提示', res.data.message, 'info');
+                            $('#' + divId).dialog('close');
+                        }
+                        if (res.data.result === 500) {
+                            $.messager.alert('提示', res.data.message, 'info');
+                            return false;
+                        }
+                        if (res.data.result === 400) {
+                            //这例为个人领料审核时使用，如有问题可群里询问，请勿私自删除
+                            Page.passSecondWin('secondWin', divId, taskId, obj.remarkStr, checkTaskUrl, businessCode, titleName, '询问', '批复数量未修改，您是否通过?');
+                        }
+                    })
+                    // $.post(baseHttpUrl + checkTaskUrl, {
+                    //         taskId: taskId, businessCode: businessCode,
+                    //         type: type, remark: obj.remarkStr, titleName: titleName
+                    //     },
+                    //     function (data) {
+                    //         progressClose();
+                    //         if (data.result === 200) {
+                    //             $(document.getElementById("myTaskTable")).find("a[taskId='" + taskId + "']").parent().remove();
+                    //             $.messager.alert('提示', data.message, 'info');
+                    //             $('#' + divId).dialog('close');
+                    //         }
+                    //         if (data.result == 500) {
+                    //             $.messager.alert('提示', data.message, 'info');
+                    //             return false;
+                    //         }
+                    //         if (data.result == 400) {
+                    //             //这例为个人领料审核时使用，如有问题可群里询问，请勿私自删除
+                    //             Page.passSecondWin('secondWin', divId, taskId, obj.remarkStr, checkTaskUrl, businessCode, titleName, '询问', '批复数量未修改，您是否通过?');
+                    //         }
+                    //     }, 'JSON');
                 });
                 $(obj).parent().find(".l-btn-small").eq(1).on("click", function () {
                     //取消
@@ -403,24 +438,43 @@ var Page = {
         parent.$.messager.confirm(title, info, function (b) {
             if (b) {
                 progressLoad();
-                $.post(baseHttpUrl + url, paramMap, function (date) {
-                    progressClose();
-                    if (date.result == 200) {
-                        parent.$.messager.alert('提示', date.message, 'info');
-                        //这里主要是为了执行操作后刷新界面
-                        dateGrid.datagrid("load", args);
-                        if (status == "Y") {
-                            parent.refreshGrid();
+                jrequest.post(baseHttpUrl + url, paramMap)
+                    .then(res=>{
+                        progressClose();
+                        if (res.data.result === 200) {
+                            parent.$.messager.alert('提示', res.data.message, 'info');
+                            //这里主要是为了执行操作后刷新界面
+                            dateGrid.datagrid("load", args);
+                            if (status === "Y") {
+                                parent.refreshGrid();
+                            }
+                        } else {
+                            parent.$.messager.alert('提示', res.data.message, 'info');
+                            //这里主要是为了执行操作后刷新界面
+                            dateGrid.datagrid("load", args);
+                            if (status === "Y") {
+                                parent.refreshGrid();
+                            }
                         }
-                    } else {
-                        parent.$.messager.alert('提示', date.message, 'info');
-                        //这里主要是为了执行操作后刷新界面
-                        dateGrid.datagrid("load", args);
-                        if (status == "Y") {
-                            parent.refreshGrid();
-                        }
-                    }
-                }, 'JSON')
+                    });
+                // $.post(baseHttpUrl + url, paramMap, function (date) {
+                //     progressClose();
+                //     if (date.result == 200) {
+                //         parent.$.messager.alert('提示', date.message, 'info');
+                //         //这里主要是为了执行操作后刷新界面
+                //         dateGrid.datagrid("load", args);
+                //         if (status == "Y") {
+                //             parent.refreshGrid();
+                //         }
+                //     } else {
+                //         parent.$.messager.alert('提示', date.message, 'info');
+                //         //这里主要是为了执行操作后刷新界面
+                //         dateGrid.datagrid("load", args);
+                //         if (status == "Y") {
+                //             parent.refreshGrid();
+                //         }
+                //     }
+                // }, 'JSON')
             }
         });
     },

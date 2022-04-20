@@ -104,16 +104,26 @@ function submitForm() {
 function loadFormSubmit() {
     let params = serializeObject($('#loginForm'));
     params.password = md5(params.password);
-    $.post("/loginCont/userLogin", params, function (data) {
-        if (data.result === 200) {
-            if (data.data) {
-                loginSetStorage(data.data);
+    // $.post("/loginCont/userLogin", params, function (data) {
+    //     if (data.result === 200) {
+    //         if (data.data) {
+    //             loginSetCache(data.data);
+    //             window.location.href = '/index';
+    //         }
+    //     } else {
+    //         $('#msg-err').html(data.message);
+    //     }
+    // }, "JSON");
+    jrequest.post(baseHttpUrl + "loginCont/userLogin", params).then(res => {
+        if (res.data.result === 200) {
+            if (res.data.data) {
+                loginSetCache(res.data.data);
                 window.location.href = '/index';
             }
         } else {
-            $('#msg-err').html(data.message);
+            $('#msg-err').html(res.data.message);
         }
-    }, "JSON");
+    });
 }
 
 function hintMsg(id, msg) {

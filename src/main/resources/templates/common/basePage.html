@@ -17,10 +17,13 @@
     <link rel="stylesheet" type="text/css" th:href="@{../../platform/style/base.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{../../platform/style/login.css}"/>
     <script type="text/javascript" th:src="@{../../jquery/jquery.min.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../jquery/jquery.cookie-1.4.1.min.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{../../easyui/1.5.5/jquery.easyui.min.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{../../easyui/1.5.5/locale/easyui-lang-zh_CN.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{../../platform/js/extJs.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{../../platform/js/common.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../platform/js/CookieUtils.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{../../platform/js/request.js}" charset="utf-8"></script>
     <script type="text/javascript" th:src="@{../../platform/js/controller.js}" charset="utf-8"></script>
     <!--    MD5引入-->
     <script type="text/javascript" th:src="@{../../md5.min.js}" charset="utf-8"></script>
@@ -32,7 +35,7 @@
         				+ #request.getContextPath()}]] + '/';
 
         function getCurUserInfo() {
-            const user = window.sessionStorage.getItem("user");
+            const user = docCookies.getItem(USER_COOKIE_KEY);
             return JSON.parse(user);
         }
     </script>
