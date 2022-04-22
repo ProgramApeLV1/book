@@ -12,14 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.book.common.base.Constant.ACTION_ERROR;
-import static com.book.common.base.Constant.ACTION_SUCCESS;
-
 @Controller
 @RequestMapping("/menuCont")
 public class MenuPageController extends BaseController {

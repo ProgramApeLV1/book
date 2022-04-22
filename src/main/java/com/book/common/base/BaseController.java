@@ -1,6 +1,6 @@
 package com.book.common.base;
 
-import com.book.common.units.Result;
+import com.book.common.units.RedisClient;
 import com.book.common.units.ResponseJson;
 import com.book.model.User;
 import com.book.service.IUserService;
@@ -40,7 +40,10 @@ public class BaseController implements Serializable {
     private static ThreadLocal<HttpSession> currentSession = new ThreadLocal<HttpSession>();
 
     @Autowired
-    private IUserService userService;
+    protected IUserService userService;
+
+    @Autowired
+    protected RedisClient redisClient;
 
     /**
      * 线程安全初始化request，respose,session对象
@@ -117,96 +120,6 @@ public class BaseController implements Serializable {
 
     }
 
-    /**
-     * http 成功  m1
-     *
-     * @return
-     */
-    public Object renderSuccess(String msg, Object obj) {
-        Result result = new Result();
-        result.setSuccess(true);
-        result.setMsg(msg);
-        result.setObj(obj);
-        return result;
-    }
-
-    /**
-     * http 失败 m1
-     *
-     * @return
-     */
-    public Object renderError(String msg, Object obj) {
-        Result result = new Result();
-        result.setSuccess(false);
-        result.setMsg(msg);
-        result.setObj(obj);
-        return result;
-    }
-
-
-    /**
-     * ajax成功
-     *
-     * @return {Object}
-     */
-    public Object renderSuccess() {
-        Result result = new Result();
-        result.setSuccess(true);
-        return result;
-    }
-
-
-    /**
-     * ajax失败
-     *
-     * @return {Object}
-     */
-    public Object renderError() {
-        Result result = new Result();
-        result.setSuccess(false);
-        return result;
-    }
-
-
-    /**
-     * ajax成功
-     *
-     * @param msg 消息
-     * @return {Object}
-     */
-    public Object renderSuccess(String msg) {
-        Result result = new Result();
-        result.setSuccess(true);
-        result.setMsg(msg);
-        return result;
-    }
-
-    /**
-     * ajax失败
-     *
-     * @param msg 消息
-     * @return {Object}
-     */
-    public Object renderError(String msg) {
-        Result result = new Result();
-        result.setSuccess(false);
-        result.setMsg(msg);
-        return result;
-    }
-
-    /**
-     * ajax成功
-     *
-     * @param obj 成功时的对象
-     * @return {Object}
-     */
-    public Object renderSuccess(Object obj) {
-        Result result = new Result();
-        result.setSuccess(true);
-        result.setObj(obj);
-        return result;
-    }
-
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) {
         /**
@@ -220,7 +133,7 @@ public class BaseController implements Serializable {
      * @param  message 提示语
      * @param  object 返回给客户端的对象
      * ***/
-    public Object responseJson(Integer result, String message, Object object) {
+    public ResponseJson responseJson(Integer result, String message, Object object) {
         ResponseJson rJson = new ResponseJson();
         rJson.setResult(result);
         rJson.setMessage(message);
@@ -229,11 +142,21 @@ public class BaseController implements Serializable {
     }
 
     /***
+     * ***/
+    public ResponseJson responseSuccess() {
+        ResponseJson rJson = new ResponseJson();
+        rJson.setResult(ApiCode.SUCCESS.getCode());
+        rJson.setMessage(ApiCode.SUCCESS.getMessage());
+        rJson.setData(null);
+        return rJson;
+    }
+
+    /***
      * @param  message 返回给客户端的对象
      * ***/
-    public Object responseSuccess(String message) {
+    public ResponseJson responseSuccess(String message) {
         ResponseJson rJson = new ResponseJson();
-        rJson.setResult(200);
+        rJson.setResult(ApiCode.SUCCESS.getCode());
         rJson.setMessage(message);
         rJson.setData(null);
         return rJson;
@@ -243,21 +166,26 @@ public class BaseController implements Serializable {
      * @param  message 返回给客户端的对象
      * @param object 返回值
      * ***/
-    public Object responseSuccess(String message, Object object) {
+    public ResponseJson responseSuccess(String message, Object object) {
         ResponseJson rJson = new ResponseJson();
-        rJson.setResult(200);
+        rJson.setResult(ApiCode.SUCCESS.getCode());
         rJson.setMessage(message);
         rJson.setData(object);
         return rJson;
     }
 
-    /***
-     * @param  message 返回给客户端的错误提示信息
-     * ***/
-    public Object responseError(String message) {
+    public ResponseJson responseError(String message) {
         ResponseJson rJson = new ResponseJson();
-        rJson.setResult(500);
+        rJson.setResult(ApiCode.REQUEST_ERROR.getCode());
         rJson.setMessage(message);
+        rJson.setData(null);
+        return rJson;
+    }
+
+    public ResponseJson responseError() {
+        ResponseJson rJson = new ResponseJson();
+        rJson.setResult(ApiCode.REQUEST_ERROR.getCode());
+        rJson.setMessage(ApiCode.REQUEST_ERROR.getMessage());
         rJson.setData(null);
         return rJson;
     }

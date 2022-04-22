@@ -24,17 +24,17 @@ spring:
     maxOpenPreparedStatements: 20
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
   redis:
-    database: 0
     host: 127.0.0.1
     port: 6379
     password:
+    database: 0
+    timeout: 3000
     jedis:
       pool:
         max-active: 8
         max-wait: -1
         max-idle: 500
         min-idle: 0
-    timeout: 1000
 resources:
   chain.strategy.content.enabled: true
   chain.strategy.content.paths: /*

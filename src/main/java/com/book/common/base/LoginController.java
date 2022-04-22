@@ -1,32 +1,45 @@
 package com.book.common.base;
 
-import com.book.common.base.BaseController;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
+import com.alibaba.fastjson.JSON;
+import com.book.common.units.CookieUtils;
+import com.book.common.units.ResponseJson;
 import com.book.common.units.StringUtil;
 import com.book.model.User;
-import com.book.service.IUserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+@Slf4j
 @Controller
 @RequestMapping("/loginCont")
 public class LoginController extends BaseController {
 
-    @Autowired
-    private IUserService userService;
+    private LineCaptcha lineCaptcha;
 
-    @RequestMapping(value = "userLogin", method = RequestMethod.POST)
+    @PostMapping(value = "userLogin")
     @ResponseBody
-    private Object userLogin(String loginName, String password) {
+    private ResponseJson userLogin(
+            HttpServletResponse response,
+            @RequestParam String loginName,
+            @RequestParam String password
+    ) throws Exception {
         if (StringUtils.isBlank(loginName)) {
             return responseSuccess("账号不能为空");
         }
@@ -50,6 +63,10 @@ public class LoginController extends BaseController {
         User user = userMap.get(loginName);
         user.setPhone(StringUtil.phoneCutEncrypt(user.getPhone()));
         user.setIdentity(StringUtil.identityCutEncrypt(user.getIdentity()));
+        // 将登录的用户信息存入缓存
+        String token = UUID.randomUUID().toString().replaceAll("-", "");
+        redisClient.set(token, JSON.toJSONString(user), 30 * 60);
+        CookieUtils.addCookie(response, "token", token, 30 * 60);
         return responseSuccess("登录成功", user);
     }
 
@@ -58,10 +75,34 @@ public class LoginController extends BaseController {
      * @author: wangyh
      * @time: 2018-07-03 10:28:59
      */
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     public ModelAndView logout(ModelAndView model) {
 //    	request().getSession(false).removeAttribute(Constant.X_USER_SESSION);
         model.setViewName("login");
         return model;
+    }
+
+    @GetMapping("/getVeriCodeImg")
+    public void getVeriCodeImg(HttpServletResponse response, HttpSession session) {
+        // 随机生成 4 位验证码
+        RandomGenerator randomGenerator = new RandomGenerator("0123456789", 4);
+        // 定义图片的显示大小
+        lineCaptcha = CaptchaUtil.createLineCaptcha(100, 30);
+        response.setContentType("image/jpeg");
+        response.setHeader("Pragma", "No-cache");
+        PrintWriter out = null;
+        try {
+            // 调用父类的 setGenerator() 方法，设置验证码的类型
+            lineCaptcha.setGenerator(randomGenerator);
+            // 输出到页面
+            lineCaptcha.write(response.getOutputStream());
+            // 打印日志
+            log.info("生成的验证码:{}", lineCaptcha.getCode());
+            // 关闭流
+            response.getOutputStream().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        return responseSuccess("生成验证码图片成功!");
     }
 }

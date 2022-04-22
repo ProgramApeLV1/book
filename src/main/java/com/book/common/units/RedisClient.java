@@ -1,14 +1,11 @@
 package com.book.common.units;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
@@ -21,204 +18,170 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisClient {
 
+    // @Autowired
+//    private RedisTemplate<String, Object> redisTemplate;
+
     @Autowired
-    private RedisTemplate<String, ?> redisTemplate;
+    private StringRedisTemplate redisTemplate;
 
-    public boolean set(final String key, final String value) {
-        boolean result = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            connection.set(serializer.serialize(key), serializer.serialize(value));
-            return true;
-        });
-        return result;
-    }
+    // Key（键），简单的key-value操作
 
-    public boolean set(final String key, final Object bean) {
-        final String value = JSON.toJSONString(bean);
-        boolean result = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            connection.set(serializer.serialize(key), serializer.serialize(value));
-            return true;
-        });
-        return result;
-    }
-
-    public boolean set(final String key, final Object bean, final long liveTime) {
-        final String value = JSON.toJSONString(bean);
-        boolean result = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            connection.set(serializer.serialize(key), serializer.serialize(value));
-            connection.expire(serializer.serialize(key), liveTime);
-            return true;
-        });
-        return result;
-    }
-
-    public boolean set(final String key, final String value, final long liveTime) {
-        boolean result = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            connection.set(serializer.serialize(key), serializer.serialize(value));
-            connection.expire(serializer.serialize(key), liveTime);
-            return true;
-        });
-        return result;
-    }
-
-    public boolean setNX(final String key, final String value) {
-        boolean result = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            Boolean aBoolean = connection.setNX(serializer.serialize(key), serializer.serialize(value));
-            connection.close();
-            return aBoolean;
-        });
-        return result;
-    }
-
-    public boolean setNX(final String key, final String value, final long liveTime) {
-        boolean result = redisTemplate.execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            Boolean aBoolean = connection.setNX(serializer.serialize(key), serializer.serialize(value));
-            connection.expire(serializer.serialize(key), liveTime);
-            connection.close();
-            return aBoolean;
-        });
-        return result;
-    }
-
-    public String get(final String key) {
-        String result = redisTemplate.execute((RedisCallback<String>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            byte[] value = connection.get(serializer.serialize(key));
-            return serializer.deserialize(value);
-        });
-        return result;
-    }
-
-    public String getSet(final String key, final String value) {
-        String result = redisTemplate.execute((RedisCallback<String>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            byte[] ret = connection.getSet(serializer.serialize(key),serializer.serialize(value));
-            return serializer.deserialize(ret);
-        });
-        return result;
-    }
-
-    public void remove(final String key) {
-        redisTemplate.delete(key);
-    }
-
-    public <T> T get(final String key, final Class<T> clazz) {
-        String result = redisTemplate.execute((RedisCallback<String>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            byte[] value = connection.get(serializer.serialize(key));
-            return serializer.deserialize(value);
-        });
-        return JSON.parseObject(result, clazz);
-    }
-
-    public boolean expire(final String key, long liveTime) {
-        return redisTemplate.expire(key, liveTime, TimeUnit.SECONDS);
-    }
-
-    public boolean exists(final String key) {
-        return redisTemplate.hasKey(key);
-    }
-
-    public long getExpireTime(final String key){
+    /**
+     * 实现命令：TTL key，以秒为单位，返回给定 key的剩余生存时间(TTL, time to live)。
+     *
+     * @param key
+     * @return
+     */
+    public long ttl(String key) {
         return redisTemplate.getExpire(key);
     }
 
-    public <T> boolean setList(String key, List<T> list) {
-        String value = JSONObject.toJSONString(list);
-        return set(key, value);
+    /**
+     * 实现命令：expire 设置过期时间，单位秒
+     *
+     * @param key
+     * @return
+     */
+    public void expire(String key, long timeout) {
+        redisTemplate.expire(key, timeout, TimeUnit.SECONDS);
     }
 
-    public <T> List<T> getList(String key, Class<T> clz) {
-        String json = get(key);
-        if (json != null) {
-            List<T> list = JSONObject.parseArray(json, clz);
-            return list;
-        }
-        return null;
+    /**
+     * 实现命令：INCR key，增加key一次
+     *
+     * @param key
+     * @return
+     */
+    public long incr(String key, long delta) {
+        return redisTemplate.opsForValue().increment(key, delta);
     }
 
-    public long lpush(final String key, Object obj) {
-        final String value = JSONObject.toJSONString(obj);
-        long result = redisTemplate.execute((RedisCallback<Long>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            long count = connection.lPush(serializer.serialize(key), serializer.serialize(value));
-            return count;
-        });
-        return result;
-    }
-    public long lpush(final String key, String obj) {
-        final String value = obj;
-        long result = redisTemplate.execute((RedisCallback<Long>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            long count = connection.lPush(serializer.serialize(key), serializer.serialize(value));
-            return count;
-        });
-        return result;
+    /**
+     * 实现命令：KEYS pattern，查找所有符合给定模式 pattern的 key
+     */
+    public Set<String> keys(String pattern) {
+        return redisTemplate.keys(pattern);
     }
 
-    public long lpush(final String key, String obj, final long liveTime) {
-        final String value = obj;
-        long result = redisTemplate.execute((RedisCallback<Long>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            long count = connection.lPush(serializer.serialize(key), serializer.serialize(value));
-            connection.expire(serializer.serialize(key), liveTime);
-            return count;
-        });
-        return result;
+    /**
+     * 实现命令：DEL key，删除一个key
+     *
+     * @param key
+     */
+    public void del(String key) {
+        redisTemplate.delete(key);
     }
 
-    public long lpush(final String key, Object obj, final long liveTime) {
-        final String value = JSONObject.toJSONString(obj);
-        long result = redisTemplate.execute((RedisCallback<Long>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            long count = connection.lPush(serializer.serialize(key), serializer.serialize(value));
-            connection.expire(serializer.serialize(key), liveTime);
-            return count;
-        });
-        return result;
+    // String（字符串）
+
+    /**
+     * 实现命令：SET key value，设置一个key-value（将字符串值 value关联到 key）
+     *
+     * @param key
+     * @param value
+     */
+    public void set(String key, String value) {
+        redisTemplate.opsForValue().set(key, value);
     }
 
-    public long rpush(final String key, Object obj) {
-        final String value = JSONObject.toJSONString(obj);
-        long result = redisTemplate.execute((RedisCallback<Long>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            long count = connection.rPush(serializer.serialize(key), serializer.serialize(value));
-            return count;
-        });
-        return result;
+    /**
+     * 实现命令：SET key value EX seconds，设置key-value和超时时间（秒）
+     *
+     * @param key
+     * @param value
+     * @param timeout
+     *            （以秒为单位）
+     */
+    public void set(String key, String value, long timeout) {
+        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
     }
 
-    public long rpush(final String key, Object obj, final long liveTime) {
-        final String value = JSONObject.toJSONString(obj);
-        long result = redisTemplate.execute((RedisCallback<Long>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            long count = connection.rPush(serializer.serialize(key), serializer.serialize(value));
-            connection.expire(serializer.serialize(key), liveTime);
-            return count;
-        });
-        return result;
+    /**
+     * 实现命令：GET key，返回 key所关联的字符串值。
+     *
+     * @param key
+     * @return value
+     */
+    public String get(String key) {
+        return (String)redisTemplate.opsForValue().get(key);
     }
 
-    public String lpop(final String key) {
-        String result = redisTemplate.execute((RedisCallback<String>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            byte[] res = connection.lPop(serializer.serialize(key));
-            return serializer.deserialize(res);
-        });
-        return result;
+    // Hash（哈希表）
+
+    /**
+     * 实现命令：HSET key field value，将哈希表 key中的域 field的值设为 value
+     *
+     * @param key
+     * @param field
+     * @param value
+     */
+    public void hset(String key, String field, Object value) {
+        redisTemplate.opsForHash().put(key, field, value);
     }
-    public String rpop(final String key) {
-        String result = redisTemplate.execute((RedisCallback<String>) connection -> {
-            RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
-            byte[] res = connection.rPop(serializer.serialize(key));
-            return serializer.deserialize(res);
-        });
-        return result;
+
+    /**
+     * 实现命令：HGET key field，返回哈希表 key中给定域 field的值
+     *
+     * @param key
+     * @param field
+     * @return
+     */
+    public String hget(String key, String field) {
+        return (String) redisTemplate.opsForHash().get(key, field);
+    }
+
+    /**
+     * 实现命令：HDEL key field [field ...]，删除哈希表 key 中的一个或多个指定域，不存在的域将被忽略。
+     *
+     * @param key
+     * @param fields
+     */
+    public void hdel(String key, Object... fields) {
+        redisTemplate.opsForHash().delete(key, fields);
+    }
+
+    /**
+     * 实现命令：HGETALL key，返回哈希表 key中，所有的域和值。
+     *
+     * @param key
+     * @return
+     */
+    public Map<Object, Object> hgetall(String key) {
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    // List（列表）
+
+    /**
+     * 实现命令：LPUSH key value，将一个值 value插入到列表 key的表头
+     *
+     * @param key
+     * @param value
+     * @return 执行 LPUSH命令后，列表的长度。
+     */
+    public long lpush(String key, String value) {
+        return redisTemplate.opsForList().leftPush(key, value);
+    }
+
+    /**
+     * 实现命令：LPOP key，移除并返回列表 key的头元素。
+     *
+     * @param key
+     * @return 列表key的头元素。
+     */
+    public String lpop(String key) {
+        return (String)redisTemplate.opsForList().leftPop(key);
+    }
+
+    /**
+     * 实现命令：RPUSH key value，将一个值 value插入到列表 key的表尾(最右边)。
+     *
+     * @param key
+     * @param value
+     * @return 执行 LPUSH命令后，列表的长度。
+     */
+    public long rpush(String key, String value) {
+        return redisTemplate.opsForList().rightPush(key, value);
     }
 
 }

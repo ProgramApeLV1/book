@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.book.common.base.Constant.ACTION_SUCCESS;
-
 @RestController
 @RequestMapping("/menuApi")
 public class MenuController extends BaseController {
@@ -55,7 +53,7 @@ public class MenuController extends BaseController {
         menu.setCreateTime(new Date());
         menu.setUrl("NONE");
         menuService.insert(menu);
-        return responseSuccess(ACTION_SUCCESS);
+        return responseSuccess();
     }
 
     @PostMapping(value = "/editMenu")
@@ -76,12 +74,12 @@ public class MenuController extends BaseController {
         menuVo.setResourceType(menu.getResourceType());
         menuVo.setSeq(menu.getSeq());
         menuService.updateById(menuVo);
-        return responseSuccess(ACTION_SUCCESS);
+        return responseSuccess();
     }
 
     @PostMapping(value = "/deleteWorkById")
     public Object deleteWorkById(Integer id) throws Exception {
         menuService.deleteById(id);
-        return responseSuccess(ACTION_SUCCESS);
+        return responseSuccess();
     }
 }

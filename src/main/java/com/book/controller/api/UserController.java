@@ -17,9 +17,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static com.book.common.base.Constant.ACTION_ERROR;
-import static com.book.common.base.Constant.ACTION_SUCCESS;
-
 /**
  * <p>
  * 用户登入 前端控制器
@@ -58,7 +55,7 @@ public class UserController extends BaseController {
         user.setCreateTime(LocalDateTime.now());
         user.setStatus(1);
         userService.insert(user);
-        return responseSuccess(ACTION_SUCCESS);
+        return responseSuccess();
     }
 
     @PostMapping(value = "/edit")
@@ -69,13 +66,13 @@ public class UserController extends BaseController {
         }
         user.setPassword(curUser.getPassword());
         userService.updateById(user);
-        return responseSuccess(ACTION_SUCCESS);
+        return responseSuccess();
     }
 
     @PostMapping(value = "/deleteWorkById")
     public Object deleteWorkById(String id) throws Exception {
         userService.deleteById(id);
-        return responseSuccess(ACTION_SUCCESS);
+        return responseSuccess();
     }
 
     @PostMapping(value = "/updatePwdByUserId")
@@ -102,7 +99,7 @@ public class UserController extends BaseController {
         String newPassword = DigestUtils.md5DigestAsHex(request.getNewPassword().getBytes());
         request.setNewPassword(newPassword);
         userService.updatePwdByUserId(request.getUserId(), request.getNewPassword());
-        return responseSuccess(ACTION_SUCCESS);
+        return responseSuccess();
     }
 
 }
