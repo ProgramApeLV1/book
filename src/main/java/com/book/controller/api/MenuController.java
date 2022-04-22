@@ -2,6 +2,7 @@ package com.book.controller.api;
 
 import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
+import com.book.common.units.ResponseJson;
 import com.book.common.units.StringUtils;
 import com.book.model.Menu;
 import com.book.model.MenuTree;
@@ -53,7 +54,7 @@ public class MenuController extends BaseController {
         menu.setCreateTime(new Date());
         menu.setUrl("NONE");
         menuService.insert(menu);
-        return responseSuccess();
+        return ResponseJson.success();
     }
 
     @PostMapping(value = "/editMenu")
@@ -74,12 +75,12 @@ public class MenuController extends BaseController {
         menuVo.setResourceType(menu.getResourceType());
         menuVo.setSeq(menu.getSeq());
         menuService.updateById(menuVo);
-        return responseSuccess();
+        return ResponseJson.success();
     }
 
     @PostMapping(value = "/deleteWorkById")
     public Object deleteWorkById(Integer id) throws Exception {
         menuService.deleteById(id);
-        return responseSuccess();
+        return ResponseJson.success();
     }
 }

@@ -33,7 +33,7 @@ public class LoginController extends BaseController {
 
     private LineCaptcha lineCaptcha;
 
-    @PostMapping(value = "userLogin")
+    @PostMapping(value = "/userLogin")
     @ResponseBody
     private ResponseJson userLogin(
             HttpServletResponse response,

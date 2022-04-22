@@ -2,7 +2,9 @@ package com.book.controller.api;
 
 
 import com.book.common.base.BaseController;
+import com.book.common.units.CookieUtils;
 import com.book.common.units.PageInfo;
+import com.book.common.units.ResponseJson;
 import com.book.common.units.StringUtil;
 import com.book.controller.api.req.UpdatePwdRequest;
 import com.book.model.User;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -55,52 +58,57 @@ public class UserController extends BaseController {
         user.setCreateTime(LocalDateTime.now());
         user.setStatus(1);
         userService.insert(user);
-        return responseSuccess();
+        return ResponseJson.success("用户新增成功");
     }
 
     @PostMapping(value = "/edit")
     public Object edit(@RequestBody User user) throws Exception {
         User curUser = userService.selectById(user.getId());
         if (Objects.isNull(curUser)) {
-            return responseError("未查到当前用户!");
+            return ResponseJson.error("未查到当前用户!");
         }
         user.setPassword(curUser.getPassword());
         userService.updateById(user);
-        return responseSuccess();
+        return ResponseJson.success("用户编辑成功");
     }
 
     @PostMapping(value = "/deleteWorkById")
     public Object deleteWorkById(String id) throws Exception {
         userService.deleteById(id);
-        return responseSuccess();
+        return ResponseJson.success("删除用户成功");
     }
 
     @PostMapping(value = "/updatePwdByUserId")
     public Object updatePwdByUserId(@RequestBody UpdatePwdRequest request) throws Exception {
         if (StringUtil.isEmpty(request.getUserId())) {
-            return responseError("用户id不能为空!");
+            return ResponseJson.error("用户id不能为空!");
         }
         if (StringUtil.isEmpty(request.getPassword())) {
-            return responseError("旧密码不能为空!");
+            return ResponseJson.error("旧密码不能为空!");
         }
         if (StringUtil.isEmpty(request.getNewPassword())) {
-            return responseError("新密码不能为空!");
+            return ResponseJson.error("新密码不能为空!");
         }
         User curUser = userService.selectById(request.getUserId());
         if (Objects.isNull(curUser)) {
-            return responseError("未查到当前用户!");
+            return ResponseJson.error("未查到当前用户!");
         }
         //验证旧密码
         String password = DigestUtils.md5DigestAsHex(request.getPassword().getBytes());
         if (!password.equals(curUser.getPassword())) {
-            return responseError("旧密码验证错误!");
+            return ResponseJson.error("旧密码验证错误!");
         }
         //二次加密
         String newPassword = DigestUtils.md5DigestAsHex(request.getNewPassword().getBytes());
         request.setNewPassword(newPassword);
         userService.updatePwdByUserId(request.getUserId(), request.getNewPassword());
-        return responseSuccess();
+        return ResponseJson.success("更新用户密码成功");
     }
 
+    @GetMapping(value = "/userInfo")
+    public ResponseJson userInfo(HttpServletRequest request) throws Exception {
+        CookieUtils.getUid(request,"token");
+        return ResponseJson.success();
+    }
 }
 

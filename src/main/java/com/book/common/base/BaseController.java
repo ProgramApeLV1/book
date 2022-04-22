@@ -1,12 +1,16 @@
 package com.book.common.base;
 
+import com.book.common.exception.BusinessException;
+import com.book.common.units.CookieUtils;
 import com.book.common.units.RedisClient;
 import com.book.common.units.ResponseJson;
+import com.book.common.units.StringUtil;
 import com.book.model.User;
 import com.book.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -128,65 +132,12 @@ public class BaseController implements Serializable {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
     }
 
-    /***
-     *@param  result 状态码
-     * @param  message 提示语
-     * @param  object 返回给客户端的对象
-     * ***/
-    public ResponseJson responseJson(Integer result, String message, Object object) {
-        ResponseJson rJson = new ResponseJson();
-        rJson.setResult(result);
-        rJson.setMessage(message);
-        rJson.setData(object);
-        return rJson;
-    }
+    public ResponseJson currentUserInfo(HttpServletRequest request) throws Exception {
+        String token = CookieUtils.getUid(request, "token");
+        if (StringUtil.isEmpty(token)) {
+            throw new BusinessException(ApiCode.UNAUTHORIZED);
+        }
 
-    /***
-     * ***/
-    public ResponseJson responseSuccess() {
-        ResponseJson rJson = new ResponseJson();
-        rJson.setResult(ApiCode.SUCCESS.getCode());
-        rJson.setMessage(ApiCode.SUCCESS.getMessage());
-        rJson.setData(null);
-        return rJson;
-    }
-
-    /***
-     * @param  message 返回给客户端的对象
-     * ***/
-    public ResponseJson responseSuccess(String message) {
-        ResponseJson rJson = new ResponseJson();
-        rJson.setResult(ApiCode.SUCCESS.getCode());
-        rJson.setMessage(message);
-        rJson.setData(null);
-        return rJson;
-    }
-
-    /***
-     * @param  message 返回给客户端的对象
-     * @param object 返回值
-     * ***/
-    public ResponseJson responseSuccess(String message, Object object) {
-        ResponseJson rJson = new ResponseJson();
-        rJson.setResult(ApiCode.SUCCESS.getCode());
-        rJson.setMessage(message);
-        rJson.setData(object);
-        return rJson;
-    }
-
-    public ResponseJson responseError(String message) {
-        ResponseJson rJson = new ResponseJson();
-        rJson.setResult(ApiCode.REQUEST_ERROR.getCode());
-        rJson.setMessage(message);
-        rJson.setData(null);
-        return rJson;
-    }
-
-    public ResponseJson responseError() {
-        ResponseJson rJson = new ResponseJson();
-        rJson.setResult(ApiCode.REQUEST_ERROR.getCode());
-        rJson.setMessage(ApiCode.REQUEST_ERROR.getMessage());
-        rJson.setData(null);
-        return rJson;
+        return ResponseJson.success();
     }
 }
