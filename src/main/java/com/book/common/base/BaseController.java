@@ -1,16 +1,13 @@
 package com.book.common.base;
 
 import com.book.common.exception.BusinessException;
-import com.book.common.units.CookieUtils;
-import com.book.common.units.RedisClient;
-import com.book.common.units.ResponseJson;
-import com.book.common.units.StringUtil;
+import com.book.common.units.*;
 import com.book.model.User;
+import com.book.model.vo.UserVo;
 import com.book.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +21,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static com.book.common.base.Constant.TOKEN_NAME;
 
 
 /**
@@ -132,12 +131,25 @@ public class BaseController implements Serializable {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
     }
 
-    public ResponseJson currentUserInfo(HttpServletRequest request) throws Exception {
-        String token = CookieUtils.getUid(request, "token");
+    /**
+     * 根据token获取用户信息
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    public UserVo userInfoByToken(HttpServletRequest request) throws Exception {
+        String token = CookieUtils.getUid(request, TOKEN_NAME);
         if (StringUtil.isEmpty(token)) {
             throw new BusinessException(ApiCode.UNAUTHORIZED);
         }
-
-        return ResponseJson.success();
+        UserVo userVo = new UserVo();
+        String userinfo = redisClient.get(token);
+        if (StringUtil.isEmpty(userinfo)) {
+            throw new BusinessException(ApiCode.NOTEXIST_USERINFO);
+        }
+        // 2022/4/22 去数据库捞用户数据
+        userVo = JsonUtils.convertJsonToObject(userinfo, UserVo.class);
+        return userVo;
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -25,6 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.book.common.base.Constant.HALF_HOUR;
+import static com.book.common.base.Constant.TOKEN_NAME;
 
 @Slf4j
 @Controller
@@ -41,10 +45,10 @@ public class LoginController extends BaseController {
             @RequestParam String password
     ) throws Exception {
         if (StringUtils.isBlank(loginName)) {
-            return responseSuccess("账号不能为空");
+            return ResponseJson.error("账号不能为空");
         }
         if (StringUtils.isBlank(password)) {
-            return responseSuccess("密码不能为空");
+            return ResponseJson.error("密码不能为空");
         }
         List<User> userList = getAllUser();
         Map<String, User> userMap = new HashMap<>();
@@ -52,22 +56,22 @@ public class LoginController extends BaseController {
             userMap.put(user.getLoginName(), user);
         }
         if (!userMap.containsKey(loginName.trim())) {
-            return responseError("该用户不存在");
+            return ResponseJson.error("该用户不存在");
         }
         //二次md5加密
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         String pwd = userMap.get(loginName).getPassword();
         if (!password.equals(pwd)) {
-            return responseError("密码错误");
+            return ResponseJson.error("密码错误");
         }
         User user = userMap.get(loginName);
         user.setPhone(StringUtil.phoneCutEncrypt(user.getPhone()));
         user.setIdentity(StringUtil.identityCutEncrypt(user.getIdentity()));
         // 将登录的用户信息存入缓存
         String token = UUID.randomUUID().toString().replaceAll("-", "");
-        redisClient.set(token, JSON.toJSONString(user), 30 * 60);
-        CookieUtils.addCookie(response, "token", token, 30 * 60);
-        return responseSuccess("登录成功", user);
+        redisClient.set(token, JSON.toJSONString(user), HALF_HOUR);
+        CookieUtils.addCookie(response, TOKEN_NAME, token, HALF_HOUR.intValue());
+        return ResponseJson.success("登录成功", user);
     }
 
     /**
@@ -75,11 +79,11 @@ public class LoginController extends BaseController {
      * @author: wangyh
      * @time: 2018-07-03 10:28:59
      */
-    @GetMapping("/logout")
-    public ModelAndView logout(ModelAndView model) {
-//    	request().getSession(false).removeAttribute(Constant.X_USER_SESSION);
-        model.setViewName("login");
-        return model;
+    @PostMapping("/logout")
+    @ResponseBody
+    public ResponseJson logout(HttpServletRequest request, HttpServletResponse response) {
+        CookieUtils.removeCookie(response, TOKEN_NAME);
+        return ResponseJson.success();
     }
 
     @GetMapping("/getVeriCodeImg")

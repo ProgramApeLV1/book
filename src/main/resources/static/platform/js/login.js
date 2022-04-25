@@ -117,7 +117,7 @@ function loadFormSubmit() {
     jrequest.post(baseHttpUrl + "loginCont/userLogin", params).then(res => {
         if (res.data.result === 200) {
             if (res.data.data) {
-                loginSetCache(res.data.data);
+                // loginSetCache(res.data.data);
                 window.location.href = '/index';
             }
         } else {

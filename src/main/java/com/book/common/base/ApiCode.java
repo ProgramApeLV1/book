@@ -52,7 +52,11 @@ public enum ApiCode {
     /**
      * 连接超时
      **/
-    CONNECTITON_ERROR(3006, "服务调用超时,请重试");
+    CONNECTITON_ERROR(3006, "服务调用超时,请重试"),
+    /**
+     * 用户信息不存在
+     **/
+    NOTEXIST_USERINFO(3007, "用户信息不存在");
 
     private final int code;
     private final String message;

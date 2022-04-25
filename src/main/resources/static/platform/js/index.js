@@ -222,6 +222,9 @@ function logoutModal() {
 }
 
 function logout() {
-    logoutRemoveCache();
-    window.location.href = '/';
+    jrequest.post(baseHttpUrl + "/loginCont/logout", {}
+    ).then(res => {
+        logoutRemoveCache();
+        window.location.href = '/';
+    });
 }

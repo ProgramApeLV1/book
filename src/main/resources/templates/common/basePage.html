@@ -34,8 +34,20 @@
         				+ #request.getServerPort()
         				+ #request.getContextPath()}]] + '/';
 
-        function getCurUserInfo() {
-            const user = docCookies.getItem(USER_COOKIE_KEY);
+        async function getCurUserInfo() {
+            let user = getCacheInfoByKey(USER_COOKIE_KEY);
+            if (!user) {
+                await jrequest.get(baseHttpUrl + "/userApi/userInfo", {}
+                ).then(res => {
+                    if (res.data.result === 200) {
+                        user = JSON.stringify(res.data.data);
+                        // 储存至缓存
+                        setCacheInfo(USER_COOKIE_KEY, user);
+                    }
+                }).catch(e => {
+                    console.log(e);
+                });
+            }
             return JSON.parse(user);
         }
     </script>

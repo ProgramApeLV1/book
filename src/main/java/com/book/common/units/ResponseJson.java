@@ -39,6 +39,43 @@ public class ResponseJson implements Serializable {
         return rJson;
     }
 
+    /**
+     * @param apiCode 枚举
+     * @return
+     */
+    public static ResponseJson success(ApiCode apiCode) {
+        ResponseJson rJson = new ResponseJson();
+        rJson.setResult(apiCode.getCode());
+        rJson.setMessage(apiCode.getMessage());
+        rJson.setData(null);
+        return rJson;
+    }
+
+    /**
+     * @param object 返回值
+     * @return
+     */
+    public static ResponseJson success(Object object) {
+        ResponseJson rJson = new ResponseJson();
+        rJson.setResult(ApiCode.SUCCESS.getCode());
+        rJson.setMessage(ApiCode.SUCCESS.getMessage());
+        rJson.setData(object);
+        return rJson;
+    }
+
+    /**
+     * @param apiCode 枚举
+     * @param object 返回值
+     * @return
+     */
+    public static ResponseJson success(ApiCode apiCode, Object object) {
+        ResponseJson rJson = new ResponseJson();
+        rJson.setResult(apiCode.getCode());
+        rJson.setMessage(apiCode.getMessage());
+        rJson.setData(null);
+        return rJson;
+    }
+
     /***
      * @param  message 返回给客户端的对象
      * ***/
@@ -66,6 +103,14 @@ public class ResponseJson implements Serializable {
         ResponseJson rJson = new ResponseJson();
         rJson.setResult(ApiCode.REQUEST_ERROR.getCode());
         rJson.setMessage(ApiCode.REQUEST_ERROR.getMessage());
+        rJson.setData(null);
+        return rJson;
+    }
+
+    public static ResponseJson error(ApiCode apiCode) {
+        ResponseJson rJson = new ResponseJson();
+        rJson.setResult(apiCode.getCode());
+        rJson.setMessage(apiCode.getMessage());
         rJson.setData(null);
         return rJson;
     }

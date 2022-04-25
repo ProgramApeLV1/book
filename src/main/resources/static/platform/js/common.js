@@ -187,20 +187,28 @@ function find(obj, key) {
 //用户缓存key常量
 const USER_COOKIE_KEY = "user";
 
-function loginSetCache(data) {
-    const user = {
-        userId: data.id,
-        phone: data.phone,
-        loginName: data.loginName,
-        userName: data.userName,
-        userCode: data.userCode,
-        sex: data.sex
-    }
-    docCookies.setItem(USER_COOKIE_KEY, JSON.stringify(user), '', '/');
-    window.sessionStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user));
+// function loginSetCache(data) {
+//     const user = {
+//         userId: data.id,
+//         phone: data.phone,
+//         loginName: data.loginName,
+//         userName: data.userName,
+//         userCode: data.userCode,
+//         sex: data.sex
+//     }
+//     docCookies.setItem(USER_COOKIE_KEY, JSON.stringify(user), '', '/');
+//     window.sessionStorage.setItem(USER_COOKIE_KEY, JSON.stringify(user));
+// }
+
+function getCacheInfoByKey(key) {
+    return window.localStorage.getItem(key);
+}
+
+function setCacheInfo(key, val) {
+    return window.localStorage.setItem(key, val);
 }
 
 function logoutRemoveCache() {
-    docCookies.removeItem(USER_COOKIE_KEY, '/');
-    window.sessionStorage.removeItem(USER_COOKIE_KEY);
+    // docCookies.removeItem(USER_COOKIE_KEY, '/');
+    window.localStorage.removeItem(USER_COOKIE_KEY);
 }

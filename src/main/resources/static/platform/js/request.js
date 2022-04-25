@@ -1,11 +1,12 @@
 var jrequest = (function () {
     return {
-        _request(url, method, contentType, params) {
+        _request(url, method, contentType, params, async) {
             return new Promise((resolve, reject) => {
                 $.ajax({
                     headers: {
                         authorization: ''
                     },
+                    async: async,
                     contentType: contentType,
                     dataType: "JSON",
                     data: params,
@@ -18,47 +19,71 @@ var jrequest = (function () {
                             data: res,
                             total: request.getResponseHeader("X-Total-Count")
                         })
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr)
+                        console.error(status)
+                        console.error(error)
+                        reject();
                     }
                 })
             })
         },
-        get(url, params) {
+        get(url, params, notAsync) {
             return new Promise((resolve, reject) => {
-                this._request(url, "get", "application/json", params).then(res => {
-                    if (res) {
-                        resolve(res)
-                    }
-                })
-            })
-        },
-        post(url, params, contentType) {
-            return new Promise((resolve, reject) => {
-                this._request(url,
-                    "post",
-                    contentType ? contentType : "application/x-www-form-urlencoded",
-                    params
+                this._request(url, "get", "application/json",
+                    params,
+                    !notAsync
                 ).then(res => {
                     if (res) {
                         resolve(res)
                     }
+                }).catch(e => {
+                    reject(e);
                 })
             })
         },
-        put(url, params) {
+        post(url, params, contentType, notAsync) {
             return new Promise((resolve, reject) => {
-                this._request(url, "put", "application/x-www-form-urlencoded", params).then(res => {
+                this._request(url,
+                    "post",
+                    contentType ? contentType : "application/x-www-form-urlencoded",
+                    params,
+                    !notAsync
+                ).then(res => {
                     if (res) {
                         resolve(res)
                     }
+                }).catch(e => {
+                    reject(e);
                 })
             })
         },
-        delete(url, params) {
+        put(url, params, notAsync) {
             return new Promise((resolve, reject) => {
-                this._request(url, "delete", "application/json", params).then(res => {
+                this._request(url, "put", "application/x-www-form-urlencoded",
+                    params,
+                    !notAsync
+                ).then(res => {
                     if (res) {
                         resolve(res)
                     }
+                }).catch(e => {
+                    reject(e);
+                })
+            })
+        },
+        delete(url, params, notAsync) {
+            return new Promise((resolve, reject) => {
+                this._request(url, "delete", "application/json",
+                    params,
+                    !notAsync
+                ).then(res => {
+                    if (res) {
+                        resolve(res)
+                    }
+                }).catch(e => {
+                    reject(e);
                 })
             })
         }

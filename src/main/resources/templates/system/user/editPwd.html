@@ -29,7 +29,7 @@
         })
 
         //提交表单
-        function saveWin() {
+        async function saveWin() {
             progressLoad();
             var isValid = $("#formEdit").form('validate');
             if (!isValid) {
@@ -37,37 +37,23 @@
                 return false;
             } else {
                 var data = serializeObject($("#formEdit"));
-                data.userId = getCurUserInfo().userId;
+                const user = await getCurUserInfo();
+                data.userId = user.id;
                 data.password = md5(data.password);
                 data.newPassword = md5(data.newPassword);
+                console.log(data)
                 jrequest.post(
                     baseHttpUrl + "userApi/updatePwdByUserId",
                     JSON.stringify(data),
                     "application/json; charset=UTF-8"
                 ).then(res => {
-                        progressClose();
-                        if (res.data.result === 200) {
-                            logout();
-                        } else {
-                            parent.$.messager.alert('提示', res.data.message, 'info');
-                        }
-                    });
-                // $.ajax({
-                //     url: baseHttpUrl + "userApi/updatePwdByUserId",
-                //     contentType: 'application/json; charset=UTF-8',
-                //     data: JSON.stringify(data),
-                //     type: 'POST',
-                //     cache: false,
-                //     dataType: "json",
-                //     processData: false
-                // }).done(function (res) {
-                //     progressClose();
-                //     if (res.result === 200) {
-                //         logout();
-                //     } else {
-                //         parent.$.messager.alert('提示', res.message, 'info');
-                //     }
-                // });
+                    progressClose();
+                    if (res.data.result === 200) {
+                        logout();
+                    } else {
+                        parent.$.messager.alert('提示', res.data.message, 'info');
+                    }
+                });
                 return false;
             }
         }

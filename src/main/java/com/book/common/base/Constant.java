@@ -14,5 +14,7 @@ public class Constant {
     public final static Long ONE_HOUR = 60 * 60L;
 
     public final static Long TW_HOUR = 60 * 60L;
+
+    public final static String TOKEN_NAME = "token";
 }
 

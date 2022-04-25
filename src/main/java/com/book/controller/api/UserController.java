@@ -2,7 +2,6 @@ package com.book.controller.api;
 
 
 import com.book.common.base.BaseController;
-import com.book.common.units.CookieUtils;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
 import com.book.common.units.StringUtil;
@@ -107,8 +106,8 @@ public class UserController extends BaseController {
 
     @GetMapping(value = "/userInfo")
     public ResponseJson userInfo(HttpServletRequest request) throws Exception {
-        CookieUtils.getUid(request,"token");
-        return ResponseJson.success();
+        UserVo userVo = userInfoByToken(request);
+        return ResponseJson.success(userVo);
     }
 }
 
