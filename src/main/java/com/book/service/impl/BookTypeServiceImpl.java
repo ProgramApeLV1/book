@@ -23,13 +23,11 @@ import java.util.List;
 @Service
 public class BookTypeServiceImpl extends ServiceImpl<BookTypeMapper, BookType> implements IBookTypeService {
 
-    @Autowired
-    private BookTypeMapper bookTypeMapper;
 
     @Override
     public void getBookTypeList(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
-        List<BookTypeVo> list = bookTypeMapper.getBookTypeList(page, pageInfo.getCondition());
+        List<BookTypeVo> list = baseMapper.getBookTypeList(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
     }

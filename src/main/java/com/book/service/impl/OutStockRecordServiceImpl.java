@@ -23,13 +23,10 @@ import java.util.List;
 @Service
 public class OutStockRecordServiceImpl extends ServiceImpl<OutStockRecordMapper, OutStockRecord> implements IOutStockRecordService {
 
-    @Autowired
-    private OutStockRecordMapper outStockRecordMapper;
-
     @Override
     public void getBoorowBookInfoList(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
-        List<OutStockRecordVo> list = outStockRecordMapper.getBoorowBookInfoList(page, pageInfo.getCondition());
+        List<OutStockRecordVo> list = baseMapper.getBoorowBookInfoList(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
     }

@@ -56,8 +56,8 @@ public class MenuPageController extends BaseController {
     }
 
     @GetMapping(value = "/gotoMenuInfoEditPage")
-    public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView, Integer id) {
-        Menu menu = menuService.selectById(id);
+    public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView, String unid) {
+        Menu menu = menuService.selectById(unid);
         modelAndView.addObject("menu", menu);
         modelAndView.setViewName(PagePathConstant.SYSTEM_MENU.concat(PagePathConstant.MENUEDIT));
         return modelAndView;

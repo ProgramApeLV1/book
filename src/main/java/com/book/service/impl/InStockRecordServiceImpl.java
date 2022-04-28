@@ -23,14 +23,10 @@ import java.util.List;
 @Service
 public class InStockRecordServiceImpl extends ServiceImpl<InStockRecordMapper, InStockRecord> implements IInStockRecordService {
 
-    @Autowired
-    private InStockRecordMapper inStockRecordMapper;
-
-
     @Override
     public void getReturnBookInfo(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
-        List<InStockRecordVo> list = inStockRecordMapper.getReturnBookInfo(page, pageInfo.getCondition());
+        List<InStockRecordVo> list = baseMapper.getReturnBookInfo(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
     }

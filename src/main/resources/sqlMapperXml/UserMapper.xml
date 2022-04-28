@@ -41,7 +41,7 @@
         FROM
         os_user AS t
         WHERE
-        1=1
+        1 = 1
         <if test="userName != null and userName != '' ">
             AND t.userName LIKE CONCAT_WS(#{userName},"%","%",NULL)
         </if>

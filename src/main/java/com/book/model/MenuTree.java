@@ -13,7 +13,7 @@ public class MenuTree implements java.io.Serializable {
 
     private static final long serialVersionUID = 980682543891282923L;
     
-    private Long id;
+    private String unid;
  
     private String code;
     

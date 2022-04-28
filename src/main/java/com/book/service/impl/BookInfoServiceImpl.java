@@ -23,13 +23,11 @@ import java.util.List;
 @Service
 public class BookInfoServiceImpl extends ServiceImpl<BookInfoMapper, BookInfo> implements IBookInfoService {
 
-    @Autowired
-    private BookInfoMapper bookInfoMapper;
 
     @Override
     public void getBookInfoList(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
-        List<BookInfoVo> list = bookInfoMapper.getBookInfoList(page, pageInfo.getCondition());
+        List<BookInfoVo> list = baseMapper.getBookInfoList(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
     }

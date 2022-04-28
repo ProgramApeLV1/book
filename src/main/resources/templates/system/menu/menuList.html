@@ -24,20 +24,20 @@
 
         function operations(value, row, index) {
             var str = '';
-            str = "<a class='sz_button' onclick='editById(\"" + row.id + "\");' href='javascript:void(0);'>编辑</a>";
+            str = "<a class='sz_button' onclick='editById(\"" + row.unid + "\");' href='javascript:void(0);'>编辑</a>";
             str += '&nbsp;|&nbsp;';
-            str += "<a class='sz_button' onclick='deleteById(\"" + row.id + "\");' href='javascript:void(0);'>删除</a>";
+            str += "<a class='sz_button' onclick='deleteById(\"" + row.unid + "\");' href='javascript:void(0);'>删除</a>";
             return str;
         }
 
-        function deleteById(id) {
+        function deleteById(unid) {
             Page.messager(menuPage.dataGrid, "menuApi/deleteWorkById", "询问", "是否确定删除?", {
-                id: id
+                unid: unid
             });
         }
 
-        function editById(id) {
-            Page.registerWindowDialog(menuPage.dataGrid, "editWin", "编辑", 'menuCont/gotoMenuInfoEditPage?id=' + id, 25 + '%', 60 + '%');
+        function editById(unid) {
+            Page.registerWindowDialog(menuPage.dataGrid, "editWin", "编辑", 'menuCont/gotoMenuInfoEditPage?unid=' + unid, 25 + '%', 60 + '%');
         }
 
         //详情框方法start

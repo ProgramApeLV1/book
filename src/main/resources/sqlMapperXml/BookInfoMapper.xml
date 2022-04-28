@@ -7,7 +7,7 @@
         id, bookCode, bookName, author, publishTime, unitPrice, publishingHouse, typeCode, status, createTime
     </sql>
 
-    <select id="getBookInfoList" resultType="BookInfoVo">
+    <select id="getBookInfoList" resultType="com.book.model.vo.BookInfoVo">
         SELECT
         t.id,
         t.bookCode,

@@ -59,7 +59,7 @@ public class MenuController extends BaseController {
 
     @PostMapping(value = "/editMenu")
     public Object editMenu(@RequestBody Menu menu) throws Exception {
-        Menu menuVo = menuService.selectById(menu.getId());
+        Menu menuVo = menuService.selectById(menu.getUnid());
         if (StringUtils.isNotBlank(menu.getUrl())) {
             menuVo.setUrl(menu.getUrl());
         } else {
@@ -79,8 +79,8 @@ public class MenuController extends BaseController {
     }
 
     @PostMapping(value = "/deleteWorkById")
-    public Object deleteWorkById(Integer id) throws Exception {
-        menuService.deleteById(id);
+    public Object deleteWorkById(String unid) throws Exception {
+        menuService.deleteById(unid);
         return ResponseJson.success();
     }
 }

@@ -1,5 +1,6 @@
 package com.book.service;
 
+import com.book.common.units.PageInfo;
 import com.book.model.Role;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IRoleService extends IService<Role> {
 
+    void getRoleList(PageInfo pageInfo);
 }

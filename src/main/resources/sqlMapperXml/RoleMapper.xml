@@ -4,7 +4,21 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, role_name AS roleName, pid, status, createTime
+        ${alias}.unid, ${alias}.role_name AS roleName, ${alias}.pid, ${alias}.status, ${alias}.createTime
     </sql>
+
+    <select id="getRoleList" resultType="com.book.model.vo.RoleVo">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="t"/></include>
+
+        FROM
+            os_role AS t
+        WHERE
+            1 = 1
+            <if test="role_name != null and role_name != '' ">
+                AND t.role_name LIKE CONCAT_WS(#{role_name},"%","%",NULL)
+            </if>
+            ORDER BY t.createTime DESC
+    </select>
 
 </mapper>

@@ -26,20 +26,17 @@ import java.util.Set;
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
-    @Autowired
-    private MenuMapper menuMapper;
-
     @Override
     public List<MenuTree> getMenuTree() {
         String pCode = null;
         Integer status = 1;
-        List<MenuTree> treeList = menuMapper.getParentMenuTree(pCode, status);
+        List<MenuTree> treeList = baseMapper.getParentMenuTree(pCode, status);
         List<MenuTree> removeTree = new ArrayList<>();
         List<MenuTree> removeTreeChild = new ArrayList<>();
         Set<String> treeSet = new HashSet<>();
         for (MenuTree tree : treeList) {
             pCode = tree.getCode();
-            tree.setChildren(menuMapper.getParentMenuTree(pCode, status));
+            tree.setChildren(baseMapper.getParentMenuTree(pCode, status));
         }
         for (MenuTree tree : treeList) {
             if (!treeSet.add(tree.getPCode() + tree.getText())) {
@@ -60,13 +57,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public void getMenuInfoList(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
-        List<Menu> list = menuMapper.getMenuInfoList(page, pageInfo.getCondition());
+        List<Menu> list = baseMapper.getMenuInfoList(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
     }
 
     @Override
     public List<Menu> getParentMenuList() {
-        return menuMapper.getParentMenuList();
+        return baseMapper.getParentMenuList();
     }
 }

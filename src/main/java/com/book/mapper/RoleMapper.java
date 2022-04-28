@@ -1,7 +1,12 @@
 package com.book.mapper;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.book.model.Role;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.book.model.vo.RoleVo;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +18,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
+    List<RoleVo> getRoleList(Page page, Map<String, Object> condition);
 }

@@ -26,13 +26,10 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
-    @Autowired
-    private UserMapper userMapper;
-
     @Override
     public void getUserList(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
-        List<UserVo> list = userMapper.getUserList(page, pageInfo.getCondition());
+        List<UserVo> list = baseMapper.getUserList(page, pageInfo.getCondition());
         list = list.stream().map(userVo -> {
             String phone = StringUtil.phoneCutEncrypt(userVo.getPhone());
             String identity = StringUtil.identityCutEncrypt(userVo.getIdentity());
@@ -46,6 +43,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public void updatePwdByUserId(String userId, String password) {
-        userMapper.updatePwdByUserId(userId, password);
+        baseMapper.updatePwdByUserId(userId, password);
     }
 }

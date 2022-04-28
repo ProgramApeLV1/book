@@ -4,13 +4,15 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, code, url, description, icon, pCode, seq, status, resourceType, createTime
+        ${alias}.unid, ${alias}.name, ${alias}.code, ${alias}.url, ${alias}.description,
+        ${alias}.icon, ${alias}.pCode, ${alias}.seq, ${alias}.status, ${alias}.resourceType,
+        ${alias}.createTime
     </sql>
 
     <select id="getParentMenuTree" resultType="com.book.model.MenuTree">
         <![CDATA[
 	     SELECT
-	       t1.id,
+	       t1.unid,
 	       t1.code,
 	       t1.pCode,
 	       t1.name AS text,
@@ -31,9 +33,9 @@
         </where>
     </select>
 
-    <select id="getMenuInfoList" resultType="MenuVo">
+    <select id="getMenuInfoList" resultType="com.book.model.vo.MenuVo">
         SELECT
-        t.id,
+        t.unid,
         t.`name`,
         t.`code`,
         t.url,
@@ -60,19 +62,9 @@
         ORDER BY t.createTime DESC
     </select>
 
-    <select id="getParentMenuList" resultType="Menu">
+    <select id="getParentMenuList" resultType="com.book.model.Menu">
         SELECT
-        t.id,
-        t.`name`,
-        t.`code`,
-        t.url,
-        t.description,
-        t.icon,
-        t.pCode,
-        t.seq,
-        t.`status`,
-        t.resourceType,
-        t.createTime
+        <include refid="Base_Column_List"><property name="alias" value="t"/></include>
         FROM
         os_menu AS t
         WHERE

@@ -29,8 +29,8 @@ public class Menu implements Serializable {
     /**
      * 平台系统菜单  该数据也来源于子系统
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "unid", type = IdType.UUID)
+    private String unid;
     /**
      * 菜单名称
      */

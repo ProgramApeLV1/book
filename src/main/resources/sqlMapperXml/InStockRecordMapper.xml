@@ -7,7 +7,7 @@
         id, inCode, bookCode, typeCode, inNum, status, createTime
     </sql>
 
-    <select id="getReturnBookInfo" resultType="InStockRecordVo">
+    <select id="getReturnBookInfo" resultType="com.book.model.vo.InStockRecordVo">
         SELECT
         t.id,
         t.inCode,

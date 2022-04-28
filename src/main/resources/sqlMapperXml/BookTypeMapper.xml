@@ -7,7 +7,7 @@
         id, code, typeName, status, createTime
     </sql>
 
-    <select id="getBookTypeList" resultType="BookTypeVo">
+    <select id="getBookTypeList" resultType="com.book.model.vo.BookTypeVo">
         SELECT
         t.id,
         t.`code`,
