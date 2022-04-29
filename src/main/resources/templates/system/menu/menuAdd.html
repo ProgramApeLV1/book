@@ -8,8 +8,31 @@
 
             $(function () {
                 //加载父级菜单combobox
-                Page.registerComboboxSelect("parentName", "/menuApi/getParentMenuList", "code", "name");
+                Page.registerComboboxSelect("parentName", 'GET', "/menuApi/getParentMenuList", "code", "name");
+
+                $('#resourceType').combobox({
+                    onSelect: function (e) {
+                        const parentName = $('#parentName');
+                        if (e.value === '0') {
+                            parentName.combobox({disabled: false});
+                        }
+                        if (e.value === '1') {
+                            parentName.combobox('setValue', '');
+                            parentName.combobox({disabled: true});
+                        }
+                    }
+                });
             });
+
+            $.extend($.fn.validatebox.defaults.rules, {
+                confirmPass: {
+                    validator: function (value, param) {
+                        var pass = $(param[0]).passwordbox('getValue');
+                        return value === pass;
+                    },
+                    message: '两次输入的不同!'
+                }
+            })
 
             //提交表单
             function saveWin() {
@@ -35,25 +58,6 @@
                             parent.$.messager.alert('提示', res.data.message, 'info');
                         }
                     });
-                    // $.ajax({
-                    //     url: baseHttpUrl + "menuApi/saveMenu",
-                    //     contentType: 'application/json; charset=UTF-8',
-                    //     data: JSON.stringify(data),
-                    //     type: 'POST',
-                    //     cache: false,
-                    //     dataType: "json",
-                    //     processData: false
-                    // }).done(function (res) {
-                    //     progressClose();
-                    //     if (res.result === 200) {
-                    //         parent.$.messager.alert('提示', res.message, 'info');
-                    //         parent.Page.refreshDataGrid(window.parentPanelDataGrid);
-                    //         parent.Page.closeDialog(window.parentPanelDivId);
-                    //
-                    //     } else {
-                    //         parent.$.messager.alert('提示', res.message, 'info');
-                    //     }
-                    // });
                     return false;
                 }
             }
@@ -61,7 +65,7 @@
     </head>
     <body class="easyui-layout" data-options="fit:true,border:false">
         <div id="mainTabs" class="easyui-panel" style="width: 100%;height: 100%;">
-            <form id="formAdd" method="post">
+            <form id="formAdd">
                 <table class="grid">
                     <tr>
                         <td>菜单名称：</td>
@@ -79,14 +83,14 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>菜单类别：</label>
+                            <label>菜单类型：</label>
                         </td>
                         <td>
                             <select id="resourceType" name="resourceType" class="easyui-combobox" style="width: 180px;"
                                     panelHeight="auto"
                                     data-options="prompt:'请选择',required:true,editable:false">
-                                <option value="0">一级菜单</option>
-                                <option value="1">二级菜单</option>
+                                <option value="0">菜单</option>
+                                <option value="1">按钮</option>
                             </select>
                         </td>
                     </tr>

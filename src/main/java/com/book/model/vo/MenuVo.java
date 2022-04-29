@@ -1,9 +1,7 @@
 package com.book.model.vo;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,7 +23,7 @@ public class MenuVo implements Serializable {
     /**
      * 平台系统菜单  该数据也来源于子系统
      */
-    private Integer id;
+    private String unid;
     /**
      * 菜单名称
      */
@@ -53,6 +51,7 @@ public class MenuVo implements Serializable {
     /**
      * 父级菜单id
      */
+    @JsonProperty(value="pCode")
     private String pCode;
     /**
      * 排序
@@ -67,11 +66,24 @@ public class MenuVo implements Serializable {
      */
     private String statusName;
     /**
-     * 菜单类别  0：一级菜单   1：二级菜单   2：按钮菜单 3:顶部导航菜单
+     * 菜单类别  0：一级菜单   1：二级菜单
+     */
+    private Integer level;
+    /**
+     * 菜单类别  0：一级菜单   1：二级菜单
+     */
+    private String levelName;
+    /**
+     * 菜单类别  0：菜单  1：按钮
      */
     private Integer resourceType;
     /**
-     * 菜单类别  0：一级菜单   1：二级菜单   2：按钮菜单 3:顶部导航菜单
+     * 父级菜单类别  0：菜单 1：按钮
+     */
+    @JsonProperty(value="pResourceType")
+    private Integer pResourceType;
+    /**
+     * 菜单类别  0：菜单  1：按钮
      */
     private String resourceTypeName;
     /**

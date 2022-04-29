@@ -19,12 +19,12 @@ var Page = {
             };
     },
     /***注册datagrid(无复选框)组件**/
-    registerDataGrid: function (id, dataGridUrl, toolbarId, arr) {
+    registerDataGrid: function (id, method, dataGridUrl, toolbarId, arr) {
         if (getById(id)) {
             //微调工具栏中文字标签的宽度和对齐方式、按照templates/inlib/inStorageOrders.html的写法
             PageUtil.resizeToolBarTd(toolbarId);
             return $(getById(id)).datagrid({
-                method: 'post',
+                method: method,
                 url: baseHttpUrl + dataGridUrl,
                 loadMsg: '数据加载中,请稍后...',
                 queryParams: arr,
@@ -35,7 +35,10 @@ var Page = {
                 scrollbarSize: 0,
                 fit: false,
                 toolbar: '#' + toolbarId,
-                pagination: true
+                pagination: true,
+                loadFilter: function (res) {
+                    return res.data
+                }
             });
         }
     },
@@ -56,7 +59,10 @@ var Page = {
                 fit: false,
                 rownumbers: true,
                 toolbar: '#' + toolbarId,
-                pagination: false
+                pagination: false,
+                loadFilter: function (res) {
+                    return res.data
+                }
             });
         }
     },
@@ -77,7 +83,10 @@ var Page = {
                 fit: false,
                 rownumbers: true,
                 toolbar: '#' + toolbarId,
-                pagination: false
+                pagination: false,
+                loadFilter: function (res) {
+                    return res.data
+                }
             });
         }
     },
@@ -98,7 +107,10 @@ var Page = {
                 scrollbarSize: 0,
                 fit: false,
                 toolbar: '#' + toolbarId,
-                pagination: true
+                pagination: true,
+                loadFilter: function (res) {
+                    return res.data
+                }
             });
         }
     },
@@ -388,9 +400,10 @@ var Page = {
         return str;
     },
     /***注册普通不可输入combobox****/
-    combobox: function (id, url, valueField, textField, afterLoadFun, afterSelectFun, afterChangeFun) {
+    combobox: function (id, method, url, valueField, textField, afterLoadFun, afterSelectFun, afterChangeFun) {
         $('#' + id).combobox({
             url: url,
+            method: method,
             lines: true,
             panelHeight: '200',//combobox高度统一用200px,避免后期被测试人员揪出来整改
             editable: false,
@@ -398,13 +411,17 @@ var Page = {
             textField: textField,
             onLoadSuccess: afterLoadFun,
             onSelect: afterSelectFun,
-            onChange: afterChangeFun
+            onChange: afterChangeFun,
+            loadFilter: function (res) {
+                return res.data
+            }
         });
     },
     /***注册普通combobox(高度为auto)****/
-    comboboxOfAutoHeight: function (id, url, valueField, textField, afterLoadFun, afterSelectFun, afterChangeFun) {
+    comboboxOfAutoHeight: function (id, method, url, valueField, textField, afterLoadFun, afterSelectFun, afterChangeFun) {
         $('#' + id).combobox({
             url: url,
+            method: method,
             lines: true,
             panelHeight: 'auto',//combobox高度统一用200px,避免后期被测试人员揪出来整改
             editable: false,
@@ -412,13 +429,17 @@ var Page = {
             textField: textField,
             onLoadSuccess: afterLoadFun,
             onSelect: afterSelectFun,
-            onChange: afterChangeFun
+            onChange: afterChangeFun,
+            loadFilter: function (res) {
+                return res.data
+            }
         });
     },
     /***注册普通可输入combobox****/
-    comboboxWithEdit: function (id, url, valueField, textField, afterLoadFun, afterSelectFun, afterChangeFun) {
+    comboboxWithEdit: function (id, method, url, valueField, textField, afterLoadFun, afterSelectFun, afterChangeFun) {
         $('#' + id).combobox({
             url: url,
+            method: method,
             lines: true,
             panelHeight: '200',//combobox高度统一用200px,避免后期被测试人员揪出来整改
             editable: true,
@@ -426,7 +447,10 @@ var Page = {
             textField: textField,
             onLoadSuccess: afterLoadFun,
             onSelect: afterSelectFun,
-            onChange: afterChangeFun
+            onChange: afterChangeFun,
+            loadFilter: function (res) {
+                return res.data
+            }
         });
     },
     /**
@@ -439,7 +463,7 @@ var Page = {
             if (b) {
                 progressLoad();
                 jrequest.post(baseHttpUrl + url, paramMap)
-                    .then(res=>{
+                    .then(res => {
                         progressClose();
                         if (res.data.result === 200) {
                             parent.$.messager.alert('提示', res.data.message, 'info');
@@ -479,16 +503,11 @@ var Page = {
         });
     },
     /**注册父级菜单选择框**/
-    registerComboboxSelect: function (comboboxId, url, code, name) {
-        this.combobox(comboboxId, baseHttpUrl + url, code, name,
-            function () {
-                //此处执行加载完成后的事件
-            },
-            function (row) {
-            },
-            function (newVal, oldVal) {
-
-            }
+    registerComboboxSelect: function (comboboxId, method, url, code, name, afterLoadFun, afterSelectFun, afterChangeFun) {
+        this.combobox(comboboxId, method, baseHttpUrl + url, code, name,
+            afterLoadFun,
+            afterSelectFun,
+            afterChangeFun
         )
     }
 };

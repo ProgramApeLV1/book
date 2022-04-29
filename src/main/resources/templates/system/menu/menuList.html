@@ -9,7 +9,7 @@
         menuPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            menuPage.dataGrid = Page.registerDataGrid("tableList", 'menuApi/getMenuInfoList', "toolbar", {});
+            menuPage.dataGrid = Page.registerDataGrid("tableList", 'GET','menuApi/getMenuInfoList', "toolbar", {});
             menuPage.registerEvent($("#add")[0], "click", function () {
                 menuPage.registerWindowDialog(menuPage.dataGrid, "addWin", "新增", 'menuCont/gotoMenuInfoAddPage', 25 + '%', 60 + '%');
             });
@@ -92,7 +92,7 @@
     <table id="tableList" width="100%" class="easyui-datagrid" height="100%">
         <thead>
         <tr>
-            <th field="id" align="center" width="2%" hidden="true"></th>
+            <th field="unid" align="center" width="2%" hidden="true"></th>
             <th field="name" align="center" width="10%" data-options="halign:'center'"
                 formatter="menuPage.moreInfoFormatter">菜单名称
             </th>
@@ -109,13 +109,13 @@
                 formatter="menuPage.moreInfoFormatter">父级菜单编码
             </th>
             <th field="seq" align="center" width="10%" data-options="halign:'center'"
-                formatter="menuPage.moreInfoFormatter">序号
+                formatter="menuPage.moreInfoFormatter">排序
             </th>
             <th field="statusName" align="center" width="10%" data-options="halign:'center'"
                 formatter="menuPage.moreInfoFormatter">状态
             </th>
-            <th field="resourceTypeName" align="center" width="10%" data-options="halign:'center'"
-                formatter="menuPage.moreInfoFormatter">菜单类别
+            <th field="levelName" align="center" width="10%" data-options="halign:'center'"
+                formatter="menuPage.moreInfoFormatter">菜单等级
             </th>
             <th field="createTime" align="center" width="10%" data-options="halign:'center'"
                 formatter="menuPage.moreInfoFormatter">创建时间

@@ -2,6 +2,7 @@ package com.book.controller.api;
 
 
 import com.book.common.units.PageInfo;
+import com.book.common.units.ResponseJson;
 import com.book.service.IInStockRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +25,15 @@ public class InStockRecordController {
     @Autowired
     private IInStockRecordService inStockRecordService;
 
-    @PostMapping(value = "/getReturnBookInfo")
-    public Object getReturnBookInfo(Integer page, Integer rows, String refCode, String inCode) throws Exception {
+    @GetMapping(value = "/getReturnBookInfo")
+    public ResponseJson getReturnBookInfo(Integer page, Integer rows, String refCode, String inCode) throws Exception {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<>();
         condition.put("refCode", refCode);
         condition.put("inCode", inCode);
         pageInfo.setCondition(condition);
         inStockRecordService.getReturnBookInfo(pageInfo);
-        return pageInfo;
+        return ResponseJson.success(pageInfo);
     }
 }
 

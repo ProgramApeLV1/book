@@ -10,7 +10,20 @@
             $(function () {
                 $("#resourceType").combobox("setValue", menu.resourceType);
                 //加载父级菜单combobox
-                Page.registerComboboxSelect("parentName", "/menuApi/getParentMenuList", "code", "name");
+                Page.registerComboboxSelect("parentName", 'GET', "/menuApi/getParentMenuList", "code", "name");
+
+                $('#resourceType').combobox({
+                    onSelect: function (e) {
+                        const parentName = $('#parentName');
+                        if (e.value === '0') {
+                            parentName.combobox({disabled: false});
+                        }
+                        if (e.value === '1') {
+                            parentName.combobox('setValue', '');
+                            parentName.combobox({disabled: true});
+                        }
+                    }
+                });
             });
 
             //提交表单
@@ -87,14 +100,14 @@
                     </tr>
                     <tr>
                         <td>
-                            <label>菜单类别：</label>
+                            <label>菜单类型：</label>
                         </td>
                         <td>
                             <select id="resourceType" name="resourceType" class="easyui-combobox" style="width: 180px;"
                                     panelHeight="auto"
                                     data-options="prompt:'请选择',required:true,editable:false">
-                                <option value="0">一级菜单</option>
-                                <option value="1">二级菜单</option>
+                                <option value="0">菜单</option>
+                                <option value="1">按钮</option>
                             </select>
                         </td>
                     </tr>

@@ -5,9 +5,12 @@ import com.book.common.units.PageInfo;
 import com.book.model.Menu;
 import com.book.mapper.MenuMapper;
 import com.book.model.MenuTree;
+import com.book.model.vo.MenuVo;
 import com.book.service.IMenuService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public void getMenuInfoList(PageInfo pageInfo) {
         Page page = new Page(pageInfo.getNowpage(), pageInfo.getSize());
-        List<Menu> list = baseMapper.getMenuInfoList(page, pageInfo.getCondition());
+        List<MenuVo> list = baseMapper.getMenuInfoList(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
     }
@@ -65,5 +68,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public List<Menu> getParentMenuList() {
         return baseMapper.getParentMenuList();
+    }
+
+    @Override
+    public MenuVo getCurMenuInfo(String unid) {
+        MenuVo res = new MenuVo();
+        Menu menu = baseMapper.selectById(unid);
+        BeanUtils.copyProperties(menu, res);
+        return res;
+    }
+
+    @Override
+    public Menu getParentMenu(String pCode) {
+        return baseMapper.getMenuInfo(pCode);
     }
 }

@@ -6,7 +6,7 @@
     <sql id="Base_Column_List">
         ${alias}.unid, ${alias}.name, ${alias}.code, ${alias}.url, ${alias}.description,
         ${alias}.icon, ${alias}.pCode, ${alias}.seq, ${alias}.status, ${alias}.resourceType,
-        ${alias}.createTime
+        ${alias}.createTime, ${alias}.level
     </sql>
 
     <select id="getParentMenuTree" resultType="com.book.model.MenuTree">
@@ -30,6 +30,7 @@
                 </otherwise>
             </choose>
             AND t1.`status` = #{status}
+            AND t1.`resourceType` = 0
         </where>
     </select>
 
@@ -48,16 +49,26 @@
         WHEN '1' THEN '有效'
         ELSE '' END AS statusName,
         CASE t.resourceType
+        WHEN '0' THEN '菜单'
+        WHEN '1' THEN '按钮'
+        ELSE '' END AS resourceTypeName,
+        t.createTime,
+        t.level,
+        CASE t.level
         WHEN '0' THEN '一级菜单'
         WHEN '1' THEN '二级菜单'
-        ELSE '' END AS resourceTypeName,
-        t.createTime
+        WHEN '2' THEN '三级菜单'
+        WHEN '3' THEN '四级菜单'
+        ELSE '' END AS levelName
         FROM
         os_menu AS t
         WHERE
         1=1
+        <if test="level != null and level != '' ">
+           AND t.`level` = #{level}
+        </if>
         <if test="menuName != null and menuName != '' ">
-           AND t.`name` LIKE CONCAT_WS(#{menuName},"%","%",NULL)
+            AND t.`name` LIKE CONCAT_WS(#{menuName},"%","%",NULL)
         </if>
         ORDER BY t.createTime DESC
     </select>
@@ -70,5 +81,15 @@
         WHERE
         1=1
         AND t.resourceType = 0
+        AND t.level = 0
+    </select>
+    <select id="getMenuInfo" resultType="com.book.model.Menu">
+        SELECT
+        <include refid="Base_Column_List"><property name="alias" value="t"/></include>
+        FROM
+        os_menu AS t
+        WHERE
+        1=1
+        AND t.code = #{pCode}
     </select>
 </mapper>

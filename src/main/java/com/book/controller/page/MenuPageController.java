@@ -6,6 +6,7 @@ import com.book.common.units.PageInfo;
 import com.book.common.units.StringUtils;
 import com.book.model.Menu;
 import com.book.model.MenuTree;
+import com.book.model.vo.MenuVo;
 import com.book.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +58,7 @@ public class MenuPageController extends BaseController {
 
     @GetMapping(value = "/gotoMenuInfoEditPage")
     public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView, String unid) {
-        Menu menu = menuService.selectById(unid);
+        MenuVo menu = menuService.getCurMenuInfo(unid);
         modelAndView.addObject("menu", menu);
         modelAndView.setViewName(PagePathConstant.SYSTEM_MENU.concat(PagePathConstant.MENUEDIT));
         return modelAndView;

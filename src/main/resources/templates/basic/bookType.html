@@ -9,7 +9,7 @@
         bookPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            bookPage.dataGrid = Page.registerDataGrid("table", 'bookTypeApi/getBookTypeList', "toolbar",{});
+            bookPage.dataGrid = Page.registerDataGrid("table", 'GET', 'bookTypeApi/getBookTypeList', "toolbar", {});
             bookPage.registerEvent($("#add")[0], "click", function () {
                 bookPage.registerWindowDialog(bookPage.dataGrid, "addWin", "新增", 'bookInfoCont/addPage', 80 + '%', 90 + '%');
             });

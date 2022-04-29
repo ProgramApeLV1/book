@@ -24,7 +24,7 @@ function openNav(id) {
 function InitLeftMenu() {
     jrequest.get(baseHttpUrl + "/menuApi/getMenuTree", {})
         .then(res => {
-            const json = res.data;
+            const json = res.data.data;
             $("#divMenu").empty();
             var menulist = "";
             if (json != null && json.length > 0) {

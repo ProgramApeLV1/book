@@ -9,7 +9,7 @@
         userPage.dataGrid = null;
         $(function () {
             //调用公用类加载datagrid
-            userPage.dataGrid = Page.registerDataGrid("tableList", 'userApi/getUserList', "toolbar", {});
+            userPage.dataGrid = Page.registerDataGrid("tableList", 'GET','userApi/getUserList', "toolbar", {});
             userPage.registerEvent($("#add")[0], "click", function () {
                 userPage.registerWindowDialog(userPage.dataGrid, "addWin", "新增", 'userCont/gotoUserInfoAddPage', 50 + '%', 50 + '%');
             });

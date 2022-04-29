@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.book.model.Menu;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.book.model.MenuTree;
+import com.book.model.vo.MenuVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,8 +23,9 @@ public interface MenuMapper extends BaseMapper<Menu> {
     List<MenuTree> getParentMenuTree(@Param("pCode") String pCode,@Param("status") Integer status);
 
 
-    List<Menu> getMenuInfoList(Page page, Map<String, Object> condition);
+    List<MenuVo> getMenuInfoList(Page page, Map<String, Object> condition);
 
     List<Menu> getParentMenuList();
 
+    Menu getMenuInfo(@Param("pCode") String pCode);
 }

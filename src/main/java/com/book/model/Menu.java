@@ -64,7 +64,11 @@ public class Menu implements Serializable {
      */
     private Integer status;
     /**
-     * 菜单类别  0：一级菜单   1：二级菜单   2：按钮菜单 3:顶部导航菜单
+     * 菜单类别  0：一级菜单   1：二级菜单
+     */
+    private Integer level;
+    /**
+     * 菜单类别  0：菜单  2：按钮
      */
     private Integer resourceType;
     /**

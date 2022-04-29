@@ -4,6 +4,7 @@ import com.book.common.units.PageInfo;
 import com.book.model.Menu;
 import com.baomidou.mybatisplus.service.IService;
 import com.book.model.MenuTree;
+import com.book.model.vo.MenuVo;
 
 import java.util.List;
 
@@ -23,4 +24,7 @@ public interface IMenuService extends IService<Menu> {
 
     List<Menu> getParentMenuList();
 
+    MenuVo getCurMenuInfo(String unid);
+
+    Menu getParentMenu(String pCode);
 }

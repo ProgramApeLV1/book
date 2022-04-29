@@ -34,18 +34,18 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
-    @PostMapping(value = "/getUserList")
-    public Object getUserList(Integer page, Integer rows, String userName) throws Exception {
+    @GetMapping(value = "/getUserList")
+    public ResponseJson getUserList(Integer page, Integer rows, String userName) throws Exception {
         PageInfo pageInfo = new PageInfo(page, rows);
         Map<String, Object> condition = new HashMap<>();
         condition.put("userName", userName);
         pageInfo.setCondition(condition);
         userService.getUserList(pageInfo);
-        return pageInfo;
+        return ResponseJson.success(pageInfo);
     }
 
     @PostMapping(value = "/add")
-    public Object add(@RequestBody UserVo userVo) throws Exception {
+    public ResponseJson add(@RequestBody UserVo userVo) throws Exception {
         User user = new User();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         String userCode = formatter.format(LocalDateTime.now()) + String.format("%04d", new Random().nextInt(9999));
@@ -61,7 +61,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping(value = "/edit")
-    public Object edit(@RequestBody User user) throws Exception {
+    public ResponseJson edit(@RequestBody User user) throws Exception {
         User curUser = userService.selectById(user.getId());
         if (Objects.isNull(curUser)) {
             return ResponseJson.error("未查到当前用户!");
@@ -72,13 +72,13 @@ public class UserController extends BaseController {
     }
 
     @PostMapping(value = "/deleteWorkById")
-    public Object deleteWorkById(String id) throws Exception {
+    public ResponseJson deleteWorkById(String id) throws Exception {
         userService.deleteById(id);
         return ResponseJson.success("删除用户成功");
     }
 
     @PostMapping(value = "/updatePwdByUserId")
-    public Object updatePwdByUserId(@RequestBody UpdatePwdRequest request) throws Exception {
+    public ResponseJson updatePwdByUserId(@RequestBody UpdatePwdRequest request) throws Exception {
         if (StringUtil.isEmpty(request.getUserId())) {
             return ResponseJson.error("用户id不能为空!");
         }
