@@ -1,4 +1,4 @@
-package com.book.controller.api.req;
+package com.book.controller.api.req.user;
 
 import lombok.Data;
 

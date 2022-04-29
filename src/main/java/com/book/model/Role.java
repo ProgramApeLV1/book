@@ -46,5 +46,6 @@ public class Role implements Serializable {
     /**
      * 创建时间
      */
+    @TableField("create_time")
     private Date createTime;
 }

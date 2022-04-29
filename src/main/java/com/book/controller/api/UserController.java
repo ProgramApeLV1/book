@@ -4,7 +4,7 @@ package com.book.controller.api;
 import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
-import com.book.controller.api.req.RequestUpdatePwd;
+import com.book.controller.api.req.user.RequestUpdatePwd;
 import com.book.model.User;
 import com.book.model.vo.UserVo;
 import com.book.service.IUserService;

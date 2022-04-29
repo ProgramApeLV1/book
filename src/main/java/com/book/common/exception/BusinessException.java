@@ -48,6 +48,11 @@ public class BusinessException extends RuntimeException {
         this.errorMsg = apiCode.getMessage();
     }
 
+    public BusinessException(int code, String msg) {
+        this.errorCode = code;
+        this.errorMsg = msg;
+    }
+
     public BusinessException(String errorMsg, Throwable cause) {
         super(errorMsg, cause);
         this.errorCode = ApiCode.INTERNAL_FAIL.getCode();
