@@ -4,8 +4,7 @@ package com.book.controller.api;
 import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
-import com.book.common.units.StringUtil;
-import com.book.controller.api.req.UpdatePwdRequest;
+import com.book.controller.api.req.RequestUpdatePwd;
 import com.book.model.User;
 import com.book.model.vo.UserVo;
 import com.book.service.IUserService;
@@ -15,6 +14,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -78,16 +78,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping(value = "/updatePwdByUserId")
-    public ResponseJson updatePwdByUserId(@RequestBody UpdatePwdRequest request) throws Exception {
-        if (StringUtil.isEmpty(request.getUserId())) {
-            return ResponseJson.error("用户id不能为空!");
-        }
-        if (StringUtil.isEmpty(request.getPassword())) {
-            return ResponseJson.error("旧密码不能为空!");
-        }
-        if (StringUtil.isEmpty(request.getNewPassword())) {
-            return ResponseJson.error("新密码不能为空!");
-        }
+    public ResponseJson updatePwdByUserId(@RequestBody @Valid RequestUpdatePwd request) throws Exception {
         User curUser = userService.selectById(request.getUserId());
         if (Objects.isNull(curUser)) {
             return ResponseJson.error("未查到当前用户!");

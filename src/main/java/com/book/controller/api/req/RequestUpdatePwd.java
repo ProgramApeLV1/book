@@ -1,11 +1,9 @@
 package com.book.controller.api.req;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -16,18 +14,21 @@ import java.time.LocalDateTime;
  * @since 2019-01-03
  */
 @Data
-public class UpdatePwdRequest implements Serializable {
+public class RequestUpdatePwd implements Serializable {
 
     /**
      * 用户主键id
      */
+    @NotBlank(message = "用户id不能为空")
     private String userId;
     /**
      * 旧密码
      */
+    @NotBlank(message = "旧密码不能为空")
     private String password;
     /**
      * 新密码
      */
+    @NotBlank(message = "新密码不能为空")
     private String newPassword;
 }

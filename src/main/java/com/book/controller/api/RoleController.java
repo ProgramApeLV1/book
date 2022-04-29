@@ -3,13 +3,10 @@ package com.book.controller.api;
 
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
+import com.book.model.vo.RoleVo;
 import com.book.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +35,24 @@ public class RoleController {
         pageInfo.setCondition(condition);
         roleService.getRoleList(pageInfo);
         return ResponseJson.success(pageInfo);
+    }
+
+    @PostMapping(value = "/add")
+    public ResponseJson add(@RequestBody RoleVo roleVo) throws Exception {
+
+        return ResponseJson.success();
+    }
+
+    @PutMapping(value = "/put")
+    public ResponseJson put(@RequestBody RoleVo roleVo) throws Exception {
+
+        return ResponseJson.success();
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponseJson delete(@RequestBody RoleVo roleVo) throws Exception {
+        roleService.deleteById(roleVo.getUnid());
+        return ResponseJson.success();
     }
 }
 
