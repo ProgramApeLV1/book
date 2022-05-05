@@ -1,9 +1,9 @@
 package com.book.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.book.model.LibraryStock;
 import com.book.mapper.LibraryStockMapper;
 import com.book.service.ILibraryStockService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

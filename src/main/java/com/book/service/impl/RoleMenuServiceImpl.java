@@ -3,7 +3,7 @@ package com.book.service.impl;
 import com.book.model.RoleMenu;
 import com.book.mapper.RoleMenuMapper;
 import com.book.service.IRoleMenuService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

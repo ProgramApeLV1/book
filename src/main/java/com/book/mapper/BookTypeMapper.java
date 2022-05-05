@@ -1,9 +1,10 @@
 package com.book.mapper;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.book.model.BookType;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.book.model.vo.BookTypeVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -18,5 +19,5 @@ import java.util.Map;
  */
 public interface BookTypeMapper extends BaseMapper<BookType> {
 
-    List<BookTypeVo> getBookTypeList(Page page, Map<String, Object> condition);
+    List<BookTypeVo> getBookTypeList(Page page, @Param(value = "condition") Map<String, Object> condition);
 }

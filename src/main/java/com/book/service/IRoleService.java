@@ -2,7 +2,10 @@ package com.book.service;
 
 import com.book.common.units.PageInfo;
 import com.book.model.Role;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.book.model.vo.RoleVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,7 @@ import com.baomidou.mybatisplus.service.IService;
 public interface IRoleService extends IService<Role> {
 
     void getRoleList(PageInfo pageInfo);
+
+    List<RoleVo> getRootRoleList();
+
 }

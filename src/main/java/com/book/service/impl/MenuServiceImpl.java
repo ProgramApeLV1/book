@@ -1,16 +1,14 @@
 package com.book.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.book.common.units.PageInfo;
 import com.book.model.Menu;
 import com.book.mapper.MenuMapper;
 import com.book.model.MenuTree;
 import com.book.model.vo.MenuVo;
 import com.book.service.IMenuService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

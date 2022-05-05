@@ -1,6 +1,5 @@
 package com.book.controller.api.req.role;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

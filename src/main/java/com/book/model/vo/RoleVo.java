@@ -1,13 +1,8 @@
 package com.book.model.vo;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -37,13 +32,17 @@ public class RoleVo implements Serializable {
     /**
      * 角色名
      */
-    private String pRoleName;
+    private String pidName;
     /**
      * 0:禁用 1:启用
      */
     private Integer status;
     /**
+     * 0:禁用 1:启用
+     */
+    private String statusName;
+    /**
      * 创建时间
      */
-    private Date createTime;
+    private String createTime;
 }

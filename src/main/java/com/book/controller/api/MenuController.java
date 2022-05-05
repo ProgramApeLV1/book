@@ -68,19 +68,15 @@ public class MenuController extends BaseController {
         menu.setStatus(1);
         menu.setIcon("icon-taginfo");
         menu.setCreateTime(new Date());
-        menu.setUrl("NONE");
-        menuService.insert(menu);
+        menu.setUrl(StringUtil.isEmpty(menuVo.getUrl()) ? "NONE" : menuVo.getUrl());
+        menuService.save(menu);
         return ResponseJson.success();
     }
 
     @PostMapping(value = "/editMenu")
     public ResponseJson editMenu(@RequestBody MenuVo menuVo) throws Exception {
-        Menu menu = menuService.selectById(menuVo.getUnid());
-        if (StringUtils.isNotBlank(menuVo.getUrl())) {
-            menu.setUrl(menuVo.getUrl());
-        } else {
-            menu.setUrl("NONE");
-        }
+        Menu menu = menuService.getById(menuVo.getUnid());
+        menu.setUrl(StringUtil.isEmpty(menuVo.getUrl()) ? "NONE" : menuVo.getUrl());
         if (StringUtils.isEmpty(menuVo.getPCode()) || "NONE".equals(menuVo.getPCode())) {
             menu.setPCode("NONE");
             menu.setLevel(0);
@@ -99,7 +95,7 @@ public class MenuController extends BaseController {
 
     @PostMapping(value = "/deleteWorkById")
     public ResponseJson deleteWorkById(String unid) throws Exception {
-        menuService.deleteById(unid);
+        menuService.removeById(unid);
         return ResponseJson.success();
     }
 }

@@ -4,21 +4,26 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        ${alias}.unid, ${alias}.role_name AS roleName, ${alias}.pid, ${alias}.status, ${alias}.createTime
+        ${alias}.unid, ${alias}.role_name AS roleName, ${alias}.pid, ${alias}.status, ${alias}.create_time AS createTime
     </sql>
 
     <select id="getRoleList" resultType="com.book.model.vo.RoleVo">
         SELECT
-        <include refid="Base_Column_List"><property name="alias" value="t"/></include>
-
+        <include refid="Base_Column_List"><property name="alias" value="t"/></include>,
+        CASE t.status
+        WHEN '0' THEN '禁用'
+        WHEN '1' THEN '启用'
+        ELSE '' END AS statusName,
+        t1.role_name AS pidName
         FROM
             os_role AS t
+            LEFT JOIN os_role t1 ON t.pid = t1.unid
         WHERE
             1 = 1
-            <if test="role_name != null and role_name != '' ">
-                AND t.role_name LIKE CONCAT_WS(#{role_name},"%","%",NULL)
+            <if test="condition.roleName != null and condition.roleName != '' ">
+                AND t.role_name LIKE CONCAT_WS(#{condition.roleName},"%","%",NULL)
             </if>
-            ORDER BY t.createTime DESC
+            ORDER BY t.create_time DESC
     </select>
 
 </mapper>

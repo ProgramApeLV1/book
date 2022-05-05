@@ -13,6 +13,8 @@ import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -703,9 +705,9 @@ public class StringUtil {
      * 将用逗号组成的字符串转换成加上单引号，用于sql的条件
      *
      * @param str 1,2,3
+     * @return '1','2','3'
      * @author Laihz
      * @date Nov 06,2016
-     * @return    '1','2','3'
      */
     public static String filtrateStringToSqlQuotes(String str) {
         if (str != null) {
@@ -1235,6 +1237,7 @@ public class StringUtil {
 
     /**
      * 获取当天时间
+     *
      * @return 字符串
      */
     public static String dateForMater() {
@@ -1304,6 +1307,16 @@ public class StringUtil {
 
     public static String identityCutEncrypt(String identity) {
         return identity.replaceAll("(\\d{4})\\d{10}(\\d{4})", "$1**********$2");
+    }
+
+    /***
+     * 转化日期为 yyyy-MM-dd HH:mm:ss 格式的字符串
+     * @param localDateTime 日期
+     * @return 字符串
+     */
+    public static String localDateTimeStr(LocalDateTime localDateTime) {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return format.format(localDateTime);
     }
 
     /**

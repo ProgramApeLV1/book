@@ -1,7 +1,7 @@
 package com.book.service;
 
 import com.book.model.LibraryStock;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

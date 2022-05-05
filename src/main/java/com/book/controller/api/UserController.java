@@ -56,13 +56,13 @@ public class UserController extends BaseController {
         user.setUserCode(userCode);
         user.setCreateTime(LocalDateTime.now());
         user.setStatus(1);
-        userService.insert(user);
+        userService.save(user);
         return ResponseJson.success("用户新增成功");
     }
 
     @PostMapping(value = "/edit")
     public ResponseJson edit(@RequestBody User user) throws Exception {
-        User curUser = userService.selectById(user.getId());
+        User curUser = userService.getById(user.getId());
         if (Objects.isNull(curUser)) {
             return ResponseJson.error("未查到当前用户!");
         }
@@ -73,13 +73,13 @@ public class UserController extends BaseController {
 
     @PostMapping(value = "/deleteWorkById")
     public ResponseJson deleteWorkById(String id) throws Exception {
-        userService.deleteById(id);
+        userService.removeById(id);
         return ResponseJson.success("删除用户成功");
     }
 
     @PostMapping(value = "/updatePwdByUserId")
     public ResponseJson updatePwdByUserId(@RequestBody @Valid RequestUpdatePwd request) throws Exception {
-        User curUser = userService.selectById(request.getUserId());
+        User curUser = userService.getById(request.getUserId());
         if (Objects.isNull(curUser)) {
             return ResponseJson.error("未查到当前用户!");
         }

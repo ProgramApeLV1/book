@@ -64,11 +64,11 @@
         os_menu AS t
         WHERE
         1=1
-        <if test="level != null and level != '' ">
-           AND t.`level` = #{level}
+        <if test="condition.level != null and condition.level != '' ">
+           AND t.`level` = #{condition.level}
         </if>
-        <if test="menuName != null and menuName != '' ">
-            AND t.`name` LIKE CONCAT_WS(#{menuName},"%","%",NULL)
+        <if test="condition.menuName != null and condition.menuName != '' ">
+            AND t.`name` LIKE CONCAT_WS(#{condition.menuName},"%","%",NULL)
         </if>
         ORDER BY t.createTime DESC
     </select>

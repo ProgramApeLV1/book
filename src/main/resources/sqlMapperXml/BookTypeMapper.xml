@@ -21,8 +21,8 @@
         FROM
         cs_book_type AS t
         <where>
-            <if test="typeName neq null and typeName neq '' ">
-              AND t.typeName LIKE '%${typeName}%'
+            <if test="condition.typeName neq null and condition.typeName neq '' ">
+              AND t.typeName LIKE CONCAT_WS(#{condition.typeName},"%","%",NULL)
             </if>
         </where>
     </select>

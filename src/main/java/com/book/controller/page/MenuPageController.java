@@ -22,37 +22,37 @@ public class MenuPageController extends BaseController {
 
     @GetMapping(value = "/gotoBookInfoPage")
     public ModelAndView gotoBookInfoPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BASIC.concat(PagePathConstant.BOOKINFO));
+        modelAndView.setViewName(PagePathConstant.BOOKINFO_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoBookTypePage")
     public ModelAndView gotoBookTypePage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BASIC.concat(PagePathConstant.BOOKTYPE));
+        modelAndView.setViewName(PagePathConstant.BOOKTYPE_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoBoorowBookPage")
     public ModelAndView gotoBoorowBookPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BOOKBOOROW.concat(PagePathConstant.BOOROWBOOKINFO));
+        modelAndView.setViewName(PagePathConstant.BOOROWBOOKINFO_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoReturnBookPage")
     public ModelAndView gotoReturnBookPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BOOKRETURN.concat(PagePathConstant.RETURNBOOKINFO));
+        modelAndView.setViewName(PagePathConstant.RETURNBOOKINFO_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoMenuInfoPage")
     public ModelAndView gotoMenuInfoPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.SYSTEM_MENU.concat(PagePathConstant.MENULIST));
+        modelAndView.setViewName(PagePathConstant.MENULIST_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoMenuInfoAddPage")
     public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.SYSTEM_MENU.concat(PagePathConstant.MENUADD));
+        modelAndView.setViewName(PagePathConstant.MENUADD_PAGE);
         return modelAndView;
     }
 
@@ -60,13 +60,19 @@ public class MenuPageController extends BaseController {
     public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView, String unid) {
         MenuVo menu = menuService.getCurMenuInfo(unid);
         modelAndView.addObject("menu", menu);
-        modelAndView.setViewName(PagePathConstant.SYSTEM_MENU.concat(PagePathConstant.MENUEDIT));
+        modelAndView.setViewName(PagePathConstant.MENUEDIT_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoUserInfoPage")
     public ModelAndView gotoUserInfoPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.SYSTEM_USER.concat(PagePathConstant.USERLIST));
+        modelAndView.setViewName(PagePathConstant.USERLIST_PAGE);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/gotoRoleInfoPage")
+    public ModelAndView gotoRoleInfoPage(ModelAndView modelAndView) {
+        modelAndView.setViewName(PagePathConstant.ROLELIST_PAGE);
         return modelAndView;
     }
 }

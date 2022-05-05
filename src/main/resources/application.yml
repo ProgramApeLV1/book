@@ -46,6 +46,8 @@ mybatis:
 mybatis-plus:
   mapper-locations: classpath:sqlMapperXml/*.xml
   type-aliases-package: com.book.model
+  configuration:
+    map-underscore-to-camel-case: false
 
 thymeleaf:
   prefix: classpath:/templates/

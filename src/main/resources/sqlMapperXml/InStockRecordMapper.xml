@@ -31,10 +31,10 @@
         LEFT JOIN cs_book_type t3 ON t.typeCode = t3.`code`
         <where>
             <if test="inCode neq null and inCode neq '' ">
-                AND t.inCode LIKE '${inCode}%'
+                AND t.inCode LIKE CONCAT_WS(#{condition.inCode},"%","%",NULL)
             </if>
             <if test="refCode neq null and refCode neq '' ">
-                AND t.refCode LIKE '${refCode}%'
+                AND t.refCode LIKE CONCAT_WS(#{condition.refCode},"%","%",NULL)
             </if>
         </where>
     </select>

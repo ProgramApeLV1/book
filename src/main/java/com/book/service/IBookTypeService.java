@@ -2,7 +2,7 @@ package com.book.service;
 
 import com.book.common.units.PageInfo;
 import com.book.model.BookType;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

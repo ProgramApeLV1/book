@@ -1,8 +1,8 @@
 package com.book.mapper;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.book.model.User;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.book.model.vo.UserVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-    List<UserVo> getUserList(Page page, Map<String, Object> condition);
+    List<UserVo> getUserList(Page page, @Param(value = "condition") Map<String, Object> condition);
 
     void updatePwdByUserId(@Param("id") String id, @Param("password") String password);
 }

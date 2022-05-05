@@ -29,25 +29,25 @@ public class UserPageController extends BaseController {
 
     @GetMapping(value = "/gotoUserInfoAddPage")
     public ModelAndView gotoUserInfoAddPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.SYSTEM_USER.concat(PagePathConstant.USERADD));
+        modelAndView.setViewName(PagePathConstant.USERADD_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoUserInfoEditPage")
     public ModelAndView gotoUserInfoEditPage(ModelAndView modelAndView, String id) {
-        User user = userService.selectById(id);
+        User user = userService.getById(id);
         String phone = StringUtil.phoneCutEncrypt(user.getPhone());
         String identity = StringUtil.identityCutEncrypt(user.getIdentity());
         user.setPhone(phone);
         user.setIdentity(identity);
         modelAndView.addObject("user", user);
-        modelAndView.setViewName(PagePathConstant.SYSTEM_USER.concat(PagePathConstant.USEREDIT));
+        modelAndView.setViewName(PagePathConstant.USEREDIT_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoEditPwdPage")
     public ModelAndView gotoEditPwdPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.SYSTEM_USER.concat(PagePathConstant.EDITPWD));
+        modelAndView.setViewName(PagePathConstant.EDITPWD_PAGE);
         return modelAndView;
     }
 

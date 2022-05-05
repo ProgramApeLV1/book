@@ -1,13 +1,13 @@
 package com.book.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.book.common.units.PageInfo;
 import com.book.model.BookInfo;
 import com.book.mapper.BookInfoMapper;
 import com.book.model.vo.BookInfoVo;
 import com.book.service.IBookInfoService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

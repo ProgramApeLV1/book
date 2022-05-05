@@ -27,11 +27,11 @@
         LEFT JOIN cs_book_info t1 ON t.bookCode = t1.bookCode
         LEFT JOIN cs_book_type t2 ON t.typeCode = t2.`code`
         <where>
-            <if test="outCode neq null and outCode neq '' ">
-                AND t.outCode LIKE '${outCode}%'
+            <if test="condition.outCode neq null and condition.outCode neq '' ">
+                AND t.outCode LIKE CONCAT_WS(#{condition.outCode},"%","%",NULL)
             </if>
-            <if test="refCode neq null and refCode neq '' ">
-                AND t.refCode LIKE '${refCode}%'
+            <if test="condition.refCode neq null and condition.refCode neq '' ">
+                AND t.refCode LIKE CONCAT_WS(#{condition.refCode},"%","%",NULL)
             </if>
         </where>
     </select>

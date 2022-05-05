@@ -26,7 +26,7 @@ import static com.book.common.base.Constant.TOKEN_NAME;
 
 
 /**
- * @author laihz
+ * @author wyh
  * @description: 控制层基础类
  * @since 2018-05-07 11:10
  */
@@ -67,7 +67,7 @@ public class BaseController implements Serializable {
      * @description 获取当前登录的用户对象缓存的账号权限信息
      */
     public List<User> getAllUser() {
-        List<User> userList = userService.selectList(null);
+        List<User> userList = userService.list();
         return userList;
     }
 

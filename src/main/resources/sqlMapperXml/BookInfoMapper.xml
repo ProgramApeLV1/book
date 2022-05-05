@@ -27,8 +27,8 @@
         cs_book_info AS t
         LEFT JOIN cs_book_type AS t1 ON t.typeCode = t1.`code`
         <where>
-            <if test="bookName neq null and bookName neq '' ">
-                AND t.bookName LIKE '%${bookName}%'
+            <if test="condition.bookName neq null and condition.bookName neq '' ">
+                AND t.bookName LIKE CONCAT_WS(#{condition.bookName},"%","%",NULL)
             </if>
         </where>
     </select>

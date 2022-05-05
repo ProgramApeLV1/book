@@ -481,24 +481,59 @@ var Page = {
                             }
                         }
                     });
-                // $.post(baseHttpUrl + url, paramMap, function (date) {
-                //     progressClose();
-                //     if (date.result == 200) {
-                //         parent.$.messager.alert('提示', date.message, 'info');
-                //         //这里主要是为了执行操作后刷新界面
-                //         dateGrid.datagrid("load", args);
-                //         if (status == "Y") {
-                //             parent.refreshGrid();
-                //         }
-                //     } else {
-                //         parent.$.messager.alert('提示', date.message, 'info');
-                //         //这里主要是为了执行操作后刷新界面
-                //         dateGrid.datagrid("load", args);
-                //         if (status == "Y") {
-                //             parent.refreshGrid();
-                //         }
-                //     }
-                // }, 'JSON')
+            }
+        });
+    },
+    /**
+     *  注册普通messager.confirm
+     *  dataGrid：dateGrid对象，url：请求url，title：标题，info：内容
+     *  paramMap：需传参数对象，args：dateGrid带参时需填，status：二级弹窗刷新一级dataGrid需填
+     * */
+    messagerV2: function (dateGrid, {url, method, paramMap}, title, info, {args, status}) {
+        parent.$.messager.confirm(title, info, function (b) {
+            if (b) {
+                progressLoad();
+                if (method === 'DELETE') {
+                    jrequest.delete(baseHttpUrl + url, paramMap)
+                        .then(res => {
+                            progressClose();
+                            if (res.data.result === 200) {
+                                parent.$.messager.alert('提示', res.data.message, 'info');
+                                //这里主要是为了执行操作后刷新界面
+                                dateGrid.datagrid("load", args);
+                                if (status === "Y") {
+                                    parent.refreshGrid();
+                                }
+                            } else {
+                                parent.$.messager.alert('提示', res.data.message, 'info');
+                                //这里主要是为了执行操作后刷新界面
+                                dateGrid.datagrid("load", args);
+                                if (status === "Y") {
+                                    parent.refreshGrid();
+                                }
+                            }
+                        });
+                } else {
+                    jrequest.post(baseHttpUrl + url, paramMap)
+                        .then(res => {
+                            progressClose();
+                            if (res.data.result === 200) {
+                                parent.$.messager.alert('提示', res.data.message, 'info');
+                                //这里主要是为了执行操作后刷新界面
+                                dateGrid.datagrid("load", args);
+                                if (status === "Y") {
+                                    parent.refreshGrid();
+                                }
+                            } else {
+                                parent.$.messager.alert('提示', res.data.message, 'info');
+                                //这里主要是为了执行操作后刷新界面
+                                dateGrid.datagrid("load", args);
+                                if (status === "Y") {
+                                    parent.refreshGrid();
+                                }
+                            }
+                        });
+                }
             }
         });
     },
