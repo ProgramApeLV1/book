@@ -36,7 +36,7 @@ public class Role implements Serializable {
     @TableField("role_name")
     private String roleName;
     /**
-     * 父级 空则为最上级
+     * 父级 -1为最上级
      */
     private String pid;
     /**

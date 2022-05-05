@@ -8,7 +8,7 @@
 
         $(function () {
             //加载combobox
-            Page.registerComboboxSelect("pid", "/roleApi/getRootRoleList", "roleId", "roleName");
+            Page.registerComboboxSelect("pid", "GET","/roleApi/getRootRoleList", "unid", "roleName");
         });
 
         //提交表单
@@ -35,6 +35,9 @@
                     } else {
                         parent.$.messager.alert('提示', res.data.message, 'info');
                     }
+                }).catch(e => {
+                    progressClose();
+                    parent.$.messager.alert('提示', e.message, 'error');
                 });
                 return false;
             }

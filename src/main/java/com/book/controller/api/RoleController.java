@@ -15,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.websocket.server.PathParam;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +76,7 @@ public class RoleController {
     }
 
     @DeleteMapping(value = "/{roleId}")
-    public ResponseJson delete(@PathParam("roleId") String roleId) throws Exception {
+    public ResponseJson delete(@PathVariable("roleId") String roleId) throws Exception {
         Role role = roleService.getById(roleId);
         if (Objects.isNull(role)) throw new BusinessException(ApiCode.REQUEST_ERROR.getCode(), "角色id不存在");
         roleService.removeById(roleId);

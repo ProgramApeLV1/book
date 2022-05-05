@@ -489,7 +489,7 @@ var Page = {
      *  dataGrid：dateGrid对象，url：请求url，title：标题，info：内容
      *  paramMap：需传参数对象，args：dateGrid带参时需填，status：二级弹窗刷新一级dataGrid需填
      * */
-    messagerV2: function (dateGrid, {url, method, paramMap}, title, info, {args, status}) {
+    messagerV2: function (dateGrid, {url, method, paramMap}, title, info, args, status) {
         parent.$.messager.confirm(title, info, function (b) {
             if (b) {
                 progressLoad();

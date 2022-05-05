@@ -8,10 +8,15 @@
         const role = [[${role}]];
         $(function () {
             //加载父级菜单combobox
-            Page.registerComboboxSelect("pid", "/roleApi/getRootRoleList", "roleId", "roleName");
+            Page.registerComboboxSelect("pid", "GET", "/roleApi/getRootRoleList", "unid", "roleName");
 
             $("#status").combobox("setValue", role.status);
-            $("#pid").combobox("setValue", role.pid);
+            if (role.pid === '-1') {
+                $("#pid").combobox("setValue", '');
+                $("#pid").combobox({required: false, disabled: true});
+            } else {
+                $("#pid").combobox("setValue", role.pid);
+            }
         });
 
         //提交表单
@@ -23,20 +28,23 @@
                 return false;
             } else {
                 var data = serializeObject($("#formEdit"));
-                jrequest.post(
-                    baseHttpUrl + "userApi/update",
+                jrequest.put(
+                    baseHttpUrl + "roleApi/update",
                     JSON.stringify(data),
                     "application/json; charset=UTF-8"
                 ).then(res => {
+                    console.log(res)
                     progressClose();
                     if (res.data.result === 200) {
                         parent.$.messager.alert('提示', res.data.message, 'info');
                         parent.Page.refreshDataGrid(window.parentPanelDataGrid);
                         parent.Page.closeDialog(window.parentPanelDivId);
-
                     } else {
                         parent.$.messager.alert('提示', res.data.message, 'info');
                     }
+                }).catch(e => {
+                    progressClose();
+                    parent.$.messager.alert('提示', e.message, 'error');
                 });
                 return false;
             }
@@ -48,12 +56,12 @@
     <form id="formEdit" method="post">
         <table class="grid">
             <tr hidden>
-                <td><input id="unid" name="unid" class="easyui-textbox" th:value="${role.unid}"
+                <td><input id="unid" name="roleId" class="easyui-textbox" th:value="${role.unid}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
             </tr>
             <tr>
                 <td>角色名称：</td>
-                <td><input id="loginName" name="loginName" class="easyui-textbox" th:value="${role.roleName}"
+                <td><input id="roleName" name="roleName" class="easyui-textbox" th:value="${role.roleName}"
                            data-options="prompt:'请输入',width:180,required:true"></td>
             </tr>
             <tr>

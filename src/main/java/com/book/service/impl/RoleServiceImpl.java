@@ -1,6 +1,8 @@
 package com.book.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.book.common.units.BeanUtil;
 import com.book.common.units.PageInfo;
 import com.book.model.Role;
 import com.book.mapper.RoleMapper;
@@ -9,7 +11,9 @@ import com.book.service.IRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -36,7 +40,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
 
     @Override
     public List<RoleVo> getRootRoleList() {
-//        baseMapper.selectList()
-        return null;
+        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
+        List<Role> roles = baseMapper.selectList(wrapper.eq(Role::getPid, "-1").eq(Role::getStatus, 1));
+        return roles.stream().map(role -> {
+            RoleVo roleVo = new RoleVo();
+            BeanUtil.convertBean2Bean(role, roleVo);
+            return roleVo;
+        }).collect(Collectors.toCollection(ArrayList::new));
     }
 }

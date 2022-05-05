@@ -3,6 +3,7 @@ package com.book.controller.api.req.role;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,12 +28,12 @@ public class RequestRoleEdit implements Serializable {
     @NotBlank(message = "角色名称不能为空")
     private String roleName;
     /**
-     * 父级 空则为最上级
+     * 父级 -1为最上级
      */
-    private String pid;
+    private String pid = "-1";
     /**
      * 0:禁用 1:启用
      */
-    @NotBlank(message = "角色名称不能为空")
+    @NotNull(message = "状态不能为空")
     private Integer status;
 }

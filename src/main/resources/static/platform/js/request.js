@@ -24,7 +24,7 @@ var jrequest = (function () {
                         console.error(xhr)
                         console.error(status)
                         console.error(error)
-                        reject();
+                        reject(xhr.responseJSON);
                     }
                 })
             })
@@ -59,9 +59,11 @@ var jrequest = (function () {
                 })
             })
         },
-        put(url, params, notAsync) {
+        put(url, params, contentType, notAsync) {
             return new Promise((resolve, reject) => {
-                this._request(url, "put", "application/x-www-form-urlencoded",
+                this._request(url,
+                    "put",
+                    contentType ? contentType : "application/x-www-form-urlencoded",
                     params,
                     !notAsync
                 ).then(res => {
@@ -73,9 +75,11 @@ var jrequest = (function () {
                 })
             })
         },
-        delete(url, params, notAsync) {
+        delete(url, params, contentType, notAsync) {
             return new Promise((resolve, reject) => {
-                this._request(url, "delete", "application/json",
+                this._request(url,
+                    "delete",
+                    contentType ? contentType : "application/json",
                     params,
                     !notAsync
                 ).then(res => {
