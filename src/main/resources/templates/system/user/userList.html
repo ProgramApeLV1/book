@@ -11,7 +11,7 @@
             //调用公用类加载datagrid
             userPage.dataGrid = Page.registerDataGrid("tableList", 'GET','userApi/getUserList', "toolbar", {});
             userPage.registerEvent($("#add")[0], "click", function () {
-                userPage.registerWindowDialog(userPage.dataGrid, "addWin", "新增", 'userCont/gotoUserInfoAddPage', 50 + '%', 50 + '%');
+                userPage.registerWindowDialog(userPage.dataGrid, "addWin", "新增", 'userCont/gotoUserInfoAddPage', 50 + '%', 60 + '%');
             });
             userPage.registerEvent($("#find")[0], "click", function () {
                 userPage.dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
@@ -37,7 +37,7 @@
         }
 
         function editById(id) {
-            Page.registerWindowDialog(userPage.dataGrid, "editWin", "编辑", 'userCont/gotoUserInfoEditPage?id=' + id, 50 + '%', 50 + '%');
+            Page.registerWindowDialog(userPage.dataGrid, "editWin", "编辑", 'userCont/gotoUserInfoEditPage?id=' + id, 50 + '%', 60 + '%');
         }
 
         //详情框方法start
@@ -115,7 +115,7 @@
                 formatter="userPage.moreInfoFormatter">联系电话
             </th>
             <th field="userType" align="center" width="6%" data-options="halign:'center'"
-                formatter="userPage.moreInfoFormatter">用户角色
+                formatter="userPage.moreInfoFormatter">用户类型
             </th>
             <th field="statusName" align="center" width="10%" data-options="halign:'center'"
                 formatter="userPage.moreInfoFormatter">状态

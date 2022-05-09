@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -50,6 +48,19 @@ public class RoleController {
     @GetMapping(value = "/getRootRoleList")
     public ResponseJson getRootRoleList() throws Exception {
         List<RoleVo> roleVoList = roleService.getRootRoleList();
+        return ResponseJson.success(roleVoList);
+    }
+
+    @GetMapping(value = "/getAllRoleList")
+    public ResponseJson getAllRoleList() throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        params.put("status", 1);
+        List<Role> roles = roleService.listByMap(params);
+        List<RoleVo> roleVoList = roles.stream().map(role -> {
+            RoleVo roleVo = new RoleVo();
+            BeanUtil.convertBean2Bean(role, roleVo);
+            return roleVo;
+        }).collect(Collectors.toCollection(ArrayList::new));
         return ResponseJson.success(roleVoList);
     }
 

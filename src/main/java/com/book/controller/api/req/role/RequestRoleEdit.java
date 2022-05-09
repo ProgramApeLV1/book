@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 修改密码
+ * 修改角色
  * </p>
  *
  * @author wyh123

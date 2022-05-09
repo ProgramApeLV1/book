@@ -8,7 +8,7 @@
 
         $(function () {
             //加载父级菜单combobox
-            // Page.registerComboboxSelect("parentName", "/menuCont/getParentMenuList", "code", "name");
+            Page.registerComboboxSelect("roleIds", "GET","/roleApi/getAllRoleList", "unid", "roleName");
         });
 
         //提交表单
@@ -21,6 +21,7 @@
             } else {
                 var data = serializeObject($("#formAdd"));
                 data.password = md5(data.password);
+                data.roleIds = data.roleIds.split(",");
                 jrequest.post(
                     baseHttpUrl + "userApi/add",
                     JSON.stringify(data),
@@ -35,26 +36,10 @@
                     } else {
                         parent.$.messager.alert('提示', res.data.message, 'info');
                     }
+                }).catch(e=>{
+                    progressClose();
+                    parent.$.messager.alert('提示', e.message, 'error');
                 });
-                // $.ajax({
-                //     url: baseHttpUrl + "userApi/add",
-                //     contentType: 'application/json; charset=UTF-8',
-                //     data: JSON.stringify(data),
-                //     type: 'POST',
-                //     cache: false,
-                //     dataType: "json",
-                //     processData: false
-                // }).done(function (res) {
-                //     progressClose();
-                //     if (res.result === 200) {
-                //         parent.$.messager.alert('提示', res.message, 'info');
-                //         parent.Page.refreshDataGrid(window.parentPanelDataGrid);
-                //         parent.Page.closeDialog(window.parentPanelDivId);
-                //
-                //     } else {
-                //         parent.$.messager.alert('提示', res.message, 'info');
-                //     }
-                // });
                 return false;
             }
         }
@@ -100,7 +85,7 @@
                 <td>用户电话：</td>
                 <td><input id="phone" name="phone" class="easyui-numberbox"
                            data-options="prompt:'请输入',width:180,required:true"></td>
-                <td>用户角色：</td>
+                <td>用户类型：</td>
                 <td>
                     <select id="userType" name="userType" class="easyui-combobox" style="width: 180px;"
                             panelHeight="auto"
@@ -125,6 +110,11 @@
                         <option value="2">禁用</option>
                     </select>
                 </td>
+            </tr>
+            <tr>
+                <td>用户角色：</td>
+                <td><input id="roleIds" name="roleIds" class="easyui-combobox"
+                           data-options="prompt:'请输入',width:180,required:true,multiple:true"></td>
             </tr>
         </table>
     </form>

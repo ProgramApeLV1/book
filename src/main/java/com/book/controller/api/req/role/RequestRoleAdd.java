@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 修改密码
+ * 新增角色
  * </p>
  *
  * @author wyh123
