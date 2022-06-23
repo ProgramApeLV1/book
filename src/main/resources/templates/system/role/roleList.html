@@ -24,7 +24,9 @@
 
         function operations(value, row, index) {
             var str = '';
-            str = "<a class='sz_button' onclick='editById(\"" + row.unid + "\");' href='javascript:void(0);'>编辑</a>";
+            str = "<a class='sz_button' onclick='configById(\"" + row.unid + "\");' href='javascript:void(0);'>菜单配置</a>";
+            str += '&nbsp;|&nbsp;';
+            str += "<a class='sz_button' onclick='editById(\"" + row.unid + "\");' href='javascript:void(0);'>编辑</a>";
             str += '&nbsp;|&nbsp;';
             str += "<a class='sz_button' onclick='deleteById(\"" + row.unid + "\");' href='javascript:void(0);'>删除</a>";
             return str;
@@ -38,10 +40,11 @@
             Page.registerWindowDialog(rolePage.dataGrid, "editWin", "编辑", `roleCont/gotoRoleInfoEditPage?id=${id}`, 25 + '%', 50 + '%');
         }
 
-        //详情框方法start
-        function details(checkCode) {
-            // Page.registerWindowDialogSingleBut("detailsWin", "详情", 'roleCont/detailsPage?checkCode=' + checkCode, 80 + '%', 90 + '%');
+        //菜单配置
+        function configById(id) {
+            Page.registerWindowDialog(rolePage.dataGrid, "configWin", "菜单配置", 'roleCont/gotoRoleMenuConfigPage?id=' + id, 80 + '%', 90 + '%');
         }
+        //详情框方法start
 
         //详情框方法end
 
@@ -92,19 +95,19 @@
         <tr>
             <th field="unid" align="center" width="2%" hidden="true"></th>
             <th field="pid" align="center" width="2%" hidden="true"></th>
-            <th field="roleName" align="center" width="10%" data-options="halign:'center'"
+            <th field="roleName" align="center" width="15%" data-options="halign:'center'"
                 formatter="rolePage.moreInfoFormatter">角色名称
             </th>
-            <th field="pidName" align="center" width="10%" data-options="halign:'center'"
+            <th field="pidName" align="center" width="15%" data-options="halign:'center'"
                 formatter="rolePage.moreInfoFormatter">父级
             </th>
-            <th field="statusName" align="center" width="10%" data-options="halign:'center'"
+            <th field="statusName" align="center" width="12%" data-options="halign:'center'"
                 formatter="rolePage.moreInfoFormatter">状态
             </th>
-            <th field="createTime" align="center" width="10%" data-options="halign:'center'"
+            <th field="createTime" align="center" width="15%" data-options="halign:'center'"
                 formatter="rolePage.moreInfoFormatter">创建时间
             </th>
-            <th field="action" align="center" width="10%" data-options="halign:'center'" formatter="operations">操作</th>
+            <th field="action" align="center" width="15%" data-options="halign:'center'" formatter="operations">操作</th>
         </tr>
         </thead>
     </table>

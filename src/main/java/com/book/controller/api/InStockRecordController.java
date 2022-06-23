@@ -1,6 +1,7 @@
 package com.book.controller.api;
 
 
+import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
 import com.book.service.IInStockRecordService;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/inStockRecordApi")
-public class InStockRecordController {
+public class InStockRecordController extends BaseController {
 
     @Autowired
     private IInStockRecordService inStockRecordService;

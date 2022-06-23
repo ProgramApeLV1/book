@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <block name="common" th:replace="common/basePage :: commonHead('角色菜单管理')"></block>
+    <script type="text/javascript" th:inline="javascript">
+        var roleMenuPage = {};
+        //继承Page的方法
+        $.extend(roleMenuPage, Page);
+        var role = [[${role}]];
+        const roleId = role.unid;
+        $(function () {
+            //调用公用类加载treeGrid
+            roleMenuPage.treeGrid = null;
+            roleMenuPage.treeGrid = Page.registerTreeGrid("treetableList", 'GET', `roleApi/getMenu/${roleId}`, {},
+                "code", "text", "", function (row) {
+                    return true;
+                }
+            );
+        });
+
+        //提交表单
+        function saveWin() {
+            // progressLoad();
+            let newCheckedNodesArr = [];
+            const treeGridObj = $("#treetableList");
+            const checkMenuNode = treeGridObj.treegrid("getCheckedNodes");
+            checkMenuNode.map(node => {
+                newCheckedNodesArr.push(node.unid);
+                if (node.pcode && node.pcode !== 'NONE') {
+                    let pNode = treeGridObj.treegrid("find",node.pcode);
+                    newCheckedNodesArr.push(pNode.unid);
+                }
+            });
+            newCheckedNodesArr = new Set(newCheckedNodesArr);
+            newCheckedNodesArr = [...newCheckedNodesArr];
+            jrequest.post(
+                baseHttpUrl + "roleApi/saveRoleMenu",
+                JSON.stringify({
+                    roleId,
+                    newCheckedNodesArr
+                }),
+                "application/json; charset=UTF-8"
+            ).then(res => {
+                progressClose();
+                if (res.data.result === 200) {
+                    parent.$.messager.alert('提示', res.data.message, 'info');
+                    parent.Page.refreshDataGrid(window.parentPanelDataGrid);
+                    parent.Page.closeDialog(window.parentPanelDivId);
+                } else {
+                    parent.$.messager.alert('提示', res.data.message, 'info');
+                }
+            }).catch(e => {
+                progressClose();
+                parent.$.messager.alert('提示', e.message, 'error');
+            });
+            return false;
+        }
+
+    </script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+<div class="easyui-panel" style="width: 100%; height: 100%;padding: 10px;">
+    <table id="treetableList" width="100%" class="easyui-treegrid" height="100%">
+        <thead>
+        <tr>
+            <th field="text" align="left" width="40%" data-options="halign:'center'">菜单树</th>
+            <th field="code" align="center" width="25%" data-options="halign:'center'"
+                formatter="Page.moreInfoFormatter">菜单编号
+            </th>
+            <th field="createTime" align="center" width="15%" data-options="halign:'center'"
+                formatter="Page.moreInfoFormatter">创建时间
+            </th>
+        </tr>
+        </thead>
+    </table>
+</div>
+</body>
+</html>

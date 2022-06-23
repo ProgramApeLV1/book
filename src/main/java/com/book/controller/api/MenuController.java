@@ -1,21 +1,21 @@
 package com.book.controller.api;
 
+import com.book.common.base.ApiCode;
 import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
 import com.book.common.units.StringUtil;
 import com.book.common.units.StringUtils;
 import com.book.model.Menu;
+import com.book.model.MenuTree;
+import com.book.model.User;
 import com.book.model.vo.MenuVo;
 import com.book.service.IMenuService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/menuApi")
@@ -27,6 +27,16 @@ public class MenuController extends BaseController {
     @GetMapping(value = "/getMenuTree")
     public ResponseJson getMenuTree() throws Exception {
         return ResponseJson.success(menuService.getMenuTree());
+    }
+
+    @GetMapping(value = "/getMenuTree/{userId}")
+    public ResponseJson getMenuTreeByUser(@PathVariable("userId") String userId) throws Exception {
+        User user = userService.getById(userId);
+        if (Objects.isNull(user)) {
+            return ResponseJson.error(ApiCode.REQUEST_ERROR.getCode(), "用户信息不存在");
+        }
+        List<MenuTree> menuTrees = menuService.getMenuTreeByUser(user);
+        return ResponseJson.success(menuTrees);
     }
 
     @GetMapping(value = "/getMenuInfoList")

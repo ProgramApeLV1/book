@@ -12,22 +12,24 @@ import java.util.List;
 public class MenuTree implements java.io.Serializable {
 
     private static final long serialVersionUID = 980682543891282923L;
-    
+
     private String unid;
- 
+
     private String code;
-    
+
     private String pCode;
-    
+
     private String text;
 
     private String iconCls;
-    
+
     private String state = "open";
-    
+
     private boolean checked = false;
-    
-    private Object attributes;
-    
-    private List<MenuTree> children=new ArrayList<MenuTree>();
+
+    private String attributes;
+
+    private String createTime;
+
+    private List<MenuTree> children;
 }

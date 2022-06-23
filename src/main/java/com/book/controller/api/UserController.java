@@ -36,12 +36,6 @@ import java.util.*;
 @RequestMapping("/userApi")
 public class UserController extends BaseController {
 
-    @Autowired
-    private IUserService userService;
-
-    @Autowired
-    private IUserRoleService userRoleService;
-
     @GetMapping(value = "/getUserList")
     public ResponseJson getUserList(Integer page, Integer rows, String userName) throws Exception {
         PageInfo pageInfo = new PageInfo(page, rows);

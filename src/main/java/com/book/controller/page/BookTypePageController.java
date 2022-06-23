@@ -24,14 +24,14 @@ public class BookTypePageController {
 
     @GetMapping(value = "/addPage")
     public ModelAndView addPage(@RequestBody ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BOOKTYPEADD_PAGE);
+        modelAndView.setViewName(PagePathConstant.BOOK_TYPE_ADD_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/editPage")
     public ModelAndView editPage(@RequestBody ModelAndView modelAndView, Integer id) {
         modelAndView.addObject("id", id);
-        modelAndView.setViewName(PagePathConstant.BOOKTYPEEDIT_PAGE);
+        modelAndView.setViewName(PagePathConstant.BOOK_TYPE_EDIT_PAGE);
         return modelAndView;
     }
 

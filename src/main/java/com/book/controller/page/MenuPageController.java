@@ -22,57 +22,57 @@ public class MenuPageController extends BaseController {
 
     @GetMapping(value = "/gotoBookInfoPage")
     public ModelAndView gotoBookInfoPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BOOKINFO_PAGE);
+        modelAndView.setViewName(PagePathConstant.BOOK_INFO_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoBookTypePage")
     public ModelAndView gotoBookTypePage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BOOKTYPE_PAGE);
+        modelAndView.setViewName(PagePathConstant.BOOK_TYPE_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoBoorowBookPage")
     public ModelAndView gotoBoorowBookPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BOOROWBOOKINFO_PAGE);
+        modelAndView.setViewName(PagePathConstant.BOOROW_BOOK_INFO_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoReturnBookPage")
     public ModelAndView gotoReturnBookPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.RETURNBOOKINFO_PAGE);
+        modelAndView.setViewName(PagePathConstant.RETURN_BOOK_INFO_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoMenuInfoPage")
     public ModelAndView gotoMenuInfoPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.MENULIST_PAGE);
+        modelAndView.setViewName(PagePathConstant.MENU_LIST_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoMenuInfoAddPage")
     public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.MENUADD_PAGE);
+        modelAndView.setViewName(PagePathConstant.MENU_ADD_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoMenuInfoEditPage")
-    public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView, String unid) {
+    public ModelAndView gotoMenuInfoAddPage(ModelAndView modelAndView, String unid) throws Exception {
         MenuVo menu = menuService.getCurMenuInfo(unid);
         modelAndView.addObject("menu", menu);
-        modelAndView.setViewName(PagePathConstant.MENUEDIT_PAGE);
+        modelAndView.setViewName(PagePathConstant.MENU_EDIT_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoUserInfoPage")
     public ModelAndView gotoUserInfoPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.USERLIST_PAGE);
+        modelAndView.setViewName(PagePathConstant.USER_LIST_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoRoleInfoPage")
     public ModelAndView gotoRoleInfoPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.ROLELIST_PAGE);
+        modelAndView.setViewName(PagePathConstant.ROLE_LIST_PAGE);
         return modelAndView;
     }
 }

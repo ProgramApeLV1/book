@@ -13,9 +13,9 @@ public class PagePathConstant {
 
     private static final String BASIC = "/basic";
 
-    private static final String BOOKRETURN = "/bookReturn";
+    private static final String BOOK_RETURN = "/bookReturn";
 
-    private static final String BOOKBOOROW = "/bookBoorow";
+    private static final String BOOK_BOOROW = "/bookBoorow";
 
     private static final String SYSTEM_MENU = SYSTEM_BASIC.concat("/menu");
 
@@ -23,52 +23,54 @@ public class PagePathConstant {
 
     private static final String SYSTEM_ROLE = SYSTEM_BASIC.concat("/role");
 
-    private static final String BOOKINFO_BASIC = BASIC.concat("/bookInfo");
+    private static final String BOOK_INFO_BASIC = BASIC.concat("/bookInfo");
 
-    private static final String BOOKTYPE_BASIC = BASIC.concat("/bookType");
+    private static final String BOOK_TYPE_BASIC = BASIC.concat("/bookType");
 
     //系统用户模块
-    public static final String USERLIST_PAGE = SYSTEM_USER.concat("/userList");
+    public static final String USER_LIST_PAGE = SYSTEM_USER.concat("/userList");
 
-    public static final String USERADD_PAGE = SYSTEM_USER.concat("/userAdd");
+    public static final String USER_ADD_PAGE = SYSTEM_USER.concat("/userAdd");
 
-    public static final String USEREDIT_PAGE = SYSTEM_USER.concat("/userEdit");
+    public static final String USER_EDIT_PAGE = SYSTEM_USER.concat("/userEdit");
 
-    public static final String EDITPWD_PAGE = SYSTEM_USER.concat("/editPwd");
+    public static final String EDIT_PWD_PAGE = SYSTEM_USER.concat("/editPwd");
 
     //系统角色模块
-    public static final String ROLELIST_PAGE = SYSTEM_ROLE.concat("/roleList");
+    public static final String ROLE_LIST_PAGE = SYSTEM_ROLE.concat("/roleList");
 
-    public static final String ROLEADD_PAGE = SYSTEM_ROLE.concat("/roleAdd");
+    public static final String ROLE_ADD_PAGE = SYSTEM_ROLE.concat("/roleAdd");
 
-    public static final String ROLEEDIT_PAGE = SYSTEM_ROLE.concat("/roleEdit");
+    public static final String ROLE_EDIT_PAGE = SYSTEM_ROLE.concat("/roleEdit");
+
+    public static final String ROLE_MENU_CONFIG_PAGE = SYSTEM_ROLE.concat("/roleMenuConfig");
 
     //系统菜单模块
-    public static final String MENULIST_PAGE = SYSTEM_MENU.concat("/menuList");
+    public static final String MENU_LIST_PAGE = SYSTEM_MENU.concat("/menuList");
 
-    public static final String MENUADD_PAGE = SYSTEM_MENU.concat("/menuAdd");
+    public static final String MENU_ADD_PAGE = SYSTEM_MENU.concat("/menuAdd");
 
-    public static final String MENUEDIT_PAGE = SYSTEM_MENU.concat("/menuEdit");
+    public static final String MENU_EDIT_PAGE = SYSTEM_MENU.concat("/menuEdit");
 
     //书本返还模块
-    public static final String RETURNBOOKINFO_PAGE = BOOKRETURN.concat("/returnBookInfo");
+    public static final String RETURN_BOOK_INFO_PAGE = BOOK_RETURN.concat("/returnBookInfo");
 
     //书本租借模块
-    public static final String BOOROWBOOKINFO_PAGE = BOOKBOOROW.concat("/boorowBookInfo");
+    public static final String BOOROW_BOOK_INFO_PAGE = BOOK_BOOROW.concat("/boorowBookInfo");
 
-    public static final String BOOROWBOOKADD_PAGE = BOOKBOOROW.concat("/boorowBookAdd");
+    public static final String BOOROW_BOOK_ADD_PAGE = BOOK_BOOROW.concat("/boorowBookAdd");
 
     //书本类型模块
-    public static final String BOOKTYPE_PAGE = BOOKTYPE_BASIC.concat("/bookType");
+    public static final String BOOK_TYPE_PAGE = BOOK_TYPE_BASIC.concat("/bookType");
 
-    public static final String BOOKTYPEADD_PAGE = BOOKTYPE_BASIC.concat("/bookTypeAdd");
+    public static final String BOOK_TYPE_ADD_PAGE = BOOK_TYPE_BASIC.concat("/bookTypeAdd");
 
-    public static final String BOOKTYPEEDIT_PAGE = BOOKTYPE_BASIC.concat("/bookTypeEdit");
+    public static final String BOOK_TYPE_EDIT_PAGE = BOOK_TYPE_BASIC.concat("/bookTypeEdit");
 
     //书本信息模块
-    public static final String BOOKINFO_PAGE = BOOKINFO_BASIC.concat("/bookInfo");
+    public static final String BOOK_INFO_PAGE = BOOK_INFO_BASIC.concat("/bookInfo");
 
-    public static final String BOOKINFOADD_PAGE = BOOKINFO_BASIC.concat("/bookInfoAdd");
+    public static final String BOOK_INFO_ADD_PAGE = BOOK_INFO_BASIC.concat("/bookInfoAdd");
 
-    public static final String BOOKINFOEDIT_PAGE = BOOKINFO_BASIC.concat("/bookInfoEdit");
+    public static final String BOOK_INFO_EDIT_PAGE = BOOK_INFO_BASIC.concat("/bookInfoEdit");
 }

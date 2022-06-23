@@ -21,88 +21,55 @@ function openNav(id) {
 }
 
 //初始化左侧
-function InitLeftMenu() {
-    jrequest.get(baseHttpUrl + "/menuApi/getMenuTree", {})
-        .then(res => {
-            const json = res.data.data;
-            $("#divMenu").empty();
-            var menulist = "";
-            if (json != null && json.length > 0) {
-                for (var i in json) {
-                    var _m = json[i];
-                    menulist += '<div title="&nbsp;&nbsp;' + _m.text + '"  data-options="iconCls:\'' + _m.iconCls + '\'" style="overflow:auto;">';
-                    menulist += '<ul>';
-                    if (_m.children != null && _m.children.length > 0) {
-                        var _children = _m.children;
-                        for (var j in _children) {
-                            var _cm = _children[j];
-                            menulist += '<li><div><a ref="' + _cm.id + '" href="#" rel="' + baseHttpUrl + _cm.attributes + '" ><span class="icon ' + _cm.iconCls + '" >&nbsp;</span>' + _cm.text + '</a></div></li> ';
-                        }
-                    }
-                    menulist += '</ul></div>';
+async function InitLeftMenu() {
+    const userinfo = await getCurUserInfo();
+    const menuTree = getCacheInfoByKey(MENU_TREE_KEY);
+    if (!menuTree) {
+        jrequest.get(baseHttpUrl + `/menuApi/getMenuTree/${userinfo.id}`, {})
+            .then(res => {
+                const json = res.data.data;
+                if (json) setCacheInfo(MENU_TREE_KEY, JSON.stringify(json));
+                makeMenuTree(json);
+            });
+    } else {
+        makeMenuTree(JSON.parse(menuTree));
+    }
+}
+
+function makeMenuTree(treeJson) {
+    $("#divMenu").empty();
+    var menulist = "";
+    if (treeJson != null && treeJson.length > 0) {
+        for (var i in treeJson) {
+            var _m = treeJson[i];
+            menulist += '<div title="&nbsp;&nbsp;' + _m.text + '"  data-options="iconCls:\'' + _m.iconCls + '\'" style="overflow:auto;">';
+            menulist += '<ul>';
+            if (_m.children != null && _m.children.length > 0) {
+                var _children = _m.children;
+                for (var j in _children) {
+                    var _cm = _children[j];
+                    menulist += '<li><div><a ref="' + _cm.id + '" href="#" rel="' + baseHttpUrl + _cm.attributes + '" ><span class="icon ' + _cm.iconCls + '" >&nbsp;</span>' + _cm.text + '</a></div></li> ';
                 }
             }
-            $("#divMenu").append(menulist);
-            $.parser.parse($('#divMenu'));
-            $('#divMenu').accordion({border: false, fit: true});
-            $('#divMenu li a').click(function () {
-                var tabTitleParent = $(this).parents(".panel-body").siblings(".panel-header").find(".panel-title").eq(1).text();
-                var tabTitle = $(this).text();
-                var title = tabTitleParent + "-" + tabTitle;
-                var url = $(this).attr("rel");
-                $('#divMenu li div').removeClass("selected");
-                $(this).parent().addClass("selected");
-                addTab(title, url);
-            }).hover(function () {
-                $(this).parent().addClass("hover");
-            }, function () {
-                $(this).parent().removeClass("hover");
-            });
-        });
-    // $.ajax({
-    //     type: "post",
-    //     dataType: "json",
-    //     cache: 'false',
-    //     url: baseHttpUrl + "/menuApi/getMenuTree",
-    //     success: function (json) {
-    //         $("#divMenu").empty();
-    //         var menulist = "";
-    //         if (json != null && json.length > 0) {
-    //             for (var i in json) {
-    //                 var _m = json[i];
-    //                 menulist += '<div title="&nbsp;&nbsp;' + _m.text + '"  data-options="iconCls:\'' + _m.iconCls + '\'" style="overflow:auto;">';
-    //                 menulist += '<ul>';
-    //                 if (_m.children != null && _m.children.length > 0) {
-    //                     var _children = _m.children;
-    //                     for (var j in _children) {
-    //                         var _cm = _children[j];
-    //                         menulist += '<li><div><a ref="' + _cm.id + '" href="#" rel="' + baseHttpUrl + _cm.attributes + '" ><span class="icon ' + _cm.iconCls + '" >&nbsp;</span>' + _cm.text + '</a></div></li> ';
-    //                     }
-    //                 }
-    //                 menulist += '</ul></div>';
-    //             }
-    //         }
-    //         $("#divMenu").append(menulist);
-    //         $.parser.parse($('#divMenu'));
-    //         $('#divMenu').accordion({border: false, fit: true});
-    //         $('#divMenu li a').click(function () {
-    //             var tabTitleParent = $(this).parents(".panel-body").siblings(".panel-header").find(".panel-title").eq(1).text();
-    //             var tabTitle = $(this).text();
-    //             var title = tabTitleParent + "-" + tabTitle;
-    //             var url = $(this).attr("rel");
-    //             $('#divMenu li div').removeClass("selected");
-    //             $(this).parent().addClass("selected");
-    //             addTab(title, url);
-    //         }).hover(function () {
-    //             $(this).parent().addClass("hover");
-    //         }, function () {
-    //             $(this).parent().removeClass("hover");
-    //         });
-    //     },
-    //     error: function (msg) {
-    //         console.log(msg);
-    //     }
-    // });
+            menulist += '</ul></div>';
+        }
+    }
+    $("#divMenu").append(menulist);
+    $.parser.parse($('#divMenu'));
+    $('#divMenu').accordion({border: false, fit: true});
+    $('#divMenu li a').click(function () {
+        var tabTitleParent = $(this).parents(".panel-body").siblings(".panel-header").find(".panel-title").eq(1).text();
+        var tabTitle = $(this).text();
+        var title = tabTitleParent + "-" + tabTitle;
+        var url = $(this).attr("rel");
+        $('#divMenu li div').removeClass("selected");
+        $(this).parent().addClass("selected");
+        addTab(title, url);
+    }).hover(function () {
+        $(this).parent().addClass("hover");
+    }, function () {
+        $(this).parent().removeClass("hover");
+    });
 }
 
 function addTab(subtitle, url) {

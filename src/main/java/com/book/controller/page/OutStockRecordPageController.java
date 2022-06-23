@@ -24,7 +24,7 @@ public class OutStockRecordPageController {
 
     @GetMapping(value = "/addPage")
     public ModelAndView addPage(@RequestBody ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.BOOROWBOOKADD_PAGE);
+        modelAndView.setViewName(PagePathConstant.BOOROW_BOOK_ADD_PAGE);
         return modelAndView;
     }
 }

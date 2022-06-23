@@ -3,7 +3,10 @@ package com.book.common.base;
 import com.book.common.exception.BusinessException;
 import com.book.common.units.*;
 import com.book.model.User;
+import com.book.model.UserRole;
 import com.book.model.vo.UserVo;
+import com.book.service.IRoleService;
+import com.book.service.IUserRoleService;
 import com.book.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -21,7 +24,10 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import static com.book.common.base.Constant.DATE_FORMAT_NYRSFM;
 import static com.book.common.base.Constant.TOKEN_NAME;
 
 
@@ -44,7 +50,10 @@ public class BaseController implements Serializable {
 
     @Autowired
     protected IUserService userService;
-
+    @Autowired
+    protected IUserRoleService userRoleService;
+    @Autowired
+    protected IRoleService roleService;
     @Autowired
     protected RedisClient redisClient;
 
@@ -128,7 +137,7 @@ public class BaseController implements Serializable {
         /**
          * 自动转换日期类型的字段格式
          */
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat(DATE_FORMAT_NYRSFM), true));
     }
 
     /**
@@ -150,6 +159,10 @@ public class BaseController implements Serializable {
         }
         // 2022/4/22 去数据库捞用户数据
         userVo = JsonUtils.convertJsonToObject(userinfo, UserVo.class);
+        // 获取对应角色id数组
+        Set<String> roleIds = userRoleService.getAllUserRoleByUserId(userVo.getId())
+                .stream().map(UserRole::getRoleId).collect(Collectors.toSet());
+        userVo.setRoleIds(roleIds);
         return userVo;
     }
 }

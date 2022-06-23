@@ -1,6 +1,7 @@
 package com.book.controller.api;
 
 
+import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
 import com.book.service.IBookTypeService;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/bookTypeApi")
-public class BookTypeController {
+public class BookTypeController extends BaseController {
 
     @Autowired
     private IBookTypeService bookTypeService;

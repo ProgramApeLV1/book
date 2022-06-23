@@ -21,7 +21,6 @@ var Page = {
     /***注册datagrid(无复选框)组件**/
     registerDataGrid: function (id, method, dataGridUrl, toolbarId, arr) {
         if (getById(id)) {
-            //微调工具栏中文字标签的宽度和对齐方式、按照templates/inlib/inStorageOrders.html的写法
             PageUtil.resizeToolBarTd(toolbarId);
             return $(getById(id)).datagrid({
                 method: method,
@@ -45,7 +44,6 @@ var Page = {
     /***注册datagrid无分页组件(不带复选框)**/
     registerDataGridNotPage: function (id, dataGridUrl, toolbarId, arr) {
         if (getById(id)) {
-            //微调工具栏中文字标签的宽度和对齐方式、按照templates/inlib/inStorageOrders.html的写法
             PageUtil.resizeToolBarTd(toolbarId);
             return $(getById(id)).datagrid({
                 method: 'post',
@@ -69,7 +67,6 @@ var Page = {
     /***注册datagrid无分页组件(带复选框)**/
     registerDataGridNotPageWithCheckbox: function (id, dataGridUrl, toolbarId, arr) {
         if (getById(id)) {
-            //微调工具栏中文字标签的宽度和对齐方式、按照templates/inlib/inStorageOrders.html的写法
             PageUtil.resizeToolBarTd(toolbarId);
             return $(getById(id)).datagrid({
                 method: 'post',
@@ -93,7 +90,6 @@ var Page = {
     /***注册datagrid(带复选框)组件**/
     registerDataGridWithCheckbox: function (id, dataGridUrl, toolbarId, arr) {
         if (getById(id)) {
-            //微调工具栏中文字标签的宽度和对齐方式、按照templates/inlib/inStorageOrders.html的写法
             PageUtil.resizeToolBarTd(toolbarId);
             return $(getById(id)).datagrid({
                 method: 'post',
@@ -111,6 +107,32 @@ var Page = {
                 loadFilter: function (res) {
                     return res.data
                 }
+            });
+        }
+    },
+    /***注册treegrid组件**/
+    registerTreeGrid: function (id, method, url, params, idField, treeField, toolbarId, checkboxFun) {
+        if (getById(id)) {
+            PageUtil.resizeToolBarTd(toolbarId);
+            return $(getById(id)).treegrid({
+                method: method,
+                url: baseHttpUrl + url,
+                queryParams: params,
+                idField: idField,
+                treeField: treeField,
+                loadMsg: '数据加载中,请稍后...',
+                animate: true,
+                onlyLeafCheck: false,
+                cascadeCheck: true,
+                nowrap: true,
+                lines: true,
+                rownumbers: true,
+                pagination: !!toolbarId,
+                toolbar: '#' + toolbarId,
+                loadFilter: function (res) {
+                    return res.data
+                },
+                checkbox: checkboxFun
             });
         }
     },

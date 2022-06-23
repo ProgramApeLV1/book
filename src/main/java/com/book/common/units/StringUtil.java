@@ -19,6 +19,8 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.book.common.base.Constant.DATE_FORMAT_NYRSFM;
+
 @Slf4j
 public class StringUtil {
 
@@ -193,7 +195,7 @@ public class StringUtil {
     }
 
     public static String getTime() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT_NYRSFM);
         return df.format(new Date());
     }
 
@@ -271,7 +273,7 @@ public class StringUtil {
     }
 
     public static String getTimeFormat(String time) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NYRSFM);
         Date date_util = sdf.parse(time);
         java.sql.Date date_sql = new java.sql.Date(date_util.getTime());
         System.out.println(date_util);
@@ -310,7 +312,7 @@ public class StringUtil {
      * @return 时间
      */
     public static Date stringToDateTime(String str) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NYRSFM);
         Date date = null;
         if (isNotEmpty(str)) {
             try {
@@ -1242,7 +1244,7 @@ public class StringUtil {
      */
     public static String dateForMater() {
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NYRSFM);
         return sdf.format(date);
     }
 
@@ -1254,7 +1256,7 @@ public class StringUtil {
      */
     public static String dateToStamp(String s) throws ParseException {
         String res;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT_NYRSFM);
         Date date = simpleDateFormat.parse(s);
         long ts = date.getTime();
         res = String.valueOf(ts);
@@ -1315,7 +1317,7 @@ public class StringUtil {
      * @return 字符串
      */
     public static String localDateTimeStr(LocalDateTime localDateTime) {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_FORMAT_NYRSFM);
         return format.format(localDateTime);
     }
 

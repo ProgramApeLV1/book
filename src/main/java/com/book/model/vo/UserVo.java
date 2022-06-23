@@ -6,7 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
+
+import static com.book.common.base.Constant.DATE_FORMAT_NYRSFM;
 
 /**
  * <p>
@@ -82,11 +84,11 @@ public class UserVo implements Serializable {
     /**
      * 创建时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = DATE_FORMAT_NYRSFM)
+    @JsonFormat(pattern = DATE_FORMAT_NYRSFM, timezone = "GMT+8")
     private LocalDateTime createTime;
     /**
      * 角色id
      */
-    private List<String> roleIds;
+    private Set<String> roleIds;
 }

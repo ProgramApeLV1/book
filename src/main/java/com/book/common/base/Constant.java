@@ -16,5 +16,7 @@ public class Constant {
     public final static Long TW_HOUR = 60 * 60L;
 
     public final static String TOKEN_NAME = "token";
+
+    public final static String DATE_FORMAT_NYRSFM = "yyyy-MM-dd HH:mm:ss";
 }
 

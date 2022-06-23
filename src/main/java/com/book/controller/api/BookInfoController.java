@@ -1,6 +1,7 @@
 package com.book.controller.api;
 
 
+import com.book.common.base.BaseController;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
 import com.book.service.IBookInfoService;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/bookInfoApi")
-public class BookInfoController {
+public class BookInfoController extends BaseController {
 
     @Autowired
     private IBookInfoService bookInfoService;

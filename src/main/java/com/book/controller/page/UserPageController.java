@@ -40,7 +40,7 @@ public class UserPageController extends BaseController {
 
     @GetMapping(value = "/gotoUserInfoAddPage")
     public ModelAndView gotoUserInfoAddPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.USERADD_PAGE);
+        modelAndView.setViewName(PagePathConstant.USER_ADD_PAGE);
         return modelAndView;
     }
 
@@ -54,15 +54,15 @@ public class UserPageController extends BaseController {
         UserVo userVo = new UserVo();
         BeanUtil.convertBean2Bean(user, userVo);
         userVo.setRoleIds(userRoleService.getAllUserRoleByUserId(user.getId()).stream()
-                .map(UserRole::getRoleId).collect(Collectors.toCollection(ArrayList::new)));
+                .map(UserRole::getRoleId).collect(Collectors.toSet()));
         modelAndView.addObject("user", userVo);
-        modelAndView.setViewName(PagePathConstant.USEREDIT_PAGE);
+        modelAndView.setViewName(PagePathConstant.USER_EDIT_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/gotoEditPwdPage")
     public ModelAndView gotoEditPwdPage(ModelAndView modelAndView) {
-        modelAndView.setViewName(PagePathConstant.EDITPWD_PAGE);
+        modelAndView.setViewName(PagePathConstant.EDIT_PWD_PAGE);
         return modelAndView;
     }
 

@@ -12,6 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 
+import static com.book.common.base.Constant.DATE_FORMAT_NYRSFM;
+
 /**
  * <p>
  * 用户登入
@@ -86,8 +88,8 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @DateTimeFormat(pattern = DATE_FORMAT_NYRSFM)
+    @JsonFormat(pattern = DATE_FORMAT_NYRSFM, timezone = "GMT+8")
     private LocalDateTime createTime;
 
     /***

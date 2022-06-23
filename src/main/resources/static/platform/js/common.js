@@ -187,6 +187,8 @@ function find(obj, key) {
 //用户缓存key常量
 const USER_COOKIE_KEY = "user";
 
+const MENU_TREE_KEY = "menuTree";
+
 // function loginSetCache(data) {
 //     const user = {
 //         userId: data.id,
@@ -211,4 +213,5 @@ function setCacheInfo(key, val) {
 function logoutRemoveCache() {
     // docCookies.removeItem(USER_COOKIE_KEY, '/');
     window.localStorage.removeItem(USER_COOKIE_KEY);
+    window.localStorage.removeItem(MENU_TREE_KEY);
 }

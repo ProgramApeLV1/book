@@ -1,17 +1,26 @@
 package com.book.controller.api;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.book.common.base.ApiCode;
+import com.book.common.base.BaseController;
 import com.book.common.exception.BusinessException;
 import com.book.common.units.BeanUtil;
 import com.book.common.units.PageInfo;
 import com.book.common.units.ResponseJson;
 import com.book.controller.api.req.role.RequestRoleAdd;
 import com.book.controller.api.req.role.RequestRoleEdit;
+import com.book.controller.api.req.role.RequestSaveRoleMenu;
+import com.book.model.Menu;
+import com.book.model.MenuTree;
 import com.book.model.Role;
+import com.book.model.RoleMenu;
 import com.book.model.vo.RoleVo;
+import com.book.service.IMenuService;
+import com.book.service.IRoleMenuService;
 import com.book.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,10 +38,13 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/roleApi")
-public class RoleController {
+public class RoleController extends BaseController {
 
     @Autowired
-    private IRoleService roleService;
+    private IRoleMenuService roleMenuService;
+
+    @Autowired
+    private IMenuService menuService;
 
 
     @GetMapping(value = "/getRoleList")
@@ -91,6 +103,41 @@ public class RoleController {
         Role role = roleService.getById(roleId);
         if (Objects.isNull(role)) throw new BusinessException(ApiCode.REQUEST_ERROR.getCode(), "角色id不存在");
         roleService.removeById(roleId);
+        return ResponseJson.success();
+    }
+
+    @GetMapping(value = "/getMenu/{roleIds}")
+    public ResponseJson getMenu(@PathVariable("roleIds") List<String> roleIds) throws Exception {
+//        Role role = roleService.getById(roleId);
+        List<Role> roles = roleService.listByIds(roleIds);
+        if (CollectionUtils.isEmpty(roles))
+            throw new BusinessException(ApiCode.REQUEST_ERROR.getCode(), "角色id不存在");
+        Set<String> menuIds = roleMenuService.getMenuIdsByRoleIds(roles);
+        Set<String> allValidMenuIds = menuService.getAllValidMenuIds();
+        if (CollectionUtils.isEmpty(allValidMenuIds))
+            throw new BusinessException(ApiCode.REQUEST_ERROR.getCode(), "获取所有菜单ID失败");
+        List<MenuTree> menus = menuService.getCheckMenuTree(allValidMenuIds, menuIds);
+        return ResponseJson.success(menus);
+    }
+
+    @PostMapping(value = "/saveRoleMenu")
+    public ResponseJson saveRoleMenu(@RequestBody @Valid RequestSaveRoleMenu requestSaveRoleMenu) throws Exception {
+        Role role = roleService.getById(requestSaveRoleMenu.getRoleId());
+        if (Objects.isNull(role))
+            throw new BusinessException(ApiCode.REQUEST_ERROR.getCode(), "角色id不存在");
+        // 删除所有角色关联菜单关系
+        roleMenuService.remove(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, role.getUnid()));
+        // 绑定新的节点信息
+        if (!CollectionUtils.isEmpty(requestSaveRoleMenu.getNewCheckedNodesArr())) {
+            List<RoleMenu> roleMenus = new ArrayList<>();
+            requestSaveRoleMenu.getNewCheckedNodesArr().forEach(menuId -> {
+                RoleMenu roleMenu = new RoleMenu();
+                roleMenu.setRoleId(role.getUnid());
+                roleMenu.setMenuId(menuId);
+                roleMenus.add(roleMenu);
+            });
+            roleMenuService.saveBatch(roleMenus);
+        }
         return ResponseJson.success();
     }
 }
