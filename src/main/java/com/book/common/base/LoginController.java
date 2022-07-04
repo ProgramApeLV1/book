@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,8 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.book.common.base.Constant.HALF_HOUR;
-import static com.book.common.base.Constant.TOKEN_NAME;
+import static com.book.common.base.Constant.*;
 
 @Slf4j
 @Controller
@@ -65,8 +65,8 @@ public class LoginController extends BaseController {
         user.setIdentity(StringUtil.identityCutEncrypt(user.getIdentity()));
         // 将登录的用户信息存入缓存
         String token = UUID.randomUUID().toString().replaceAll("-", "");
-        redisClient.set(token, JSON.toJSONString(user), HALF_HOUR);
-        CookieUtils.addCookie(response, TOKEN_NAME, token, HALF_HOUR.intValue());
+        redisClient.set(token, JSON.toJSONString(user), HALF_HALF_HOUR);
+        CookieUtils.addCookie(response, TOKEN_NAME, token, HALF_HALF_HOUR.intValue());
         return ResponseJson.success("登录成功", user);
     }
 
@@ -78,7 +78,9 @@ public class LoginController extends BaseController {
     @PostMapping("/logout")
     @ResponseBody
     public ResponseJson logout(HttpServletRequest request, HttpServletResponse response) {
+        String token = CookieUtils.getUid(request, TOKEN_NAME);
         CookieUtils.removeCookie(response, TOKEN_NAME);
+        redisClient.del(token);
         return ResponseJson.success();
     }
 

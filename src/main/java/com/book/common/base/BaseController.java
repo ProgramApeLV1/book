@@ -152,17 +152,6 @@ public class BaseController implements Serializable {
         if (StringUtil.isEmpty(token)) {
             throw new BusinessException(ApiCode.UNAUTHORIZED);
         }
-        UserVo userVo = new UserVo();
-        String userinfo = redisClient.get(token);
-        if (StringUtil.isEmpty(userinfo)) {
-            throw new BusinessException(ApiCode.NOTEXIST_USERINFO);
-        }
-        // 2022/4/22 去数据库捞用户数据
-        userVo = JsonUtils.convertJsonToObject(userinfo, UserVo.class);
-        // 获取对应角色id数组
-        Set<String> roleIds = userRoleService.getAllUserRoleByUserId(userVo.getId())
-                .stream().map(UserRole::getRoleId).collect(Collectors.toSet());
-        userVo.setRoleIds(roleIds);
-        return userVo;
+        return userService.userInfoByToken(token);
     }
 }

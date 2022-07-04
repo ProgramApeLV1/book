@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public class Constant {
 
+    public final static Long HALF_HALF_HOUR = 15 * 60L;
+
     public final static Long HALF_HOUR = 30 * 60L;
 
     public final static Long ONE_HOUR = 60 * 60L;
