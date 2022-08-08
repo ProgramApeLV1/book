@@ -1,6 +1,7 @@
 package com.book.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.book.common.units.PageInfo;
@@ -30,5 +31,11 @@ public class BookInfoServiceImpl extends ServiceImpl<BookInfoMapper, BookInfo> i
         List<BookInfoVo> list = baseMapper.getBookInfoList(page, pageInfo.getCondition());
         pageInfo.setRows(list);
         pageInfo.setTotal(page.getTotal());
+    }
+
+    @Override
+    public BookInfo getBookInfoByCode(String code) {
+        return baseMapper.selectOne(new LambdaQueryWrapper<BookInfo>()
+                .eq(BookInfo::getBookCode, code));
     }
 }

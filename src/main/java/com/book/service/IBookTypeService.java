@@ -14,5 +14,18 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBookTypeService extends IService<BookType> {
 
-    void getBookTypeList(PageInfo pageInfo);
+    /**
+     * 获取书本类型（分页）
+     * @param pageInfo 分页实体
+     * @throws Exception 异常
+     */
+    void getBookTypeList(PageInfo pageInfo) throws Exception;
+
+    /***
+     * 根据类型编码获取对应类型信息
+     * @param code 类型编码
+     * @return 类型实体
+     * @throws Exception 异常
+     */
+    BookType getBookTypeByCode(String code) throws Exception;
 }

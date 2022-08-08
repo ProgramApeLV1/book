@@ -11,7 +11,7 @@
             //调用公用类加载datagrid
             bookPage.dataGrid = Page.registerDataGrid("table", 'GET', 'bookTypeApi/getBookTypeList', "toolbar", {});
             bookPage.registerEvent($("#add")[0], "click", function () {
-                bookPage.registerWindowDialog(bookPage.dataGrid, "addWin", "新增", 'bookInfoCont/addPage', 80 + '%', 90 + '%');
+                bookPage.registerWindowDialog(bookPage.dataGrid, "addWin", "新增", 'bookTypeCont/addPage', 30 + '%', 40 + '%');
             });
             bookPage.registerEvent($("#find")[0], "click", function () {
                 bookPage.dataGrid.datagrid('load', $.serializeObject($('#searchForm')));
@@ -31,17 +31,11 @@
         }
 
         function deleteById(id) {
-            Page.messager(bookPage.dataGrid, "bookTypeApi/deleteById", "询问", "是否确定删除?", {
-                id: id
-            });
+            Page.messagerV2(bookPage.dataGrid, {url: `bookTypeApi/${id}`, method: 'DELETE', paramMap: {}}, "询问", "是否确定删除?");
         }
 
         function editById(id) {
-            Page.registerWindowDialog(bookPage.dataGrid, "editWin", "编辑", 'bookInfoCont/editPage?id=' + id, 80 + '%', 90 + '%');
-        }
-
-        function details(checkCode) {
-            Page.registerWindowDialogSingleBut("detailsWin", "详情", 'checkOrdersCont/detailsPage?checkCode=' + checkCode, 80 + '%', 90 + '%');
+            Page.registerWindowDialog(bookPage.dataGrid, "editWin", "编辑", 'bookTypeCont/editPage?id=' + id, 30 + '%', 40 + '%');
         }
 
     </script>

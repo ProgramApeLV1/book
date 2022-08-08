@@ -2,6 +2,10 @@ package com.book.controller.page;
 
 
 import com.book.common.base.PagePathConstant;
+import com.book.model.BookInfo;
+import com.book.model.BookType;
+import com.book.service.IBookInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,15 +26,19 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/bookInfoCont")
 public class BookInfoPageController {
 
+    @Autowired
+    private IBookInfoService bookInfoService;
+
     @GetMapping(value = "/addPage")
-    public ModelAndView addPage(@RequestBody ModelAndView modelAndView) {
+    public ModelAndView addPage(ModelAndView modelAndView) {
         modelAndView.setViewName(PagePathConstant.BOOK_INFO_ADD_PAGE);
         return modelAndView;
     }
 
     @GetMapping(value = "/editPage")
-    public ModelAndView editPage(@RequestBody ModelAndView modelAndView, Integer id) {
-        modelAndView.addObject("id", id);
+    public ModelAndView editPage(ModelAndView modelAndView, Integer id) {
+        BookInfo bookInfo = bookInfoService.getById(id);
+        modelAndView.addObject("bookInfo", bookInfo);
         modelAndView.setViewName(PagePathConstant.BOOK_INFO_EDIT_PAGE);
         return modelAndView;
     }

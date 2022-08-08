@@ -61,7 +61,7 @@ public class UserController extends BaseController {
         // 2022/5/6 保存用户信息
         userService.save(user);
         // 2022/5/6 绑定用户角色关系
-        userRoleService.bindUserRole(requestUserAdd.getRoleIds(), requestUserAdd.getId());
+        userRoleService.bindUserRole(requestUserAdd.getRoleIds(), user.getId());
         return ResponseJson.success("用户新增成功");
     }
 

@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class OutStockRecordPageController {
 
     @GetMapping(value = "/addPage")
-    public ModelAndView addPage(@RequestBody ModelAndView modelAndView) {
+    public ModelAndView addPage(ModelAndView modelAndView) {
         modelAndView.setViewName(PagePathConstant.BOOROW_BOOK_ADD_PAGE);
         return modelAndView;
     }

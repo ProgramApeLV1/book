@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <block name="common" th:replace="common/basePage :: commonHead('编辑')"></block>
+    <script type="text/javascript" th:inline="javascript">
+        var booTypeEditPage = {};
+        $.extend(booTypeEditPage, Page);
+        const bookType = [[${bookType}]];
+
+        $(function () {
+            //加载父级菜单combobox
+            // Page.registerComboboxSelect("roleIds", "GET","/roleApi/getAllRoleList", "unid", "roleName");
+
+            $("#code").textbox("setValue", bookType.code);
+            $("#typeName").textbox("setValue", bookType.typeName);
+            $("#status").combobox("setValue", bookType.status);
+        });
+
+        //提交表单
+        function saveWin() {
+            progressLoad();
+            var isValid = $("#formAdd").form('validate');
+            if (!isValid) {
+                progressClose();
+                return false;
+            } else {
+                var data = serializeObject($("#formAdd"));
+                data.id = bookType.id;
+                jrequest.put(
+                    baseHttpUrl + "bookTypeApi/edit",
+                    JSON.stringify(data),
+                    "application/json; charset=UTF-8"
+                ).then(res => {
+                    progressClose();
+                    if (res.data.result === 200) {
+                        parent.$.messager.alert('提示', res.data.message, 'info');
+                        parent.Page.refreshDataGrid(window.parentPanelDataGrid);
+                        parent.Page.closeDialog(window.parentPanelDivId);
+
+                    } else {
+                        parent.$.messager.alert('提示', res.data.message, 'info');
+                    }
+                }).catch(e=>{
+                    progressClose();
+                    parent.$.messager.alert('提示', e.message, 'error');
+                });
+                return false;
+            }
+        }
+    </script>
+</head>
+<body class="easyui-layout" data-options="fit:true,border:false">
+<div id="mainTabs" class="easyui-panel" style="width: 100%;height: 100%;">
+    <form id="formAdd" method="post">
+        <table class="grid">
+            <tr>
+                <td>类型编码：</td>
+                <td><input id="code" name="code" class="easyui-textbox"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
+            <tr>
+                <td>类型名称：</td>
+                <td><input id="typeName" name="typeName" class="easyui-textbox"
+                           data-options="prompt:'请输入',width:180,required:true"></td>
+            </tr>
+            <tr>
+                <td>启用状态：</td>
+                <td>
+                    <select id="status" name="status" class="easyui-combobox" style="width: 180px;"
+                            panelHeight="auto"
+                            data-options="prompt:'请选择',required:true,editable:false">
+                        <option value="0">失效</option>
+                        <option value="1">启用</option>
+                        <option value="2">禁用</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
